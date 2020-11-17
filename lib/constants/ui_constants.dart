@@ -12,5 +12,4 @@ class UIConstants {
 
   static fitToHeight(value, BuildContext context) => _fitContext(context,
       ASSUMED_SCREEN_HEIGHT, MediaQuery.of(context).size.height, value);
-
 }
