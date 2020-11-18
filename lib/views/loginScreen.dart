@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/components/backgroundPainter.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -71,7 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         TextButton(
                                           onPressed: () {
                                             print(otp);
-                                            Navigator.of(context).pop();
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return LandingScreen(
+                                                  selectedIndex: 0);
+                                            }));
                                           },
                                           child: Text('Verify'),
                                         ),
