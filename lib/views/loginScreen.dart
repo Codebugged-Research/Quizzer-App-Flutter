@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/components/backgroundPainter.dart';
-import 'package:quiz_app/views/landingScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,8 +8,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
-  String phone = '';
-  String otp = '';
+  String password = '';
+  String email = '';
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +24,18 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: <Widget>[
                   getHeader(context),
-                  getTextFields((value) {
-                    if (value.length == 10) {
-                      phone = value;
+                  inputWidget((value) {
+                    if (true) {
+                      email = value;
+                      print(email);
                     } else {
                       scaffkey.currentState.showSnackBar(new SnackBar(
-                        content:
-                            new Text("Please Enter a valid Phone Number!!"),
+                        content: new Text("Please Enter a valid Email!!"),
                       ));
                     }
+                  }, (value) {
+                    password = value;
+                    print(password);
                   }),
                   SizedBox(height: 50),
                   Expanded(
@@ -52,43 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (_) => AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12.0)),
-                                      title: Text('Please Enter the OTP'),
-                                      content: TextField(
-                                        keyboardType: TextInputType.number,
-                                        decoration:
-                                            InputDecoration(labelText: 'OTP'),
-                                        onChanged: (value) {
-                                          otp = value;
-                                        },
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            print(otp);
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return LandingScreen(
-                                                  selectedIndex: 0);
-                                            }));
-                                          },
-                                          child: Text('Verify'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('Cancel'),
-                                        )
-                                      ],
-                                    ));
+                            print("Email Ontap"+email);
+                            print("Pass Ontap"+password);
                           },
                           splashColor: Colors.grey,
                           child: CircleAvatar(
@@ -115,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-Widget getTextFields(submitted) {
+Widget inputWidget(emailSubmitted, passSubmitted) {
   return Expanded(
     flex: 4,
     child: Column(
@@ -125,12 +92,23 @@ Widget getTextFields(submitted) {
           height: 15,
         ),
         TextField(
-            keyboardType: TextInputType.numberWithOptions(),
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-              prefixText: '+91 ',
-              labelText: 'Mobile No.',
+              prefixIcon: Icon(Icons.email),
+              labelText: 'Email',
             ),
-            onSubmitted: submitted),
+            onSubmitted: emailSubmitted),
+        SizedBox(
+          height: 15,
+        ),
+        TextField(
+            keyboardType: TextInputType.text,
+            obscureText: true,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.lock),
+              labelText: 'Password',
+            ),
+            onSubmitted: passSubmitted),
       ],
     ),
   );
@@ -149,3 +127,41 @@ Widget getHeader(context) {
     ),
   );
 }
+
+// showDialog(
+//     context: context,
+//     barrierDismissible: false,
+//     builder: (_) => AlertDialog(
+//           shape: RoundedRectangleBorder(
+//               borderRadius:
+//                   BorderRadius.circular(12.0)),
+//           title: Text('Please Enter the OTP'),
+//           content: TextField(
+//             keyboardType: TextInputType.number,
+//             decoration:
+//                 InputDecoration(labelText: 'OTP'),
+//             onChanged: (value) {
+//               otp = value;
+//             },
+//           ),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 print(otp);
+//                 Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                         builder: (context) {
+//                   return LandingScreen(
+//                       selectedIndex: 0);
+//                 }));
+//               },
+//               child: Text('Verify'),
+//             ),
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//               child: Text('Cancel'),
+//             )
+//           ],
+//         ));
