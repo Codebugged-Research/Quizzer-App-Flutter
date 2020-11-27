@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:quiz_app/components/backgroundPainter.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -8,8 +11,44 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
+  final formkey = new GlobalKey<FormState>();
+
   String password = '';
   String email = '';
+  bool isLoading = false;
+
+  checkFields() {
+    final form = formkey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    setState(() {
+      isLoading = false;
+    });
+    return false;
+  }
+
+  auth() async {
+    setState(() {
+      isLoading = true;
+    });
+    if (checkFields()) {
+      var payload = json.encode({"email": email, "password": password});
+      print(payload);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return LandingScreen(selectedIndex: 0);
+      }));
+    } else {
+      scaffkey.currentState.showSnackBar(new SnackBar(
+        content: new Text("Authentication faliure !! Please retry."),
+      ));
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +63,40 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: <Widget>[
                   getHeader(context),
-                  inputWidget((value) {
-                    if (true) {
-                      email = value;
-                      print(email);
-                    } else {
-                      scaffkey.currentState.showSnackBar(new SnackBar(
-                        content: new Text("Please Enter a valid Email!!"),
-                      ));
-                    }
-                  }, (value) {
-                    password = value;
-                    print(password);
-                  }),
                   SizedBox(height: 50),
+                  Expanded(
+                    flex: 4,
+                    child: Form(
+                      key: formkey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 50,
+                          ),
+                          inputWidget(
+                              'Please Enter the Email Address',
+                              TextInputType.emailAddress,
+                              Icons.email,
+                              false,
+                              'Email',
+                              'Email Address',
+                              (value) => email = value),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          inputWidget(
+                              'Please Enter the Password',
+                              TextInputType.text,
+                              Icons.lock,
+                              true,
+                              'Password',
+                              'Password',
+                              (value) => password = value),
+                        ],
+                      ),
+                    ),
+                  ),
                   Expanded(
                     flex: 1,
                     child: Row(
@@ -54,13 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            print("Email Ontap"+email);
-                            print("Pass Ontap"+password);
+                            auth();
                           },
                           splashColor: Colors.grey,
                           child: CircleAvatar(
                             backgroundColor: Colors.grey.shade800,
-                            radius: 40,
+                            radius: 30,
                             child: Icon(
                               Icons.arrow_forward,
                               color: Colors.white,
@@ -82,35 +140,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-Widget inputWidget(emailSubmitted, passSubmitted) {
-  return Expanded(
-    flex: 4,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.email),
-              labelText: 'Email',
-            ),
-            onSubmitted: emailSubmitted),
-        SizedBox(
-          height: 15,
-        ),
-        TextField(
-            keyboardType: TextInputType.text,
-            obscureText: true,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock),
-              labelText: 'Password',
-            ),
-            onSubmitted: passSubmitted),
-      ],
-    ),
+Widget inputWidget(String validation, TextInputType type, IconData icon, bool,
+    String label, String hint, save) {
+  return new TextFormField(
+    keyboardType: type,
+    decoration: InputDecoration(
+        hintText: hint, labelText: label, prefixIcon: Icon(Icons.email)),
+    obscureText: bool,
+    validator: (value) => value.isEmpty ? validation : null,
+    onSaved: save,
   );
 }
 
@@ -127,41 +165,3 @@ Widget getHeader(context) {
     ),
   );
 }
-
-// showDialog(
-//     context: context,
-//     barrierDismissible: false,
-//     builder: (_) => AlertDialog(
-//           shape: RoundedRectangleBorder(
-//               borderRadius:
-//                   BorderRadius.circular(12.0)),
-//           title: Text('Please Enter the OTP'),
-//           content: TextField(
-//             keyboardType: TextInputType.number,
-//             decoration:
-//                 InputDecoration(labelText: 'OTP'),
-//             onChanged: (value) {
-//               otp = value;
-//             },
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 print(otp);
-//                 Navigator.of(context).push(
-//                     MaterialPageRoute(
-//                         builder: (context) {
-//                   return LandingScreen(
-//                       selectedIndex: 0);
-//                 }));
-//               },
-//               child: Text('Verify'),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//               child: Text('Cancel'),
-//             )
-//           ],
-//         ));
