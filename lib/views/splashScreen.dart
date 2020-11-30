@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigate() async {
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-      return LoginScreen();
+      return LogInScreen();
     }));
   }
 

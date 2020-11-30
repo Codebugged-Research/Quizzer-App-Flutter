@@ -15,6 +15,7 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   int _selectedIndex = 0;
   bool isLoading = false;
+  Color _selectedColor = Colors.lightBlue.shade300;
 
   @override
   void initState() {
@@ -42,7 +43,6 @@ class _LandingScreenState extends State<LandingScreen> {
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     QuizScreen(),
-    MemberScreen(),
     RewardScreen(),
     ProfileScreen()
   ];
@@ -55,24 +55,159 @@ class _LandingScreenState extends State<LandingScreen> {
               child: CircularProgressIndicator(),
             )
           : _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.local_activity), label: 'Quiz'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.local_activity), label: 'Be the Member'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.local_activity), label: 'Reward'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-        currentIndex: _selectedIndex,
-        unselectedItemColor: Color(0xff80879A),
-        selectedItemColor: Colors.lightBlue.shade300,
-        elevation: 20.0,
-        backgroundColor: Color(0xffFFFFFF),
-        onTap: _onItemTapped,
-      ),
+
+      floatingActionButton: FloatingActionButton(
+          tooltip: 'Be the Member',
+          backgroundColor: Colors.black,
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return MemberScreen();
+            }));
+          },
+          child: Icon(
+            Icons.military_tech,
+            size: 30,
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
+          shape: CircularNotchedRectangle(),
+          child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = 0;
+                      _selectedColor = Colors.lightBlue.shade300;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home,
+                            color: _selectedIndex == 0
+                                ? _selectedColor
+                                : Color(0xff80879A)),
+                        Text('Home',
+                            style: TextStyle(
+                                color: _selectedIndex == 0
+                                    ? _selectedColor
+                                    : Color(0xff80879A)))
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = 1;
+                      _selectedColor = Colors.lightBlue.shade300;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8.0, right: 12.0, bottom: 8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.dynamic_form,
+                            color: _selectedIndex == 1
+                                ? _selectedColor
+                                : Color(0xff80879A)),
+                        Text(
+                          'Quiz',
+                          style: TextStyle(
+                              color: _selectedIndex == 1
+                                  ? _selectedColor
+                                  : Color(0xff80879A)),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = 2;
+                      _selectedColor = Colors.lightBlue.shade300;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8.0, left: 12.0, bottom: 8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.emoji_events,
+                            color: _selectedIndex == 2
+                                ? _selectedColor
+                                : Color(0xff80879A)),
+                        Text(
+                          'Reward',
+                          style: TextStyle(
+                              color: _selectedIndex == 2
+                                  ? _selectedColor
+                                  : Color(0xff80879A)),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = 3;
+                      _selectedColor = Colors.lightBlue.shade300;
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.account_circle,
+                            color: _selectedIndex == 3
+                                ? _selectedColor
+                                : Color(0xff80879A)),
+                        Text(
+                          'Profile',
+                          style: TextStyle(
+                              color: _selectedIndex == 3
+                                  ? _selectedColor
+                                  : Color(0xff80879A)),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ])),
+
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.dynamic_form), label: 'Quiz'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.military_tech), label: 'Be the Member'),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.emoji_events), label: 'Reward'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   unselectedItemColor: Color(0xff80879A),
+      //   selectedItemColor: Colors.lightBlue.shade300,
+      //   elevation: 20.0,
+      //   backgroundColor: Color(0xffFFFFFF),
+      //   onTap: _onItemTapped,
+      // ),
     );
   }
 }

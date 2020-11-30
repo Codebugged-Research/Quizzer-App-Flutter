@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/backgroundPainter.dart';
 import 'package:quiz_app/views/landingScreen.dart';
-import 'package:quiz_app/views/signupScreen.dart';
+import 'package:quiz_app/views/loginScreen.dart';
 
-class LogInScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LogInScreenState createState() => _LogInScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   String email = '';
   final formkey = new GlobalKey<FormState>();
   bool isLoading = false;
+  String name = '';
   String password = '';
   final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
 
@@ -35,7 +36,8 @@ class _LogInScreenState extends State<LogInScreen> {
       isLoading = true;
     });
     if (checkFields()) {
-      var payload = json.encode({"email": email, "password": password});
+      var payload =
+          json.encode({"name": name, "email": email, "password": password});
       print(payload);
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
@@ -78,6 +80,17 @@ class _LogInScreenState extends State<LogInScreen> {
                               height: 120,
                             ),
                             inputWidget(
+                                'Please Enter the Name',
+                                TextInputType.name,
+                                Icons.person,
+                                false,
+                                'Name',
+                                'Name',
+                                (value) => name = value),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            inputWidget(
                                 'Please Enter the Email Address',
                                 TextInputType.emailAddress,
                                 Icons.email,
@@ -103,12 +116,12 @@ class _LogInScreenState extends State<LogInScreen> {
                                 onTap: () {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(builder: (context) {
-                                    return SignUpScreen();
+                                    return LogInScreen();
                                   }));
                                 },
                                 child: Text(
-                                  'New User? Sign Up',
-                                  style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black)),
+                                  'Already have an account? Log in',
+                                  style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black))
                                 ),
                               ),
                             )
@@ -123,7 +136,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          'Sign in',
+                          'Sign up',
                           style: Theme.of(context)
                               .primaryTextTheme
                               .headline5
