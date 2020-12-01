@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/views/loginScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   startTime() async {
-    var duration = new Duration(seconds: 3);
+    var duration = new Duration(seconds: 300);
     return new Timer(duration, navigate);
   }
 
@@ -29,9 +30,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Splash Screen'),
+        body: Container(
+      height: UIConstants.fitToHeight(640, context),
+      width: UIConstants.fitToWidth(360, context),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [Image.asset('name'), Text('Learning bhi Earning bhi')],
       ),
-    );
+    ));
   }
 }

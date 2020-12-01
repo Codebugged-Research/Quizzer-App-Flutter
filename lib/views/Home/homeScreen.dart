@@ -42,7 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [carouselSlider(context), carouselDots(context)],
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: carouselSlider(context),
+              ), carouselDots(context)],
           ),
         ),
       ),
