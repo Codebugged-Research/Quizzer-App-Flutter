@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   startTime() async {
-    var duration = new Duration(seconds: 300);
+    var duration = new Duration(seconds: 3);
     return new Timer(duration, navigate);
   }
 
@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Image.asset('name'), Text('Learning bhi Earning bhi')],
+        children: [Image.asset('assets/images/logo.png',height: 280,width: 280,)],
       ),
     ));
   }

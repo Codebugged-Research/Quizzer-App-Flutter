@@ -110,19 +110,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 'Password',
                                 (value) => password = value),
                             SizedBox(height: 14),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(builder: (context) {
-                                    return LogInScreen();
-                                  }));
-                                },
-                                child: Text(
-                                  'Already have an account? Log in',
-                                  style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black))
-                                ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) {
+                                  return LogInScreen();
+                                }));
+                              },
+                              child: Text(
+                                'Already have an account? Log in',
+                                style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black))
                               ),
                             )
                           ],

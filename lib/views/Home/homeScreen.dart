@@ -26,15 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Quizzer',
-          style: Theme.of(context).primaryTextTheme.headline6,
-        ),
-      ),
-      drawer: Drawer(
-        child: DrawerComponent(),
-      ),
+     
       body: Container(
         height: UIConstants.fitToHeight(640, context),
         width: UIConstants.fitToWidth(360, context),

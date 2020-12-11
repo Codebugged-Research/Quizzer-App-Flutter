@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/components/drawerComponent.dart';
 import 'package:quiz_app/views/Home/homeScreen.dart';
 import 'package:quiz_app/views/Member/memberScreen.dart';
 import 'package:quiz_app/views/Profile/profileScreen.dart';
@@ -50,6 +51,16 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+         elevation: 0,
+        title: Text(
+          'Quiz Adda',
+          style: Theme.of(context).primaryTextTheme.headline6,
+        ),
+      ),
+      drawer: Drawer(
+        child: DrawerComponent(),
+      ),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -58,7 +69,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
       floatingActionButton: FloatingActionButton(
           tooltip: 'Be the Member',
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.lightBlue.shade300,
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return MemberScreen();
@@ -150,7 +161,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                 ? _selectedColor
                                 : Color(0xff80879A)),
                         Text(
-                          'Reward',
+                          'Rank',
                           style: TextStyle(
                               color: _selectedIndex == 2
                                   ? _selectedColor
