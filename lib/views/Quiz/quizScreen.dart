@@ -1,3 +1,4 @@
+import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 
@@ -7,17 +8,21 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  int count = 4;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 4,
-      itemBuilder: (context,index){
-        return quizTile("Regular Quiz - ${index+1}", "11AM - 12PM");
-      },
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: count,
+        itemBuilder: (context, index) {
+          return quizTile(
+              "Regular Quiz - ${index + 1}", 0, 0, 15 * (index + 1), index);
+        },
+      ),
     );
   }
 
-  Widget quizTile(String title,String timming) {
+  Widget quizTile(String title, int hr, int min, int sec, int index) {
     return Card(
       child: ListTile(
         leading: Column(
@@ -28,7 +33,10 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
         title: Text(title),
         subtitle: Row(
-          children: [Icon(Icons.lock_clock), Text(timming)],
+          children: [
+            Icon(Icons.lock_clock),
+            countDownTimmer(hr, min, sec, index)
+          ],
         ),
         trailing: FlatButton(
           child: Text(
@@ -37,10 +45,24 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
           color: Colors.lightBlue.shade300,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> QuizTestScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => QuizTestScreen()));
           },
         ),
       ),
+    );
+  }
+
+  Widget countDownTimmer(hr, min, sec, index) {
+    return Countdown(
+      duration: Duration(seconds: sec, hours: hr, minutes: min),
+      onFinish: () {
+//remove quiz
+      },
+      builder: (BuildContext ctx, Duration remaining) {
+        return Text(
+            '${remaining.inHours}:${remaining.inMinutes}:${remaining.inSeconds}');
+      },
     );
   }
 }

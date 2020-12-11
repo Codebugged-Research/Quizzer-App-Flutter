@@ -48,13 +48,29 @@ class _LandingScreenState extends State<LandingScreen> {
     ProfileScreen()
   ];
 
+  List names = [
+    'Quiz Adda',
+    'Quiz Adda',
+    'LeaderBoard',
+    'Quiz Adda',
+  ];
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-         elevation: 0,
+      key: _scaffoldKey,
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.menu,color: Colors.white,),
+          onPressed: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+        ),
+        centerTitle: true,
         title: Text(
-          'Quiz Adda',
+          names[_selectedIndex],
           style: Theme.of(context).primaryTextTheme.headline6,
         ),
       ),

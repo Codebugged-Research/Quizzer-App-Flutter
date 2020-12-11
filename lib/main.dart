@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/views/landingScreen.dart';
-import 'package:quiz_app/views/loginScreen.dart';
-import 'package:quiz_app/views/splashScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Quiz Adda',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: Color(0xFF3B9EC5),
+          primaryColor: Colors.lightBlue.shade300,
           scaffoldBackgroundColor: Colors.white,
           primaryTextTheme:
               GoogleFonts.latoTextTheme(Theme.of(context).textTheme).copyWith(

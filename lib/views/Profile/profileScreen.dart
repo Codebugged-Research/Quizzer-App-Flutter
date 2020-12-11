@@ -68,18 +68,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 SizedBox(
                                     height:
-                                        UIConstants.fitToHeight(30, context)),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: IconButton(
-                                      icon: Icon(Icons.power_settings_new),
-                                      color: Colors.white,
-                                      iconSize: 30,
-                                      onPressed: () {}),
-                                ),
-                                SizedBox(
-                                    height:
                                         UIConstants.fitToHeight(55, context)),
                                 CircleAvatar(
                                   backgroundColor: Colors.black,

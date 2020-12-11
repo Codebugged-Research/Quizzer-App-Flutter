@@ -26,19 +26,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: Container(
         height: UIConstants.fitToHeight(640, context),
         width: UIConstants.fitToWidth(360, context),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: carouselSlider(context),
-              ), carouselDots(context)],
+              ),
+              carouselDots(context),
+              SizedBox(height: 30),
+              Container(
+                height: 300,
+                width: 300,
+                color: Colors.black,
+              ),
+            ],
           ),
         ),
       ),
