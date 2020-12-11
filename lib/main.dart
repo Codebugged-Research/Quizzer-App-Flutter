@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_app/views/landingScreen.dart';
+import 'package:quiz_app/views/loginScreen.dart';
 import 'package:quiz_app/views/splashScreen.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      title: 'Quizzer',
+      title: 'Quiz Adda',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Color(0xFF3B9EC5),
@@ -31,9 +33,10 @@ class MyApp extends StatelessWidget {
           buttonTheme: ButtonThemeData(
               buttonColor: Color(0xffF40555),
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Color(0xffF40555)),
+                  side: BorderSide(color: Colors.lightBlue.shade300),
                   borderRadius: BorderRadius.circular(25.0)))),
-      home: SplashScreen(),
+      home: LandingScreen(selectedIndex: 0,),
+      // home: SplashScreen(),
     );
   }
 }

@@ -97,19 +97,16 @@ class _LogInScreenState extends State<LogInScreen> {
                                 'Password',
                                 (value) => password = value),
                             SizedBox(height: 14),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(builder: (context) {
-                                    return SignUpScreen();
-                                  }));
-                                },
-                                child: Text(
-                                  'New User? Sign Up',
-                                  style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black)),
-                                ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) {
+                                  return SignUpScreen();
+                                }));
+                              },
+                              child: Text(
+                                'New User? Sign Up',
+                                style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black)),
                               ),
                             )
                           ],
