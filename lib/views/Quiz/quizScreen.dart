@@ -12,6 +12,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: count,
         itemBuilder: (context, index) {
@@ -23,31 +24,36 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Widget quizTile(String title, int hr, int min, int sec, int index) {
-    return Card(
-      child: ListTile(
-        leading: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.dynamic_form),
-          ],
-        ),
-        title: Text(title),
-        subtitle: Row(
-          children: [
-            Icon(Icons.lock_clock),
-            countDownTimmer(hr, min, sec, index)
-          ],
-        ),
-        trailing: FlatButton(
-          child: Text(
-            'Start',
-            style: TextStyle(color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal:12.0, vertical: 8),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: ListTile(
+          leading: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.dynamic_form),
+            ],
           ),
-          color: Colors.lightBlue.shade300,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => QuizTestScreen()));
-          },
+          title: Text(title),
+          subtitle: Row(
+            children: [
+              Icon(Icons.lock_clock),
+              countDownTimmer(hr, min, sec, index)
+            ],
+          ),
+          trailing: FlatButton(
+            child: Text(
+              'Start',
+              style: TextStyle(color: Colors.white),
+            ),
+            color: Colors.orangeAccent,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => QuizTestScreen()));
+            },
+          ),
         ),
       ),
     );

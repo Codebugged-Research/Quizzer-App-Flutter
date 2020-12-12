@@ -31,6 +31,7 @@ class _RewardScreenState extends State<RewardScreen> {
                   CircleAvatar(
                     radius: 65,
                     backgroundColor: Colors.white,
+                    foregroundColor: Colors.green,
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -57,6 +58,9 @@ class _RewardScreenState extends State<RewardScreen> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      color: Colors.white,
                       elevation: 2,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -64,7 +68,7 @@ class _RewardScreenState extends State<RewardScreen> {
                         child: ListTile(
                           leading: CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.black,
+                            backgroundColor: Colors.white,
                           ),
                           title: Text("Name"),
                           trailing: Text("1045"),

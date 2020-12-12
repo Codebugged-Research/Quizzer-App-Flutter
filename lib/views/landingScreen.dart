@@ -16,7 +16,7 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   int _selectedIndex = 0;
   bool isLoading = false;
-  Color _selectedColor = Colors.lightBlue.shade300;
+  Color _selectedColor = Colors.orangeAccent;
 
   @override
   void initState() {
@@ -59,6 +59,7 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
@@ -83,31 +84,35 @@ class _LandingScreenState extends State<LandingScreen> {
             )
           : _widgetOptions.elementAt(_selectedIndex),
 
-      floatingActionButton: FloatingActionButton(
-          tooltip: 'Be the Member',
-          backgroundColor: Colors.lightBlue.shade300,
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return MemberScreen();
-            }));
-          },
-          child: Icon(
-            Icons.military_tech,
-            size: 30,
-          )),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: FloatingActionButton(        
+            tooltip: 'Be the Member',
+            backgroundColor: Colors.lightBlue.shade300,
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return MemberScreen();
+              }));
+            },
+            child: Icon(
+              Icons.military_tech,
+              size: 30,
+              color: Colors.white,
+            )),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
           color: Colors.white,
           shape: CircularNotchedRectangle(),
           child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
                   onTap: () {
                     setState(() {
                       _selectedIndex = 0;
-                      _selectedColor = Colors.lightBlue.shade300;
+                      _selectedColor = Colors.orangeAccent;
                     });
                   },
                   child: Padding(
@@ -133,7 +138,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   onTap: () {
                     setState(() {
                       _selectedIndex = 1;
-                      _selectedColor = Colors.lightBlue.shade300;
+                      _selectedColor = Colors.orangeAccent;
                     });
                   },
                   child: Padding(
@@ -158,11 +163,15 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8.0, left: 12.0, bottom: 8.0),
+                ),
                 InkWell(
                   onTap: () {
                     setState(() {
                       _selectedIndex = 2;
-                      _selectedColor = Colors.lightBlue.shade300;
+                      _selectedColor = Colors.orangeAccent;
                     });
                   },
                   child: Padding(
@@ -191,7 +200,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   onTap: () {
                     setState(() {
                       _selectedIndex = 3;
-                      _selectedColor = Colors.lightBlue.shade300;
+                      _selectedColor = Colors.orangeAccent;
                     });
                   },
                   child: Padding(
@@ -216,25 +225,6 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                 )
               ])),
-
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.dynamic_form), label: 'Quiz'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.military_tech), label: 'Be the Member'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.emoji_events), label: 'Reward'),
-      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   unselectedItemColor: Color(0xff80879A),
-      //   selectedItemColor: Colors.lightBlue.shade300,
-      //   elevation: 20.0,
-      //   backgroundColor: Color(0xffFFFFFF),
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 }

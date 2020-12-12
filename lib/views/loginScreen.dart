@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/backgroundPainter.dart';
+import 'package:quiz_app/components/loginComponent.dart';
+import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 import 'package:quiz_app/views/signupScreen.dart';
 
@@ -57,128 +59,36 @@ class _LogInScreenState extends State<LogInScreen> {
       key: scaffkey,
       body: CustomPaint(
         painter: BackgroundSignIn(),
-        child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35),
-              child: Column(
-                children: <Widget>[
-                  getHeader(context),
-                  SizedBox(height: 50),
-                  Expanded(
-                    flex: 4,
-                    child: Form(
-                      key: formkey,
-                      child: SingleChildScrollView(
-                                              child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 120,
-                            ),
-                            inputWidget(
-                                'Please Enter the Email Address',
-                                TextInputType.emailAddress,
-                                Icons.email,
-                                false,
-                                'Email',
-                                'Email Address',
-                                (value) => email = value),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            inputWidget(
-                                'Please Enter the Password',
-                                TextInputType.text,
-                                Icons.lock,
-                                true,
-                                'Password',
-                                'Password',
-                                (value) => password = value),
-                            SizedBox(height: 14),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(builder: (context) {
-                                  return SignUpScreen();
-                                }));
-                              },
-                              child: Text(
-                                'New User? Sign Up',
-                                style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black)),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+        child: Container(
+          height: UIConstants.fitToHeight(640, context),
+          width: UIConstants.fitToWidth(360, context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left:16.0),
+                child: Container(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Welcome!',
+                    style: Theme.of(context)
+                        .primaryTextTheme
+                        .headline3
+                        .copyWith(fontSize: 40),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Sign in',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline5
-                              .copyWith(
-                                  color: Colors.grey.shade800,
-                                  fontWeight: FontWeight.w700),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            auth();
-                          },
-                          splashColor: Colors.grey,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey.shade800,
-                            radius: 30,
-                            child: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                  //_getBottomRow(context),
-                ],
+                ),
               ),
-            ),
-            // _getBackBtn(),
-          ],
+              SizedBox(height: UIConstants.fitToHeight(350, context),),
+              Padding(
+                padding: const EdgeInsets.only(bottom:40.0),
+                child: Container(
+                  child: LoginButtonComponentAndroid(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-}
-
-Widget inputWidget(String validation, TextInputType type, IconData icon, bool,
-    String label, String hint, save) {
-  return new TextFormField(
-    keyboardType: type,
-    decoration: InputDecoration(
-        hintText: hint, labelText: label, prefixIcon: Icon(icon)),
-    obscureText: bool,
-    validator: (value) => value.isEmpty ? validation : null,
-    onSaved: save,
-  );
-}
-
-Widget getHeader(context) {
-  return Expanded(
-    flex: 3,
-    child: Container(
-      alignment: Alignment.bottomLeft,
-      child: Text(
-        'Welcome!',
-        style:
-            Theme.of(context).primaryTextTheme.headline3.copyWith(fontSize: 40),
-      ),
-    ),
-  );
 }
