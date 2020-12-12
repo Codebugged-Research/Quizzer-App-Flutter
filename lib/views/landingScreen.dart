@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/components/drawerComponent.dart';
+import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/views/Home/homeScreen.dart';
 import 'package:quiz_app/views/Member/memberScreen.dart';
 import 'package:quiz_app/views/Profile/profileScreen.dart';
@@ -16,6 +17,8 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   int _selectedIndex = 0;
   bool isLoading = false;
+  String name = '';
+  String email = '';
   Color _selectedColor = Colors.orangeAccent;
 
   @override
@@ -23,6 +26,15 @@ class _LandingScreenState extends State<LandingScreen> {
     super.initState();
     _selectedIndex = widget.selectedIndex;
     // loadDataForScreen();
+    loadDataForUser();
+  }
+
+  loadDataForUser() async {
+    var auth = await AuthService.getSavedAuth();
+    name = auth['name'];
+    email = auth['email'];
+    print(name);
+    print(email);
   }
 
   loadDataForScreen() async {
@@ -63,8 +75,12 @@ class _LandingScreenState extends State<LandingScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
+        brightness: Brightness.dark,
         leading: IconButton(
-          icon: Icon(Icons.menu,color: Colors.white,),
+          icon: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
           onPressed: () {
             _scaffoldKey.currentState.openDrawer();
           },
@@ -72,21 +88,23 @@ class _LandingScreenState extends State<LandingScreen> {
         centerTitle: true,
         title: Text(
           names[_selectedIndex],
-          style: Theme.of(context).primaryTextTheme.headline6,
+          style: Theme.of(context).primaryTextTheme.headline6.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.46),
         ),
       ),
       drawer: Drawer(
-        child: DrawerComponent(),
+        child: DrawerComponent(
+          name: name,
+          email: email,
+        ),
       ),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
           : _widgetOptions.elementAt(_selectedIndex),
-
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(4.0),
-        child: FloatingActionButton(        
+        child: FloatingActionButton(
             tooltip: 'Be the Member',
             backgroundColor: Colors.lightBlue.shade300,
             onPressed: () {
@@ -164,8 +182,8 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 8.0, left: 12.0, bottom: 8.0),
+                  padding:
+                      const EdgeInsets.only(top: 8.0, left: 12.0, bottom: 8.0),
                 ),
                 InkWell(
                   onTap: () {

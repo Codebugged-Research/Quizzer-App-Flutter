@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/views/Home/Carousel/itemFour.dart';
 import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
 import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
@@ -13,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  String name = '';
+  String email = '';
   List cardList = [Item1(), Item2(), Item3(), Item4()];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -20,6 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
       result.add(handler(i, list[i]));
     }
     return result;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadDataForUser();
+  }
+
+  loadDataForUser() async {
+    var auth = await AuthService.getSavedAuth();
+    setState(() {
+      name = auth['name'];
+      email = auth['email'];
+    });
   }
 
   @override
@@ -53,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              InkWell(
+                              GestureDetector(
                                 child: Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
@@ -75,7 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 56,
                                         ),
                                         SizedBox(height: 4),
-                                        Text("Quiz 1",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                        Text(
+                                          "Quiz 1",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -85,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               ),
                               SizedBox(width: 12),
-                              InkWell(
+                              GestureDetector(
                                 child: Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
@@ -95,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                      color: Colors.lightBlue.shade300,
+                                          color: Colors.lightBlue.shade300,
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
@@ -110,7 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 56,
                                             ),
                                             SizedBox(height: 4),
-                                            Text("Quiz 2",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                            Text("Quiz 2",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ],
                                         ),
                                       ),
@@ -155,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              InkWell(
+                              GestureDetector(
                                 child: Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
@@ -165,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                      color: Colors.lightBlue.shade300,
+                                          color: Colors.lightBlue.shade300,
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
@@ -180,7 +206,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 56,
                                             ),
                                             SizedBox(height: 4),
-                                            Text("Quiz 3",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,)),
+                                            Text("Quiz 3",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
                                           ],
                                         ),
                                       ),
@@ -219,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               ),
                               SizedBox(width: 12),
-                              InkWell(
+                              GestureDetector(
                                 child: Card(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
@@ -229,8 +259,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                      color: Colors.lightBlue.shade300,
-                                          borderRadius: BorderRadius.circular(12),
+                                          color: Colors.lightBlue.shade300,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         height: 150,
                                         width: 150,
@@ -243,18 +274,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 56,
                                             ),
                                             SizedBox(height: 4),
-                                            Text("Quiz 4",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),),
+                                            Text(
+                                              "Quiz 4",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                      color: Colors.white24,
-                                          borderRadius: BorderRadius.circular(12),
+                                          color: Colors.white24,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                         height: 150,
                                         width: 150,
-                                        
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
@@ -266,7 +303,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
-                                          children: [Icon(Icons.lock,size: 40,)],
+                                          children: [
+                                            Icon(
+                                              Icons.lock,
+                                              size: 40,
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -284,8 +326,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: InkWell(
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 12, color: Colors.white12),
+                              border:
+                                  Border.all(width: 12, color: Colors.white12),
                               borderRadius: BorderRadius.circular(90),
                               color: Colors.white,
                             ),
@@ -294,10 +336,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(90),
-                                  color: Colors.orangeAccent,
+                                color: Colors.orangeAccent,
                               ),
                               child: Card(
-                                  color: Colors.lightBlue.shade300,
+                                color: Colors.lightBlue.shade300,
                                 margin: EdgeInsets.all(0),
                                 elevation: 3,
                                 shape: RoundedRectangleBorder(
@@ -311,7 +353,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 58,
                                     ),
                                     SizedBox(height: 4),
-                                    Text("Super Quiz",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),),
+                                    Text(
+                                      "Super Quiz",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

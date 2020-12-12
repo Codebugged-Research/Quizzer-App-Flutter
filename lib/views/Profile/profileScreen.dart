@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
+import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/services/userService.dart';
+import 'package:quiz_app/views/loginScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -9,12 +13,40 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String photoUrl = '';
   GlobalKey<ScaffoldState> scaffKey = new GlobalKey();
+  User user;
 
-  bool _isLoading = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    loadDataForScreen();
+  }
+
+  loadDataForScreen() async {
+    var auth = await AuthService.getSavedAuth();
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      photoUrl = auth['photoUrl'];
+      user = await UserService.getUser();
+    } catch (e) {
+      print(e);
+    }
+
+    print(photoUrl);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  signOut(context) async {
+    await AuthService.clearAuth();
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+      return LogInScreen();
+    }));
   }
 
   Widget profileInfo(String labelText, String labelValue, IconData icon) {
@@ -42,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
         key: scaffKey,
         backgroundColor: Colors.white,
-        body: !_isLoading
+        body: !isLoading
             ? Container(
                 height: UIConstants.fitToHeight(640, context),
                 width: UIConstants.fitToWidth(360, context),
@@ -53,7 +85,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Positioned(
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            //height: UIConstants.fitToHeight(380, context), // Change
                             decoration: BoxDecoration(
                                 color: Colors.lightBlue.shade300,
                                 borderRadius: BorderRadius.only(
@@ -68,39 +99,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 SizedBox(
                                     height:
-                                        UIConstants.fitToHeight(55, context)),
+                                        UIConstants.fitToHeight(56, context)),
                                 CircleAvatar(
-                                  backgroundColor: Colors.black,
-                                  radius: 86.5,
-                                  child: Text(
-                                    'SN',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                  backgroundImage: NetworkImage(photoUrl),
+                                  backgroundColor: photoUrl == null
+                                      ? Colors.black
+                                      : Colors.white,
+                                  radius: 80,
+                                  child: photoUrl == null
+                                      ? Text(
+                                          'SN',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 32),
+                                        )
+                                      : null,
                                 ),
-                                // SizedBox(
-                                //     height:
-                                //         UIConstants.fitToHeight(10, context)),
-                                // InkWell(
-                                //   splashColor: Colors.white,
-                                //   onTap: () {
-                                //     Navigator.of(context).push(
-                                //         MaterialPageRoute(
-                                //             builder: (BuildContext context) {
-                                //       return EditProfileScreen(
-                                //           user: user, photoUrl: photoUrl);
-                                //     }));
-                                //   },
-                                //   child: Text('Edit Profile',
-                                //       style: TextStyle(
-                                //           color: Colors.white,
-                                //           fontSize: 15,
-                                //           fontWeight: FontWeight.w400,
-                                //           letterSpacing: 0.24)),
-                                // ),
                                 SizedBox(
                                     height:
                                         UIConstants.fitToHeight(20, context)),
-                                Text('Sayan Nath',
+                                Text('${user.name}',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 23,
@@ -124,8 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ]),
                       profileInfo('Phone Number', '+91 9874948947', Icons.call),
-                      profileInfo(
-                          'Email', 'sayannath2352gmail.com', Icons.mail),
+                      profileInfo('Email', '${user.email}', Icons.mail),
                     ],
                   ),
                 ),

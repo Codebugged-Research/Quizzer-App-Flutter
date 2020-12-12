@@ -6,6 +6,9 @@ class RewardScreen extends StatefulWidget {
 }
 
 class _RewardScreenState extends State<RewardScreen> {
+  bool isLoading = false;
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

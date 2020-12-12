@@ -6,7 +6,6 @@ import 'package:quiz_app/components/backgroundPainter.dart';
 import 'package:quiz_app/components/loginComponent.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/views/landingScreen.dart';
-import 'package:quiz_app/views/signupScreen.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -32,26 +31,6 @@ class _LogInScreenState extends State<LogInScreen> {
     return false;
   }
 
-  auth() async {
-    setState(() {
-      isLoading = true;
-    });
-    if (checkFields()) {
-      var payload = json.encode({"email": email, "password": password});
-      print(payload);
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return LandingScreen(selectedIndex: 0);
-      }));
-    } else {
-      scaffkey.currentState.showSnackBar(new SnackBar(
-        content: new Text("Authentication faliure !! Please retry."),
-      ));
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,33 +38,37 @@ class _LogInScreenState extends State<LogInScreen> {
       key: scaffkey,
       body: CustomPaint(
         painter: BackgroundSignIn(),
-        child: Container(
-          height: UIConstants.fitToHeight(640, context),
-          width: UIConstants.fitToWidth(360, context),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left:16.0),
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Welcome!',
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .headline3
-                        .copyWith(fontSize: 40),
+        child: SingleChildScrollView(
+          child: Container(
+            height: UIConstants.fitToHeight(640, context),
+            width: UIConstants.fitToWidth(360, context),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Welcome!',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .headline3
+                          .copyWith(fontSize: 40),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: UIConstants.fitToHeight(350, context),),
-              Padding(
-                padding: const EdgeInsets.only(bottom:40.0),
-                child: Container(
-                  child: LoginButtonComponentAndroid(),
+                SizedBox(
+                  height: UIConstants.fitToHeight(350, context),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40.0),
+                  child: Container(
+                    child: LoginButtonComponentAndroid(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

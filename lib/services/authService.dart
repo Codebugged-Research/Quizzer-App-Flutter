@@ -5,7 +5,7 @@ import 'package:quiz_app/services/baseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends BaseService {
-  static const BASE_URI = "http://foodaurdiscount.com/api/";
+  static const BASE_URI = "http://68.183.247.45/";
   static Map<String, dynamic> _authDetails;
   static const String authNamespace = "auth";
   static Future<http.Response> makeAuthenticatedRequest(String url,
@@ -64,39 +64,27 @@ class AuthService extends BaseService {
 
   static Future<bool> authenticate(String displayName, String email,
       String password, String photoUrl) async {
-    List name = [];
-    name = displayName.split(" ");
-    String firstName = name[0];
-    String lastName = "";
-    for (int i = 1; i < name.length; i++) {
-      lastName = lastName + name[i];
-    }
-    var payload = json.encode({
-      'name': firstName,
-      'lastName': lastName,
-      'email': email,
-      'password': password
-    });
+    var payload = json
+        .encode({'name': displayName, 'email': email, 'password': password});
     print('$payload');
     http.Response response = await BaseService.makeUnauthenticatedRequest(
-        BaseService.BASE_URI + 'appsignin',
+        BaseService.BASE_URI + 'app/login',
         body: payload);
 
     Map<String, dynamic> responseMap = json.decode(response.body);
 
     String token = responseMap['token'];
-    String id = responseMap['user']['_id'].toString();
-    String role = responseMap['user']['role'].toString();
-    String status = responseMap['user']['isBlocked'].toString();
-
+    String id = responseMap['User']['_id'].toString();
+    String role = responseMap['User']['role'].toString();
+    String username = email.split('@').toString();
+    print(username);
     bool success = token != null;
-    if (success)
-      _saveToken(token, email, id, role, status, photoUrl, firstName);
+    if (success) _saveToken(token, email, id, role, photoUrl, displayName, username);
     return success;
   }
 
   static _saveToken(String token, String email, String id, String role,
-      String status, String photoUrl, String firstName) async {
+      String photoUrl, String displayName, String username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(
         authNamespace,
@@ -105,9 +93,9 @@ class AuthService extends BaseService {
           "email": email,
           "id": id,
           "role": role,
-          "status": status,
           "photoUrl": photoUrl,
-          "firstName": firstName
+          "name": displayName,
+          "username": username
         }));
   }
 

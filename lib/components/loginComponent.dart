@@ -15,8 +15,8 @@ class LoginButtonComponentAndroid extends StatelessWidget {
 
   Widget loginButton(String title, String assets, BuildContext context) {
     return SizedBox(
-      height: UIConstants.fitToHeight(35, context),
-      width: UIConstants.fitToWidth(280, context),
+      height: UIConstants.fitToHeight(40, context),
+      width: UIConstants.fitToWidth(240, context),
       child: RaisedButton(
         color: Colors.white,
         
