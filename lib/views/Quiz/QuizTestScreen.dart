@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/models/Quiz.dart';
 
 class QuizTestScreen extends StatefulWidget {
+  final List<Quiz> quiz;
+  QuizTestScreen({this.quiz});
   @override
   _QuizTestScreenState createState() => _QuizTestScreenState();
 }
@@ -12,7 +15,15 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   bool option2 = false;
   bool option3 = false;
   bool option4 = false;
+  List<Quiz> quiz;
   PageController _pageController = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    quiz = widget.quiz;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +34,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   Widget questionCard() {
     return PageView.builder(
       controller: _pageController,
-      itemCount: 10,
+      itemCount: quiz.length,
       itemBuilder: (context, index) {
         return Container(
           color: Colors.lightBlue.shade100.withOpacity(0.2),
@@ -81,7 +92,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             ),
                           ),
                           Text(
-                            "Regular Quiz - 1",
+                            "${quiz[index].name}",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -111,7 +122,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1),
                       Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry  Lorem Ipsum has been the industry's  standard dummy text  ever since the 1500s",
+                        "${quiz[index].questions[index].description}",
                         style: Theme.of(context).textTheme.headline6.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -143,7 +154,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           color: option1 ? Colors.greenAccent : Colors.white,
                           child: Text(
-                            "Option 1",
+                            "${quiz[index].questions[index].options[0]}",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -169,7 +180,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           color: option2 ? Colors.greenAccent : Colors.white,
                           child: Text(
-                            "Option 2",
+                            "${quiz[index].questions[index].options[1]}",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -200,7 +211,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 borderRadius: BorderRadius.circular(12)),
                             color: option3 ? Colors.greenAccent : Colors.white,
                             child: Text(
-                              "Option 3",
+                              "${quiz[index].questions[index].options[2]}",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
@@ -225,7 +236,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 borderRadius: BorderRadius.circular(12)),
                             color: option4 ? Colors.greenAccent : Colors.white,
                             child: Text(
-                              "Option 4",
+                              "${quiz[index].questions[index].options[3]}",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
