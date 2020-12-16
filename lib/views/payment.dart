@@ -15,18 +15,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
     super.initState();
     razorpay = new Razorpay();
 
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+      razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+      razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+      razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
   }
 
   void openCheckOut() {
     var options = {
       "key": "rzp_test_sOzJvizxWHgZgS",
-      "amount": amount.text,
+      "amount": double.parse(amount.text.trim())*100,
       "name": "Quizzer App",
       "description": "Pay to be a member",
-      "prefill": {"contact": "123456789", "email": "sayannath235@gmail.com"},
+      "prefill": {"contact": "9874948947", "email": "sayannath235@gmail.com"},
       "external": {
         "wallet": ["paytm"],
       }
