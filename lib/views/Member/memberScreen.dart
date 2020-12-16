@@ -49,28 +49,29 @@ class _MemberScreenState extends State<MemberScreen> {
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                    height: UIConstants.fitToHeight(32, context)),
+                                    height: UIConstants.fitToHeight(75, context)),
                                 Text(
                                   'Subscription',
+                                  textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .primaryTextTheme
-                                      .headline5
+                                      .headline4
                                       .copyWith(color: Colors.white),
                                 ),
                                 SizedBox(
                                     height: UIConstants.fitToHeight(32, context)),
-                                Align(
-                                    alignment: Alignment.center,
-                                    child: Text('Plan',
-                                        style: GoogleFonts.sourceSansPro(
-                                            textStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 24,
-                                                letterSpacing: 0.36,
-                                                fontWeight: FontWeight.w700)))),
+                                // Align(
+                                //     alignment: Alignment.center,
+                                //     child: Text('Plan',
+                                //         style: GoogleFonts.sourceSansPro(
+                                //             textStyle: TextStyle(
+                                //                 color: Colors.white,
+                                //                 fontSize: 24,
+                                //                 letterSpacing: 0.36,
+                                //                 fontWeight: FontWeight.w700)))),
                               ],
                             ),
                           ),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 
@@ -192,7 +190,7 @@ class PlanCard extends StatelessWidget {
                       },
                       color: Colors.white,
                       child: Text(
-                        'Buy Now!',
+                        'Subscribe!',
                         style: Theme.of(context)
                             .primaryTextTheme
                             .button
