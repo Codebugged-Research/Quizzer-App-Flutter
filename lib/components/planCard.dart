@@ -2,83 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 
 class PlanCard extends StatelessWidget {
-  // createSubscription(BuildContext context) async {
-  //   var auth = await AuthService.getSavedAuth();
-  //   var payload = json.encode({
-  //     "transaction_id": "123",
-  //     "validFrom":
-  //         "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
-  //     "validTill":
-  //         "${(DateTime.now().month + int.parse(plan.duration)) > 12 ? (DateTime.now().year + 1) : DateTime.now().year}-${(DateTime.now().month + int.parse(plan.duration)) > 12 ? (DateTime.now().month + int.parse(plan.duration) - 12) : (DateTime.now().month + int.parse(plan.duration))}-${DateTime.now().day}",
-  //     "plan": plan.id,
-  //     "count": plan.count + 1,
-  //     "subscriptionTaken": true,
-  //     "user": auth['id']
-  //   });
-  //   try {
-  //     var subscriptionId =
-  //         await SubscriptionService.createSubscription(payload);
-  //     if (subscriptionId != '') {
-  //       var body = json.encode({"subscription": subscriptionId});
-  //       bool isUpdated = await UserService.updateUser(body);
-  //       print(isUpdated);
-  //     } else {
-  //       print("DEBUG");
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     showDialog(
-  //         context: context,
-  //         builder: (_) => AlertDialog(
-  //               content: Column(
-  //                 mainAxisSize: MainAxisSize.min,
-  //                 children: [
-  //                   Text(
-  //                     'Failed to Buy Subscription. Try Again!!!',
-  //                     style: Theme.of(context)
-  //                         .primaryTextTheme
-  //                         .headline6
-  //                         .copyWith(
-  //                             color: Colors.black,
-  //                             letterSpacing: 0.46,
-  //                             fontWeight: FontWeight.w500),
-  //                   )
-  //                 ],
-  //               ),
-  //               actions: [
-  //                 MaterialButton(
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: Text(
-  //                     "Cancel",
-  //                     style: TextStyle(
-  //                       fontSize: 18,
-  //                       color: Color(0xff25354E),
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 MaterialButton(
-  //                   shape: RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.circular(18),
-  //                   ),
-  //                   color: Color(0xff000000),
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: Text(
-  //                     "OK!",
-  //                     style: TextStyle(
-  //                       fontSize: 18,
-  //                       color: Colors.white,
-  //                     ),
-  //                   ),
-  //                 )
-  //               ],
-  //             ));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -96,10 +19,7 @@ class PlanCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
-                    colors: [
-                      const Color(0xff0CC1A1),
-                      const Color(0xff0D6EC7)
-                    ],
+                    colors: [const Color(0xff0CC1A1), const Color(0xff0D6EC7)],
                   ),
                   borderRadius: BorderRadius.circular(15.0),
                 ),
