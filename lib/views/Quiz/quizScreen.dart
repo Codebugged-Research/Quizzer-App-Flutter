@@ -1,5 +1,6 @@
 import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
@@ -14,11 +15,12 @@ class _QuizScreenState extends State<QuizScreen> {
   List<Quiz> quizes = [];
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     getdata();
   }
-  bool loading=false;
+
+  bool loading = false;
 
   getdata() async {
     setState(() {
@@ -32,16 +34,27 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return loading?Center(child: CircularProgressIndicator()):quizes.length>0?Scaffold(
-      backgroundColor: Colors.white,
-      body:  ListView.builder(
-        itemCount: quizes.length,
-        itemBuilder: (context, index) {
-          return quizTile(
-              "${quizes[index].name}", 0, 0, 15 * (index + 1), index);
-        },
-      ),
-    ):Center(child: Text("No New Quizes"));
+    return loading
+        ? Center(child: CircularProgressIndicator())
+        : quizes.length > 0
+            ? Scaffold(
+                backgroundColor: Colors.white,
+                body: ListView.builder(
+                  itemCount: quizes.length,
+                  itemBuilder: (context, index) {
+                    return quizTile("${quizes[index].name}", 0, 0,
+                        15 * (index + 1), index);
+                  },
+                ),
+              )
+            : Center(
+                  child: Text(
+                  "No New Quizes",
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .headline6
+                      .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                ));
   }
 
   Widget quizTile(String title, int hr, int min, int sec, int index) {
