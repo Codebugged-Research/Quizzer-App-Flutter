@@ -34,8 +34,8 @@ class MyApp extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(25.0)))),
-      home: PaymentScreen(),
-      // home: SplashScreen(),
+      //home: PaymentScreen(),
+       home: SplashScreen(),
     );
   }
 }

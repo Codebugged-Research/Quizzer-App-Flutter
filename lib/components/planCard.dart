@@ -9,116 +9,78 @@ class PlanCard extends StatelessWidget {
         bottom: 50.0,
       ),
       child: SingleChildScrollView(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          overflow: Overflow.visible,
-          children: [
-            Container(
-                height: UIConstants.fitToHeight(180, context),
-                width: UIConstants.fitToWidth(220, context),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    colors: [const Color(0xff0CC1A1), const Color(0xff0D6EC7)],
+        child: Container(
+            height: UIConstants.fitToHeight(180, context),
+            width: UIConstants.fitToWidth(220, context),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                colors: [const Color(0xff0CC1A1), const Color(0xff0D6EC7)],
+              ),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Ink(
+              decoration: BoxDecoration(
+                color: Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.circular(15.0),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 4),
+                    blurRadius: 4,
+                    color: Color.fromRGBO(0, 0, 0, 0.25),
                   ),
-                  borderRadius: BorderRadius.circular(15.0),
+                  BoxShadow(
+                    offset: Offset(4, 4),
+                    blurRadius: 4,
+                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                  ),
+                ],
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  colors: [
+                    const Color(0xff0CC1A1),
+                    const Color(0xff0D6EC7)
+                  ],
                 ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFFFFF),
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 4),
-                        blurRadius: 4,
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                      ),
-                      BoxShadow(
-                        offset: Offset(4, 4),
-                        blurRadius: 4,
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                      ),
-                    ],
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      colors: [
-                        const Color(0xff0CC1A1),
-                        const Color(0xff0D6EC7)
-                      ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Be a Member',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .headline6
+                          .copyWith(color: Colors.white),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'Be a Member',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline6
-                              .copyWith(color: Colors.white),
-                        ),
-                        Text(
-                          '₹ 100',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline4
-                              .copyWith(
-                                  color: Colors.white,
-                                  letterSpacing: 0.46,
-                                  fontWeight: FontWeight.bold),
-                        ),
-                        Text('Play all Quiz',
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .subtitle1
-                                .copyWith(color: Colors.white)),
-                        Text('12 months ',
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .caption
-                                .copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700)),
-                      ],
+                    Text(
+                      '₹ 100',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .headline4
+                          .copyWith(
+                              color: Colors.white,
+                              letterSpacing: 0.46,
+                              fontWeight: FontWeight.bold),
                     ),
-                  ),
-                )),
-            Positioned(
-                top: UIConstants.fitToHeight(160, context),
-                child: Container(
-                    height: UIConstants.fitToHeight(40, context),
-                    width: UIConstants.fitToWidth(110, context),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 2,
-                            color: Color.fromRGBO(0, 0, 0, 0.15),
-                          ),
-                          BoxShadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 2,
-                            color: Color.fromRGBO(0, 0, 0, 0.15),
-                          ),
-                        ]),
-                    child: MaterialButton(
-                      onPressed: () async {
-                        //await createSubscription(context);
-                      },
-                      color: Colors.white,
-                      child: Text(
-                        'Subscribe!',
+                    Text('Play all Quiz',
                         style: Theme.of(context)
                             .primaryTextTheme
-                            .button
-                            .copyWith(color: Colors.black),
-                      ),
-                    )))
-          ],
-        ),
+                            .subtitle1
+                            .copyWith(color: Colors.white)),
+                    Text('12 months ',
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .caption
+                            .copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700)),
+                  ],
+                ),
+              ),
+            )),
       ),
     );
   }
