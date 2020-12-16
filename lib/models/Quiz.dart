@@ -20,6 +20,8 @@ class Quiz {
         this.slot,
         this.reward,
         this.date,
+        this.seconds,
+        this.minutes,
         this.createdAt,
         this.updatedAt,
         this.v,
@@ -31,6 +33,8 @@ class Quiz {
     String id;
     String name;
     String slot;
+    String minutes;
+    String seconds;
     String reward;
     String date;
     DateTime createdAt;
@@ -44,7 +48,9 @@ class Quiz {
         id: json["_id"] == null ? null : json["_id"],
         name: json["name"] == null ? null : json["name"],
         slot: json["slot"] == null ? null : json["slot"],
-        reward: json["reward"] == null ? null : json["reward"],
+        seconds: json["seconds"] == null ? "0": json["seconds"],
+        minutes: json["minutes"] == null ? "0" : json["minutes"],
+        reward: json["reward"] == null ? "0" : json["reward"],
         date: json["date"] == null ? null : json["date"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
@@ -58,7 +64,9 @@ class Quiz {
         "_id": id == null ? null : id,
         "name": name == null ? null : name,
         "slot": slot == null ? null : slot,
-        "reward": reward == null ? null : reward,
+        "seconds": seconds == null ? "0" : seconds,
+        "minutes": minutes == null ? "0" : minutes,
+        "reward": reward == null ? "0" : reward,
         "date": date == null ? null : date,
         "createdAt": createdAt == null ? null : createdAt.toIso8601String(),
         "updatedAt": updatedAt == null ? null : updatedAt.toIso8601String(),

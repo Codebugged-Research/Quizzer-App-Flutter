@@ -20,11 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String name = '';
   String email = '';
   List<Quiz> quizes = [];
-  List<Quiz> quiz1 = [];
-  List<Quiz> quiz2 = [];
-  List<Quiz> quiz3 = [];
-  List<Quiz> quiz4 = [];
-  List<Quiz> quiz5 = [];
+  Quiz quiz1;
+  Quiz quiz2;
+  Quiz quiz3;
+  Quiz quiz4;
+  Quiz quiz5;
   List cardList = [Item1(), Item2(), Item3(), Item4()];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -46,45 +46,31 @@ class _HomeScreenState extends State<HomeScreen> {
       name = auth['name'];
       email = auth['email'];
     });
-    quizes = await QuizService.getAllQuiz();
+    quizes = await QuizService.getTodaysQuiz();
     setState(() {
-      quiz1 = quizes.where((element) {
-        if (element.slot == '1')
-          return true;
-        else
-          return false;
-      }).toList();
-      quiz2 = quizes.where((element) {
-        if (element.slot == '2')
-          return true;
-        else
-          return false;
-      }).toList();
-      quiz3 = quizes.where((element) {
-        if (element.slot == '3')
-          return true;
-        else
-          return false;
-      }).toList();
-      quiz4 = quizes.where((element) {
-        if (element.slot == '4')
-          return true;
-        else
-          return false;
-      }).toList();
-      quiz5 = quizes.where((element) {
-        if (element.slot == '5')
-          return true;
-        else
-          return false;
-      }).toList();
+      quizes.forEach((element) {
+        if (element.slot == '1') {
+          quiz1 = element;
+        } else if (element.slot == '2') {
+          quiz2 = element;
+        } else if (element.slot == '3') {
+          quiz3 = element;
+        } else if (element.slot == '4') {
+          quiz4 = element;
+        } else if (element.slot == '5') {
+          quiz5 = element;
+        }
+      });
     });
-    print(quizes);
+    print(quizes.length);
   }
+
+  final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffkey,
       extendBody: true,
       backgroundColor: Colors.white,
       body: Container(
@@ -145,12 +131,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                    return QuizTestScreen(quiz: quiz1);
-                                  }));
-                                },
+                                onTap: quiz1 == null
+                                    ? () {
+                                        scaffkey.currentState.showSnackBar(
+                                            SnackBar(
+                                              duration: Duration(milliseconds: 150),
+                                                content: Text(
+                                                    "Quiz not Started !")));
+                                      }
+                                    : () {
+                                      print(quiz1.toJson());
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                          return QuizTestScreen(quiz: quiz1);
+                                        }));
+                                      },
                               ),
                               SizedBox(width: 12),
                               GestureDetector(
@@ -216,12 +212,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                 ),
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                    return QuizTestScreen(quiz: quiz2);
-                                  }));
-                                },
+                                onTap: quiz2 == null
+                                    ? () {
+                                        scaffkey.currentState.showSnackBar(
+                                            SnackBar( duration: Duration(milliseconds: 150),
+                                                content: Text(
+                                                    "Quiz not Started !")));
+                                      }
+                                    : () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                          return QuizTestScreen(quiz: quiz2);
+                                        }));
+                                      },
                               ),
                             ],
                           ),
@@ -293,12 +297,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                 ),
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                    return QuizTestScreen(quiz: quiz3);
-                                  }));
-                                },
+                                onTap: quiz3 == null
+                                    ? () {
+                                        scaffkey.currentState.showSnackBar(
+                                            SnackBar( duration: Duration(milliseconds: 150),
+                                                content: Text(
+                                                    "Quiz not Started !")));
+                                      }
+                                    : () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                          return QuizTestScreen(quiz: quiz3);
+                                        }));
+                                      },
                               ),
                               SizedBox(width: 12),
                               GestureDetector(
@@ -366,12 +378,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                 ),
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                    return QuizTestScreen(quiz: quiz4);
-                                  }));
-                                },
+                                onTap: quiz4 == null
+                                    ? () {
+                                        scaffkey.currentState.showSnackBar(
+                                            SnackBar( duration: Duration(milliseconds: 150),
+                                                content: Text(
+                                                    "Quiz not Started !")));
+                                      }
+                                    : () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                          return QuizTestScreen(quiz: quiz4);
+                                        }));
+                                      },
                               ),
                             ],
                           ),
@@ -420,12 +440,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) {
-                              return QuizTestScreen(quiz: quiz5);
-                            }));
-                          },
+                          onTap: quiz5 == null
+                                    ? () {
+                                        scaffkey.currentState.showSnackBar(
+                                            SnackBar( duration: Duration(milliseconds: 150),
+                                                content: Text(
+                                                    "Quiz not Started !")));
+                                      }
+                                    : () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder:
+                                                (BuildContext context) {
+                                          return QuizTestScreen(quiz: quiz5);
+                                        }));
+                                      },
                         ),
                       ),
                     ],

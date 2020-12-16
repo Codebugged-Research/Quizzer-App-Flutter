@@ -1,5 +1,7 @@
 import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -9,23 +11,42 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   int count = 4;
+  List<Quiz> quizes = [];
+
+  @override
+  void initState() { 
+    super.initState();
+    getdata();
+  }
+  bool loading=false;
+
+  getdata() async {
+    setState(() {
+      loading = true;
+    });
+    quizes = await QuizService.getTodaysQuiz();
+    setState(() {
+      loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading?Center(child: CircularProgressIndicator()):quizes.length>0?Scaffold(
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: count,
+      body:  ListView.builder(
+        itemCount: quizes.length,
         itemBuilder: (context, index) {
           return quizTile(
-              "Regular Quiz - ${index + 1}", 0, 0, 15 * (index + 1), index);
+              "${quizes[index].name}", 0, 0, 15 * (index + 1), index);
         },
       ),
-    );
+    ):Center(child: Text("No New Quizes"));
   }
 
   Widget quizTile(String title, int hr, int min, int sec, int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:12.0, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -63,7 +84,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return Countdown(
       duration: Duration(seconds: sec, hours: hr, minutes: min),
       onFinish: () {
-//remove quiz
+        quizes.removeAt(index);
       },
       builder: (BuildContext ctx, Duration remaining) {
         return Text(

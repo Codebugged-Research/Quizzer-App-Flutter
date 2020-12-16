@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/models/Quiz.dart';
 
 class QuizTestScreen extends StatefulWidget {
-  final List<Quiz> quiz;
+  final Quiz quiz;
   QuizTestScreen({this.quiz});
   @override
   _QuizTestScreenState createState() => _QuizTestScreenState();
@@ -15,7 +15,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   bool option2 = false;
   bool option3 = false;
   bool option4 = false;
-  List<Quiz> quiz;
+  Quiz quiz;
   PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -34,7 +34,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   Widget questionCard() {
     return PageView.builder(
       controller: _pageController,
-      itemCount: quiz.length,
+      itemCount: quiz.questions.length,
       itemBuilder: (context, index) {
         return Container(
           color: Colors.lightBlue.shade100.withOpacity(0.2),
@@ -92,7 +92,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             ),
                           ),
                           Text(
-                            "${quiz[index].name}",
+                            "${quiz.name}",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -122,7 +122,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1),
                       Text(
-                        "${quiz[index].questions[index].description}",
+                        "${quiz.questions[index].description}",
                         style: Theme.of(context).textTheme.headline6.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           color: option1 ? Colors.greenAccent : Colors.white,
                           child: Text(
-                            "${quiz[index].questions[index].options[0]}",
+                            "${quiz.questions[index].options[0]}",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -180,7 +180,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           color: option2 ? Colors.greenAccent : Colors.white,
                           child: Text(
-                            "${quiz[index].questions[index].options[1]}",
+                            "${quiz.questions[index].options[1]}",
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
@@ -211,7 +211,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 borderRadius: BorderRadius.circular(12)),
                             color: option3 ? Colors.greenAccent : Colors.white,
                             child: Text(
-                              "${quiz[index].questions[index].options[2]}",
+                              "${quiz.questions[index].options[2]}",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
@@ -236,7 +236,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 borderRadius: BorderRadius.circular(12)),
                             color: option4 ? Colors.greenAccent : Colors.white,
                             child: Text(
-                              "${quiz[index].questions[index].options[3]}",
+                              "${quiz.questions[index].options[3]}",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline6
@@ -319,7 +319,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               ),
               SizedBox(height: 12),
               Text(
-                "10 Points",
+                "Reward: Rs ${quiz.reward}",
                 style: Theme.of(context)
                     .textTheme
                     .headline5
@@ -327,7 +327,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               ),
               SizedBox(height: 22),
               Text(
-                "Regular Quiz - 1",
+                "${quiz.name}",
                 style: Theme.of(context)
                     .textTheme
                     .headline4
@@ -342,7 +342,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     color: Colors.white,
                   ),
                   Text(
-                    "11AM - 12PM",
+                    "${quiz.slot}",
                     style: Theme.of(context).textTheme.headline6.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -356,19 +356,19 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 trailing: Text(
-                  "10",
+                  "${quiz.questions.length}",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               ListTile(
                 title: Text(
-                  "Time per Question",
+                  "Time Limit",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 trailing: Text(
-                  "10 Sec",
+                  "${quiz.minutes} min ${quiz.seconds} Sec",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
