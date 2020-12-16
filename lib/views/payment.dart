@@ -14,16 +14,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     razorpay = new Razorpay();
-
+    try {
       razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
       razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
       razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+    } catch (e) {
+      print(e);
+    }
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
   }
 
   void openCheckOut() {
     var options = {
       "key": "rzp_test_sOzJvizxWHgZgS",
-      "amount": double.parse(amount.text.trim())*100,
+      "amount": double.parse(amount.text.trim()) * 100,
       "name": "Quizzer App",
       "description": "Pay to be a member",
       "prefill": {"contact": "9874948947", "email": "sayannath235@gmail.com"},
