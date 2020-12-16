@@ -35,14 +35,6 @@ class _MemberScreenState extends State<MemberScreen> {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: Colors.black,
-                          // image: DecorationImage(
-                          //   image:
-                          //       AssetImage('assets/images/plan/background.jpg'),
-                          //   fit: BoxFit.cover,
-                          //   colorFilter: ColorFilter.mode(
-                          //       Colors.black.withOpacity(0.55),
-                          //       BlendMode.darken),
-                          // ),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -63,15 +55,6 @@ class _MemberScreenState extends State<MemberScreen> {
                                 ),
                                 SizedBox(
                                     height: UIConstants.fitToHeight(32, context)),
-                                // Align(
-                                //     alignment: Alignment.center,
-                                //     child: Text('Plan',
-                                //         style: GoogleFonts.sourceSansPro(
-                                //             textStyle: TextStyle(
-                                //                 color: Colors.white,
-                                //                 fontSize: 24,
-                                //                 letterSpacing: 0.36,
-                                //                 fontWeight: FontWeight.w700)))),
                               ],
                             ),
                           ),
