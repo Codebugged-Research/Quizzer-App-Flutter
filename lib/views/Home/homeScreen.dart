@@ -9,6 +9,7 @@ import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
 import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
 import 'package:quiz_app/views/Home/Carousel/itemTwo.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
+import 'package:quiz_app/views/payment.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -135,12 +136,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? () {
                                         scaffkey.currentState.showSnackBar(
                                             SnackBar(
-                                              duration: Duration(milliseconds: 150),
+                                                duration:
+                                                    Duration(milliseconds: 150),
                                                 content: Text(
                                                     "Quiz not Started !")));
                                       }
                                     : () {
-                                      print(quiz1.toJson());
+                                        print(quiz1.toJson());
                                         Navigator.of(context).push(
                                             MaterialPageRoute(builder:
                                                 (BuildContext context) {
@@ -215,7 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: quiz2 == null
                                     ? () {
                                         scaffkey.currentState.showSnackBar(
-                                            SnackBar( duration: Duration(milliseconds: 150),
+                                            SnackBar(
+                                                duration:
+                                                    Duration(milliseconds: 150),
                                                 content: Text(
                                                     "Quiz not Started !")));
                                       }
@@ -300,7 +304,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: quiz3 == null
                                     ? () {
                                         scaffkey.currentState.showSnackBar(
-                                            SnackBar( duration: Duration(milliseconds: 150),
+                                            SnackBar(
+                                                duration:
+                                                    Duration(milliseconds: 150),
                                                 content: Text(
                                                     "Quiz not Started !")));
                                       }
@@ -381,7 +387,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: quiz4 == null
                                     ? () {
                                         scaffkey.currentState.showSnackBar(
-                                            SnackBar( duration: Duration(milliseconds: 150),
+                                            SnackBar(
+                                                duration:
+                                                    Duration(milliseconds: 150),
                                                 content: Text(
                                                     "Quiz not Started !")));
                                       }
@@ -441,19 +449,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           onTap: quiz5 == null
-                                    ? () {
-                                        scaffkey.currentState.showSnackBar(
-                                            SnackBar( duration: Duration(milliseconds: 150),
-                                                content: Text(
-                                                    "Quiz not Started !")));
-                                      }
-                                    : () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
-                                          return QuizTestScreen(quiz: quiz5);
-                                        }));
-                                      },
+                              ? () {
+                                  scaffkey.currentState.showSnackBar(SnackBar(
+                                      duration: Duration(milliseconds: 150),
+                                      content: Text("Quiz not Started !")));
+                                }
+                              : () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                    return QuizTestScreen(quiz: quiz5);
+                                  }));
+                                },
                         ),
                       ),
                     ],
