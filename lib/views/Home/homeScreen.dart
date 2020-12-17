@@ -53,11 +53,18 @@ class _HomeScreenState extends State<HomeScreen> {
     var auth = await AuthService.getSavedAuth();
     user = await UserService.getUser();
     DateTime now = DateTime.now();
-    if (user.subscription.validTill.difference(now).inDays > 0) {
+    try {
+      if (user.subscription.validTill.difference(now).inDays > 0) {
+        setState(() {
+          subscribed = true;
+        });
+      }
+    } catch (e) {
       setState(() {
-        subscribed = true;
+        subscribed = false;
       });
     }
+
     setState(() {
       name = auth['name'];
       email = auth['email'];
@@ -77,12 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
             now.day,
             int.parse(element.endTime.split(":").first),
             int.parse(element.endTime.split(":").last));
-            print(tempStartDateTime);
-            print(now);
-            print(tempEndtDateTime);
         if (element.slot == '1') {
-          print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz1 = element;
@@ -90,26 +93,23 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz1 = null;
           }
         } else if (element.slot == '2') {
-          print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
-           if (now.isAfter(tempStartDateTime) &&
+
+          if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz2 = element;
           } else {
             quiz2 = null;
           }
         } else if (element.slot == '3') {
-          print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
-           if (now.isAfter(tempStartDateTime) &&
+
+          if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz3 = element;
           } else {
             quiz3 = null;
           }
         } else if (element.slot == '4') {
-          print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz4 = element;
@@ -117,8 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz4 = null;
           }
         } else if (element.slot == '5') {
-          print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz5 = element;
@@ -128,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
     });
-    print(quizes.length);
     setState(() {
       loading = false;
     });

@@ -35,9 +35,13 @@ class _QuizScreenState extends State<QuizScreen> {
     });
     quizes = await QuizService.getTodaysQuiz();
     user = await UserService.getUser();
-    if (user.subscription.validTill.difference(now).inDays > 0) {
+    try{if (user.subscription.validTill.difference(now).inDays > 0) {
       setState(() {
         unlocked = true;
+      });
+    }} catch(e) {
+      setState(() {
+        unlocked = false;
       });
     }
     setState(() {
@@ -73,26 +77,7 @@ class _QuizScreenState extends State<QuizScreen> {
     int hr = 0;
     int min = 0;
     int sec = 0;
-
-    print("index:$index");
-    // var tempdata = DateTime(now.year,now.month,now.day, now.hour-5,(now.minute-30 >0 ? ).remainder(60));
-    // print(tempdata);
-      //   String twoDigits(int n) => n.toString().padLeft(2, "0");
-      // String twoDigitMinutes = twoDigits(quiz.endTime.difference(tempdata).inMinutes.remainder(60));
-      // String twoDigitSeconds = twoDigits(quiz.endTime.difference(tempdata).inSeconds.remainder(60));
-      // print("${twoDigits(quiz.endTime.difference(tempdata).inHours)}:$twoDigitMinutes:$twoDigitSeconds");
     String twoDigits(int n) => n.toString().padLeft(2, "0");
-      // String twoDigitMinutes = twoDigits(quiz.endTime.difference(now).inMinutes.remainder(60)-30);
-      // String twoDigitSeconds = twoDigits(quiz.endTime.difference(now).inSeconds.remainder(60));
-      // print("${twoDigits(quiz.endTime.difference(now).inHours-5)}:$twoDigitMinutes:$twoDigitSeconds");
-
-
-    print(quiz.endTime.toString());
-    
-    // print(tempdata.toString());
-    // if (quiz.startTime.isAfter(tempdata) && tempdata.isBefore(quiz.endTime)) {
-    //   print("after");
-    // }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Card(
