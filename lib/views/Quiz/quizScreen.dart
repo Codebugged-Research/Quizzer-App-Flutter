@@ -34,11 +34,13 @@ class _QuizScreenState extends State<QuizScreen> {
     });
     quizes = await QuizService.getTodaysQuiz();
     user = await UserService.getUser();
-    try{if (user.subscription.validTill.difference(now).inDays > 0) {
-      setState(() {
-        unlocked = true;
-      });
-    }} catch(e) {
+    try {
+      if (user.subscription.validTill.difference(now).inDays > 0) {
+        setState(() {
+          unlocked = true;
+        });
+      }
+    } catch (e) {
       setState(() {
         unlocked = false;
       });
@@ -85,9 +87,6 @@ class _QuizScreenState extends State<QuizScreen> {
         now.day,
         int.parse(quiz.endTime.split(":").first),
         int.parse(quiz.endTime.split(":").last));
-    print(tempStartDateTime);
-    print(now);
-    print(tempEndtDateTime);
     int remain = 0;
     if (now.isAfter(tempStartDateTime) && now.isBefore(tempEndtDateTime)) {
       remain = tempEndtDateTime.difference(now).inSeconds;
@@ -152,7 +151,9 @@ class _QuizScreenState extends State<QuizScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => QuizTestScreen(quiz:quizes[index],)));
+                                  builder: (context) => QuizTestScreen(
+                                        quiz: quizes[index],
+                                      )));
                         },
                       ),
               )

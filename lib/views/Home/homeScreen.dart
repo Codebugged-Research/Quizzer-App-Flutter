@@ -88,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz1 = element;
-            print("applied1");
           } else {
             quiz1 = null;
           }
@@ -96,7 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz2 = element;
-            print("applied2");
           } else {
             quiz2 = null;
           }
@@ -104,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz3 = element;
-            print("applied3");
           } else {
             quiz3 = null;
           }
@@ -112,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz4 = element;
-            print("applied4");
           } else {
             quiz4 = null;
           }
@@ -120,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz5 = element;
-            print("applied5");
           } else {
             quiz5 = null;
           }
@@ -215,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           "Quiz not Started or Quiz Finished!")));
                                             }
                                           : () {
-                                              print(quiz1.toJson());
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(builder:
                                                       (BuildContext context) {

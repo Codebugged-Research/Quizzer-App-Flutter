@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:quiz_app/components/planCard.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/User.dart';
-import 'package:quiz_app/services/subscriptionService.dart';
+import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:quiz_app/views/Member/payemntscrenn.dart';
 
 class MemberScreen extends StatefulWidget {
   @override
@@ -16,71 +16,18 @@ class MemberScreen extends StatefulWidget {
 
 class _MemberScreenState extends State<MemberScreen> {
   bool isLoading = false;
-  Razorpay razorpay;
   User user;
+  String orderId;
+  var options;
 
   @override
   void initState() {
     super.initState();
     loadDataForScreen();
-    razorpay = Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
   }
 
   loadDataForScreen() async {
     user = await UserService.getUser();
-  }
-
-  void openCheckOut() {
-    var options = {
-      "key": "rzp_test_sOzJvizxWHgZgS",
-      "amount": double.parse(100.0.toString().trim()) * 100,
-      "name": "Quiz Adda",
-      "description": "Pay to be a Member",
-      "prefill": {"contact": "9874948947", "email": "${user.email}"},
-      "external": {
-        "wallet": ["paytm"],
-      }
-    };
-
-    try {
-      razorpay.open(options);
-      createSubscriptionForUser();
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void handlePaymentSuccess() {
-    print("Payment Done");
-  }
-
-  createSubscriptionForUser() async {
-    var payload = json.encode({
-      "user": user.id,
-      "validFrom":
-          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
-      "validTill":
-          "${(DateTime.now().month + 1) > 12 ? (DateTime.now().year + 1) : DateTime.now().year}-${(DateTime.now().month + 1) > 12 ? (DateTime.now().month + 1 - 12) : (DateTime.now().month + 1)}-${DateTime.now().day}",
-    });
-    String id = await SubscriptionService.createSubscription(payload);
-    print("Helloooooooooooo   "+id);
-  }
-
-  void handlePaymentError() {
-    print("Error");
-  }
-
-  void handleExternalWallet() {
-    print("Yo");
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    razorpay.clear();
   }
 
   final scaffkey = new GlobalKey<ScaffoldState>();
@@ -180,8 +127,11 @@ class _MemberScreenState extends State<MemberScreen> {
               ]),
           child: MaterialButton(
             onPressed: () async {
-              //await createSubscription(context);
-              openCheckOut();
+              orderId = await RazorPayService.createOrderId(
+                  jsonEncode({"amount": 10000}));
+              print(orderId);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => RazorPayScreen()));
             },
             color: Colors.white,
             child: Text(
