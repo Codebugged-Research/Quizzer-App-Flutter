@@ -1,5 +1,7 @@
+import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class QuizTestScreen extends StatefulWidget {
   final Quiz quiz;
@@ -291,6 +293,14 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget infoCard() {
+    var now = DateTime.now();
+    var tempEndtDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        int.parse(quiz.endTime.split(":").first),
+        int.parse(quiz.endTime.split(":").last));
+    int remain = tempEndtDateTime.difference(now).inSeconds;
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -331,7 +341,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                 "${quiz.name}",
                 style: Theme.of(context)
                     .textTheme
-                    .headline4
+                    .headline5
                     .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 12),
@@ -342,10 +352,20 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     Icons.lock_clock,
                     color: Colors.white,
                   ),
-                  Text(
-                    "${quiz.slot}",
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                  Countdown(
+                    duration: Duration(seconds: remain),
+                    onFinish: () {
+                      setState(() {
+                        //pop
+                      });
+                    },
+                    builder: (BuildContext ctx, Duration remaining) {
+                      return Text(
+                        '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)}',
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -428,7 +448,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               ),
               SizedBox(height: 12),
               Text(
-                "10 Points",
+                "Reward: score",
                 style: Theme.of(context)
                     .textTheme
                     .headline5
@@ -436,7 +456,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               ),
               SizedBox(height: 22),
               Text(
-                "Regular Quiz - 1",
+                quiz.name,
                 style: Theme.of(context)
                     .textTheme
                     .headline4
@@ -451,7 +471,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     color: Colors.white,
                   ),
                   Text(
-                    "11AM - 12PM",
+                    "Time Taken: ",
                     style: Theme.of(context).textTheme.headline6.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -460,7 +480,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               SizedBox(height: 30),
               ListTile(
                 title: Text(
-                  "No of Questions",
+                  "Attemped",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -472,12 +492,12 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               ),
               ListTile(
                 title: Text(
-                  "Time per Question",
+                  "Attemped",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 trailing: Text(
-                  "10 Sec",
+                  "10",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -490,14 +510,12 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       borderRadius: BorderRadius.circular(12)),
                   color: Colors.greenAccent,
                   child: Text(
-                    "Start",
+                    "Back to Home",
                     style: Theme.of(context).textTheme.headline6.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    setState(() {
-                      readyTap = true;
-                    });
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LandingScreen(selectedIndex: 0,)));
                   }),
             ],
           ),
