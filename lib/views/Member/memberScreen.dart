@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiz_app/components/planCard.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
+import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/subscriptionService.dart';
+import 'package:quiz_app/services/userService.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class MemberScreen extends StatefulWidget {
@@ -12,23 +17,29 @@ class MemberScreen extends StatefulWidget {
 class _MemberScreenState extends State<MemberScreen> {
   bool isLoading = false;
   Razorpay razorpay;
+  User user;
 
   @override
   void initState() {
     super.initState();
+    loadDataForScreen();
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
   }
 
+  loadDataForScreen() async {
+    user = await UserService.getUser();
+  }
+
   void openCheckOut() {
     var options = {
       "key": "rzp_test_sOzJvizxWHgZgS",
       "amount": double.parse(100.0.toString().trim()) * 100,
-      "name": "Quizzer App",
-      "description": "Pay to be a member",
-      "prefill": {"contact": "9874948947", "email": "sayannath235@gmail.com"},
+      "name": "Quiz Adda",
+      "description": "Pay to be a Member",
+      "prefill": {"contact": "9874948947", "email": "${user.email}"},
       "external": {
         "wallet": ["paytm"],
       }
@@ -36,6 +47,7 @@ class _MemberScreenState extends State<MemberScreen> {
 
     try {
       razorpay.open(options);
+      createSubscriptionForUser();
     } catch (e) {
       print(e);
     }
@@ -43,6 +55,18 @@ class _MemberScreenState extends State<MemberScreen> {
 
   void handlePaymentSuccess() {
     print("Payment Done");
+  }
+
+  createSubscriptionForUser() async {
+    var payload = json.encode({
+      "user": user.id,
+      "validFrom":
+          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
+      "validTill":
+          "${(DateTime.now().month + 1) > 12 ? (DateTime.now().year + 1) : DateTime.now().year}-${(DateTime.now().month + 1) > 12 ? (DateTime.now().month + 1 - 12) : (DateTime.now().month + 1)}-${DateTime.now().day}",
+    });
+    String id = await SubscriptionService.createSubscription(payload);
+    print("Helloooooooooooo   "+id);
   }
 
   void handlePaymentError() {
@@ -134,10 +158,10 @@ class _MemberScreenState extends State<MemberScreen> {
 
   Widget buyWidget(context) {
     return Positioned(
-          top: UIConstants.fitToHeight(170, context),
-          left: UIConstants.fitToWidth(55, context),
-          right: UIConstants.fitToWidth(55, context),
-          child: Container(
+      top: UIConstants.fitToHeight(170, context),
+      left: UIConstants.fitToWidth(55, context),
+      right: UIConstants.fitToWidth(55, context),
+      child: Container(
           height: UIConstants.fitToHeight(40, context),
           width: UIConstants.fitToWidth(110, context),
           decoration: BoxDecoration(

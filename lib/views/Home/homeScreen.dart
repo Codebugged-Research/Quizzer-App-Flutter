@@ -52,11 +52,18 @@ class _HomeScreenState extends State<HomeScreen> {
     var auth = await AuthService.getSavedAuth();
     user = await UserService.getUser();
     DateTime now = DateTime.now();
-    if (user.subscription.validTill.difference(now).inDays > 0) {
+    try {
+      if (user.subscription.validTill.difference(now).inDays > 0) {
+        setState(() {
+          subscribed = true;
+        });
+      }
+    } catch (e) {
       setState(() {
-        subscribed = true;
+        subscribed = false;
       });
     }
+
     setState(() {
       name = auth['name'];
       email = auth['email'];
@@ -76,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
             now.day,
             int.parse(element.endTime.split(":").first),
             int.parse(element.endTime.split(":").last));
-        if (element.slot == '1') {        
+
+
+        if (element.slot == '1') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz1 = element;
@@ -85,7 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz1 = null;
           }
         } else if (element.slot == '2') {
+
            if (now.isAfter(tempStartDateTime) &&
+
               now.isBefore(tempEndtDateTime)) {
             quiz2 = element;
             print("applied2");
@@ -93,7 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz2 = null;
           }
         } else if (element.slot == '3') {
-           if (now.isAfter(tempStartDateTime) &&
+
+
+          if (now.isAfter(tempStartDateTime) &&
+
               now.isBefore(tempEndtDateTime)) {
             quiz3 = element;
             print("applied3");
@@ -101,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz3 = null;
           }
         } else if (element.slot == '4') {
+
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz4 = element;
@@ -119,7 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
     });
-    print(quizes.length);
     setState(() {
       loading = false;
     });

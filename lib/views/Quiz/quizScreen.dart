@@ -34,9 +34,13 @@ class _QuizScreenState extends State<QuizScreen> {
     });
     quizes = await QuizService.getTodaysQuiz();
     user = await UserService.getUser();
-    if (user.subscription.validTill.difference(now).inDays > 0) {
+    try{if (user.subscription.validTill.difference(now).inDays > 0) {
       setState(() {
         unlocked = true;
+      });
+    }} catch(e) {
+      setState(() {
+        unlocked = false;
       });
     }
     setState(() {
@@ -91,7 +95,6 @@ class _QuizScreenState extends State<QuizScreen> {
     } else {
       change[index] = true;
     }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Card(
