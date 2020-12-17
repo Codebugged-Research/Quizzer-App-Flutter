@@ -1,6 +1,5 @@
 import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/quizService.dart';
@@ -70,29 +69,29 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Widget quizTile(Quiz quiz, int index) {
-    int hr = 0;
-    int min = 0;
-    int sec = 0;
+    var tempStartDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        int.parse(quiz.startTime.split(":").first),
+        int.parse(quiz.startTime.split(":").last));
+    var tempEndtDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        int.parse(quiz.endTime.split(":").first),
+        int.parse(quiz.endTime.split(":").last));
+    print(tempStartDateTime);
+    print(now);
+    print(tempEndtDateTime);
+    int remain = 0;
+    if (now.isAfter(tempStartDateTime) && now.isBefore(tempEndtDateTime)) {
+      remain = tempEndtDateTime.difference(now).inSeconds;
+      change[index] = false;
+    } else {
+      change[index] = true;
+    }
 
-    print("index:$index");
-    // var tempdata = DateTime(now.year,now.month,now.day, now.hour-5,(now.minute-30 >0 ? ).remainder(60));
-    // print(tempdata);
-      //   String twoDigits(int n) => n.toString().padLeft(2, "0");
-      // String twoDigitMinutes = twoDigits(quiz.endTime.difference(tempdata).inMinutes.remainder(60));
-      // String twoDigitSeconds = twoDigits(quiz.endTime.difference(tempdata).inSeconds.remainder(60));
-      // print("${twoDigits(quiz.endTime.difference(tempdata).inHours)}:$twoDigitMinutes:$twoDigitSeconds");
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-      // String twoDigitMinutes = twoDigits(quiz.endTime.difference(now).inMinutes.remainder(60)-30);
-      // String twoDigitSeconds = twoDigits(quiz.endTime.difference(now).inSeconds.remainder(60));
-      // print("${twoDigits(quiz.endTime.difference(now).inHours-5)}:$twoDigitMinutes:$twoDigitSeconds");
-
-
-    print(quiz.endTime.toString());
-    
-    // print(tempdata.toString());
-    // if (quiz.startTime.isAfter(tempdata) && tempdata.isBefore(quiz.endTime)) {
-    //   print("after");
-    // }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Card(
@@ -110,7 +109,18 @@ class _QuizScreenState extends State<QuizScreen> {
                 subtitle: Row(
                   children: [
                     Icon(Icons.lock_clock),
-                    countDownTimmer(hr, min, sec, index)
+                    Countdown(
+                      duration: Duration(seconds: remain),
+                      onFinish: () {
+                        setState(() {
+                          change[index] = true;
+                        });
+                      },
+                      builder: (BuildContext ctx, Duration remaining) {
+                        return Text(
+                            '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)}');
+                      },
+                    ),
                   ],
                 ),
                 trailing: change[index]
@@ -124,7 +134,9 @@ class _QuizScreenState extends State<QuizScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RewardScreen()));
+                                  builder: (context) => RewardScreen(
+                                        quiz: quizes[index],
+                                      )));
                         },
                       )
                     : FlatButton(
@@ -159,21 +171,6 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
       ),
-    );
-  }
-
-  Widget countDownTimmer(hr, min, sec, index) {
-    return Countdown(
-      duration: Duration(seconds: sec, hours: hr, minutes: min),
-      onFinish: () {
-        setState(() {
-          change[index] = true;
-        });
-      },
-      builder: (BuildContext ctx, Duration remaining) {
-        return Text(
-            '${remaining.inHours}:${remaining.inMinutes}:${remaining.inSeconds}');
-      },
     );
   }
 }

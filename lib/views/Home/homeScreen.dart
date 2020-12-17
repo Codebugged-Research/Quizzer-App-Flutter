@@ -11,7 +11,6 @@ import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
 import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
 import 'package:quiz_app/views/Home/Carousel/itemTwo.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
-import 'package:quiz_app/views/payment.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -80,9 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
             print(tempStartDateTime);
             print(now);
             print(tempEndtDateTime);
-        if (element.slot == '1') {
+        if (element.slot == '1') {          
           print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+          print(now.isBefore(tempEndtDateTime));
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz1 = element;
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         } else if (element.slot == '2') {
           print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+          print(now.isBefore(tempEndtDateTime));
            if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz2 = element;
@@ -100,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         } else if (element.slot == '3') {
           print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+          print(now.isBefore(tempEndtDateTime));
            if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz3 = element;
@@ -109,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         } else if (element.slot == '4') {
           print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+          print(now.isBefore(tempEndtDateTime));
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz4 = element;
@@ -118,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         } else if (element.slot == '5') {
           print(now.isAfter(tempStartDateTime));
-          print(now.isAfter(tempEndtDateTime));
+          print(now.isBefore(tempEndtDateTime));
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz5 = element;
