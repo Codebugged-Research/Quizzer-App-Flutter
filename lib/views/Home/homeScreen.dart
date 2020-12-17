@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     quizes = await QuizService.getTodaysQuiz();
     setState(() {
       quizes.forEach((element) {
-      var tempStartDateTime = DateTime(
+        var tempStartDateTime = DateTime(
             now.year,
             now.month,
             now.day,
@@ -84,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
             int.parse(element.endTime.split(":").first),
             int.parse(element.endTime.split(":").last));
 
-
         if (element.slot == '1') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
@@ -94,9 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz1 = null;
           }
         } else if (element.slot == '2') {
-
-           if (now.isAfter(tempStartDateTime) &&
-
+          if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz2 = element;
             print("applied2");
@@ -104,10 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz2 = null;
           }
         } else if (element.slot == '3') {
-
-
           if (now.isAfter(tempStartDateTime) &&
-
               now.isBefore(tempEndtDateTime)) {
             quiz3 = element;
             print("applied3");
@@ -115,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz3 = null;
           }
         } else if (element.slot == '4') {
-
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz4 = element;

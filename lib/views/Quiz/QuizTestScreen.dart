@@ -1,6 +1,10 @@
 import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/models/Response.dart';
+import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
 class QuizTestScreen extends StatefulWidget {
@@ -18,13 +22,31 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   bool option3 = false;
   bool option4 = false;
   Quiz quiz;
+  User user;
   PageController _pageController = PageController(initialPage: 0);
 
+  Response response;
+  DateTime start;
+  DateTime stop;
+  int correct = 0;
+  int wrong = 0;
+  int reward = 0;
+  int score = 0;
   @override
   void initState() {
     super.initState();
     quiz = widget.quiz;
-    print(quiz.toString());
+  }
+
+  loadData() async {
+    user = await UserService.getUser();
+    response = Response(
+        correct: correct.toString(),
+        wrong: wrong.toString(),
+        user: user,
+        quiz: quiz,
+        reward: reward.toString(),
+        score: score.toString());
   }
 
   @override
@@ -33,6 +55,8 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
       body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
     );
   }
+  
+        bool capture = false;
 
   Widget questionCard() {
     return PageView.builder(
@@ -112,7 +136,11 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             ),
                             child: Center(
                                 child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  endTap = true;
+                                });
+                              },
                               icon: Icon(
                                 Icons.clear,
                                 color: Colors.white,
@@ -123,19 +151,31 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                         ],
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1),
-                      Text(
-                        "${quiz.questions[index].description}",
-                        style: Theme.of(context).textTheme.headline6.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                  offset: Offset(1, 1),
-                                  color: Colors.black.withOpacity(0.4),
-                                  blurRadius: 0.1),
-                            ]),
-                        textAlign: TextAlign.center,
+                          height: MediaQuery.of(context).size.height * 0.05),
+                      Container(
+                        height: UIConstants.fitToHeight(180, context),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(
+                                "${quiz.questions[index].description}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        shadows: [
+                                      Shadow(
+                                          offset: Offset(1, 1),
+                                          color: Colors.black.withOpacity(0.4),
+                                          blurRadius: 0.1),
+                                    ]),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -172,6 +212,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               option2 = false;
                               option3 = false;
                               option4 = false;
+                              capture = true;
                             });
                           },
                         ),
@@ -198,6 +239,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               option2 = true;
                               option3 = false;
                               option4 = false;
+                              capture = true;
                             });
                           },
                         ),
@@ -229,6 +271,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 option2 = false;
                                 option3 = true;
                                 option4 = false;
+                                capture = true;
                               });
                             }),
                         SizedBox(width: 20),
@@ -254,6 +297,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 option2 = false;
                                 option3 = false;
                                 option4 = true;
+                                capture = true;
                               });
                             }),
                       ],
@@ -271,16 +315,49 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         onPressed: () {
-                          setState(() {
-                            //save data and close
-                            option1 = false;
-                            option2 = false;
-                            option3 = false;
-                            option4 = false;
-                          });
-                          _pageController.animateToPage(index + 1,
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.ease);
+                          if (option1 && capture) {
+                            if (quiz.questions[index].answer == "1") {
+                              correct++;
+                            } else {
+                              wrong++;
+                            }
+                          }
+                          if (option2 && capture) {
+                            if (quiz.questions[index].answer == "2") {
+                              correct++;
+                            } else {
+                              wrong++;
+                            }
+                          }
+                          if (option3 && capture) {
+                            if (quiz.questions[index].answer == "3") {
+                              correct++;
+                            } else {
+                              wrong++;
+                            }
+                          }
+                          if (option4 && capture) {
+                            if (quiz.questions[index].answer == "4") {
+                              correct++;
+                            } else {
+                              wrong++;
+                            }
+                          }
+                          option1 = false;
+                          option2 = false;
+                          option3 = false;
+                          option4 = false;
+                          capture = false;
+                          if (quiz.questions.length == index + 1) {
+                            setState(() {
+                              endTap = true;
+                              stop = DateTime.now();
+                            });
+                          } else {
+                            _pageController.animateToPage(index + 1,
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.ease);
+                          }
                         }),
                   ],
                 ),
@@ -409,6 +486,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                   onPressed: () {
                     setState(() {
                       readyTap = true;
+                      start = DateTime.now();
                     });
                   }),
             ],
@@ -419,6 +497,12 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget endCard() {
+    setState(() {
+      score = int.parse(quiz.incorrectScore) * wrong +
+          int.parse(quiz.correctScore) * correct;
+    });
+
+    var tempTime = stop.difference(start);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -448,7 +532,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               ),
               SizedBox(height: 12),
               Text(
-                "Reward: score",
+                "Score: $score",
                 style: Theme.of(context)
                     .textTheme
                     .headline5
@@ -471,7 +555,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     color: Colors.white,
                   ),
                   Text(
-                    "Time Taken: ",
+                    "${tempTime.inHours}:${tempTime.inMinutes.remainder(60)}:${tempTime.inSeconds.remainder(60)}",
                     style: Theme.of(context).textTheme.headline6.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -485,19 +569,19 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 trailing: Text(
-                  "10",
+                  (correct + wrong).toString(),
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               ListTile(
                 title: Text(
-                  "Attemped",
+                  "Skipped",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 trailing: Text(
-                  "10",
+                  "${quiz.questions.length - correct - wrong}",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -515,7 +599,10 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LandingScreen(selectedIndex: 0,)));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => LandingScreen(
+                              selectedIndex: 0,
+                            )));
                   }),
             ],
           ),
