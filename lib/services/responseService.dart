@@ -21,10 +21,11 @@ class ResponseService extends AuthService {
     }
   }
   
-  static Future<List<Response>> getResponseByUser(var payload) async {
+  // ignore: missing_return
+  static Future<List<Response>> getResponseByUser(var id) async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
-        AuthService.BASE_URI + 'user/subscription',
-        method: 'POST', body: payload);
+        AuthService.BASE_URI + 'response/getByUser/$id',
+        method: 'GET');
     if (response.statusCode == 200) {
       var responseMap = json.decode(response.body);
       List<Response> responses = responseMap
@@ -38,10 +39,10 @@ class ResponseService extends AuthService {
   }
 
   // ignore: missing_return
-  static Future<List<Response>> getResponseByQuiz(var payload) async {
+  static Future<List<Response>> getResponseByQuiz(var id) async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
-        AuthService.BASE_URI + 'user/subscription',
-        method: 'POST', body: payload);
+        AuthService.BASE_URI + 'response/getByQuiz/$id',
+        method: 'GET');
     if (response.statusCode == 200) {
       var responseMap = json.decode(response.body);
       List<Response> responses = responseMap

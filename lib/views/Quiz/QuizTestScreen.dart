@@ -22,6 +22,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   void initState() {
     super.initState();
     quiz = widget.quiz;
+    print(quiz.toString());
   }
 
   @override

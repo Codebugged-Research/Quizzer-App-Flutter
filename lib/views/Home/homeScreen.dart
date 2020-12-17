@@ -11,7 +11,6 @@ import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
 import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
 import 'package:quiz_app/views/Home/Carousel/itemTwo.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
-import 'package:quiz_app/views/payment.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -84,8 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
             now.day,
             int.parse(element.endTime.split(":").first),
             int.parse(element.endTime.split(":").last));
-        if (element.slot == '1') {
 
+        if (element.slot == '1') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             quiz1 = element;
@@ -93,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz1 = null;
           }
         } else if (element.slot == '2') {
+
 
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
@@ -102,13 +102,17 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         } else if (element.slot == '3') {
 
+
           if (now.isAfter(tempStartDateTime) &&
+
               now.isBefore(tempEndtDateTime)) {
             quiz3 = element;
           } else {
             quiz3 = null;
           }
         } else if (element.slot == '4') {
+
+
 
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {

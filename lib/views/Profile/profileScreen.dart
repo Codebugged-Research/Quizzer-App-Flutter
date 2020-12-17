@@ -31,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     
     try {
       photoUrl = auth['photoUrl'];
+      print(photoUrl);
       user = await UserService.getUser();
     } catch (e) {
       print(e);

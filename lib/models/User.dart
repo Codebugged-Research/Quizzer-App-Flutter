@@ -6,60 +6,76 @@ import 'dart:convert';
 
 import 'package:quiz_app/models/Subscription.dart';
 
-List<User> userFromJson(String str) => List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+List<User> userFromJson(String str) =>
+    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
-String userToJson(List<User> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String userToJson(List<User> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class User {
-    User({
-        this.interests,
-        this.role,
-        this.id,
-        this.name,
-        this.email,
-        this.phone,
-        this.reward,
-        this.subscription,
-        this.password,
-        this.createdAt,
-        this.updatedAt,
-        this.v,
-    });
+  User({
+    this.interests,
+    this.role,
+    this.id,
+    this.name,
+    this.email,
+    this.phone,
+    this.reward,
+    this.subscription,
+    this.password,
+    this.photoUrl,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+  });
 
-    List<dynamic> interests;
-    String role;
-    String id;
-    String name;
-    String phone;
-    String reward;
-    Subscription subscription;
-    String email;
-    String password;
-    DateTime createdAt;
-    DateTime updatedAt;
-    int v;
+  List<dynamic> interests;
+  String role;
+  String id;
+  String name;
+  String phone;
+  String reward;
+  Subscription subscription;
+  String email;
+  String password;
+  String photoUrl;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int v;
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
-        interests: json["interests"] == null ? null : List<dynamic>.from(json["interests"].map((x) => x)),
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        interests: json["interests"] == null
+            ? null
+            : List<dynamic>.from(json["interests"].map((x) => x)),
         role: json["role"] == null ? null : json["role"],
         id: json["_id"] == null ? null : json["_id"],
         name: json["name"] == null ? null : json["name"],
+        photoUrl: json["photoUrl"] == null ? null : json["photoUrl"],
         phone: json["phone"] == null ? null : json["phone"],
         reward: json["reward"] == null ? null : json["reward"],
         email: json["email"] == null ? null : json["email"],
         password: json["password"] == null ? null : json["password"],
-        subscription: json["subscription"] == null ? null : Subscription.fromJson(json["subscription"]),
-        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        subscription: json["subscription"] == null
+            ? null
+            : Subscription.fromJson(json["subscription"]),
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
         v: json["__v"] == null ? null : json["__v"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
-        "interests": interests == null ? null : List<dynamic>.from(interests.map((x) => x)),
+  Map<String, dynamic> toJson() => {
+        "interests": interests == null
+            ? null
+            : List<dynamic>.from(interests.map((x) => x)),
         "role": role == null ? null : role,
         "_id": id == null ? null : id,
         "phone": phone == null ? null : phone,
         "name": name == null ? null : name,
+        "photoUrl": photoUrl == null ? null : photoUrl,
         "reward": reward == null ? null : reward,
         "email": email == null ? null : email,
         "subscription": subscription == null ? null : subscription.toJson(),
@@ -67,5 +83,5 @@ class User {
         "createdAt": createdAt == null ? null : createdAt.toIso8601String(),
         "updatedAt": updatedAt == null ? null : updatedAt.toIso8601String(),
         "__v": v == null ? null : v,
-    };
+      };
 }
