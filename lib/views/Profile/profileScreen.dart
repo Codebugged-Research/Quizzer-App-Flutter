@@ -35,8 +35,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } catch (e) {
       print(e);
     }
-
-    print(photoUrl);
     setState(() {
       isLoading = false;
     });
@@ -139,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ]),
-                    profileInfo('Phone Number', '+91 9874948947', Icons.call),
+                    profileInfo('Phone Number', '${user.phone}', Icons.call),
                     profileInfo('Email', '${user.email}', Icons.mail),
                   ],
                 ),

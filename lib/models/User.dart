@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:quiz_app/models/Subscription.dart';
+
 List<User> userFromJson(String str) => List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
 String userToJson(List<User> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -15,6 +17,9 @@ class User {
         this.id,
         this.name,
         this.email,
+        this.phone,
+        this.reward,
+        this.subscription,
         this.password,
         this.createdAt,
         this.updatedAt,
@@ -25,6 +30,9 @@ class User {
     String role;
     String id;
     String name;
+    String phone;
+    String reward;
+    Subscription subscription;
     String email;
     String password;
     DateTime createdAt;
@@ -36,8 +44,11 @@ class User {
         role: json["role"] == null ? null : json["role"],
         id: json["_id"] == null ? null : json["_id"],
         name: json["name"] == null ? null : json["name"],
+        phone: json["phone"] == null ? null : json["phone"],
+        reward: json["reward"] == null ? null : json["reward"],
         email: json["email"] == null ? null : json["email"],
         password: json["password"] == null ? null : json["password"],
+        subscription: json["subscription"] == null ? null : Subscription.fromJson(json["subscription"]),
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"] == null ? null : json["__v"],
@@ -47,8 +58,11 @@ class User {
         "interests": interests == null ? null : List<dynamic>.from(interests.map((x) => x)),
         "role": role == null ? null : role,
         "_id": id == null ? null : id,
+        "phone": phone == null ? null : phone,
         "name": name == null ? null : name,
+        "reward": reward == null ? null : reward,
         "email": email == null ? null : email,
+        "subscription": subscription == null ? null : subscription.toJson(),
         "password": password == null ? null : password,
         "createdAt": createdAt == null ? null : createdAt.toIso8601String(),
         "updatedAt": updatedAt == null ? null : updatedAt.toIso8601String(),

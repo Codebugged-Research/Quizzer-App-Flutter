@@ -3,22 +3,33 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:quiz_app/models/Subscription.dart';
 import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/services/userService.dart';
 
 class SubscriptionService extends AuthService {
+  // ignore: missing_return
   static Future<String> createSubscription(var payload) async {
-    var auth = await AuthService.getSavedAuth();
-    String id = auth['id'];
      http.Response response = await AuthService.makeAuthenticatedRequest(
-        AuthService.BASE_URI + 'subscription/create/$id',
+        AuthService.BASE_URI + 'subscription/create/',
         method: 'POST',
         body: payload);
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      var responseMap = json.decode(response.body);
+      Subscription subscription = Subscription.fromJson(responseMap);
+      if(subscription.id!=null){
+       bool updated =  await UserService.updateUser(jsonEncode({"subscription": subscription.id}));
+       if(updated){
+         print("updated");
+       }else{
+         print("debug update user in subscription");
+       }
+      }
     } else {
+      print("debug create subscription");
       return '';
     }
   }
 
+  // ignore: missing_return
   static Future<List<Subscription>> getSubscriptionByUser(var payload) async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
         AuthService.BASE_URI + 'user/subscription',

@@ -2,8 +2,11 @@ import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/quizService.dart';
+import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
+import 'package:quiz_app/views/Quiz/rewardScreen.dart';
 
 class QuizScreen extends StatefulWidget {
   @override
@@ -20,13 +23,23 @@ class _QuizScreenState extends State<QuizScreen> {
     getdata();
   }
 
-  bool loading = false;
+  User user;
 
+  bool loading = false;
+  DateTime now = DateTime.now();
+  List<bool> change = [false, false, false, false, false];
+  bool unlocked = false;
   getdata() async {
     setState(() {
       loading = true;
     });
     quizes = await QuizService.getTodaysQuiz();
+    user = await UserService.getUser();
+    if (user.subscription.validTill.difference(now).inDays > 0) {
+      setState(() {
+        unlocked = true;
+      });
+    }
     setState(() {
       loading = false;
     });
@@ -42,53 +55,109 @@ class _QuizScreenState extends State<QuizScreen> {
                 body: ListView.builder(
                   itemCount: quizes.length,
                   itemBuilder: (context, index) {
-                    return quizTile("${quizes[index].name}", 0, 0,
-                        15 * (index + 1), index);
+                    return quizTile(quizes[index], index);
                   },
                 ),
               )
             : Center(
-                  child: Text(
-                  "No New Quizes",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .headline6
-                      .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-                ));
+                child: Text(
+                "No New Quizes",
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline6
+                    .copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+              ));
   }
 
-  Widget quizTile(String title, int hr, int min, int sec, int index) {
+  Widget quizTile(Quiz quiz, int index) {
+    int hr = 0;
+    int min = 0;
+    int sec = 0;
+
+    print("index:$index");
+    // var tempdata = DateTime(now.year,now.month,now.day, now.hour-5,(now.minute-30 >0 ? ).remainder(60));
+    // print(tempdata);
+      //   String twoDigits(int n) => n.toString().padLeft(2, "0");
+      // String twoDigitMinutes = twoDigits(quiz.endTime.difference(tempdata).inMinutes.remainder(60));
+      // String twoDigitSeconds = twoDigits(quiz.endTime.difference(tempdata).inSeconds.remainder(60));
+      // print("${twoDigits(quiz.endTime.difference(tempdata).inHours)}:$twoDigitMinutes:$twoDigitSeconds");
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+      // String twoDigitMinutes = twoDigits(quiz.endTime.difference(now).inMinutes.remainder(60)-30);
+      // String twoDigitSeconds = twoDigits(quiz.endTime.difference(now).inSeconds.remainder(60));
+      // print("${twoDigits(quiz.endTime.difference(now).inHours-5)}:$twoDigitMinutes:$twoDigitSeconds");
+
+
+    print(quiz.endTime.toString());
+    
+    // print(tempdata.toString());
+    // if (quiz.startTime.isAfter(tempdata) && tempdata.isBefore(quiz.endTime)) {
+    //   print("after");
+    // }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: ListTile(
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.dynamic_form),
-            ],
-          ),
-          title: Text(title),
-          subtitle: Row(
-            children: [
-              Icon(Icons.lock_clock),
-              countDownTimmer(hr, min, sec, index)
-            ],
-          ),
-          trailing: FlatButton(
-            child: Text(
-              'Start',
-              style: TextStyle(color: Colors.white),
-            ),
-            color: Colors.orangeAccent,
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => QuizTestScreen()));
-            },
-          ),
-        ),
+        child: (index == 0 ? true : unlocked)
+            ? ListTile(
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.dynamic_form),
+                  ],
+                ),
+                title: Text(quiz.name),
+                subtitle: Row(
+                  children: [
+                    Icon(Icons.lock_clock),
+                    countDownTimmer(hr, min, sec, index)
+                  ],
+                ),
+                trailing: change[index]
+                    ? FlatButton(
+                        child: Text(
+                          'LeaderBoard',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.lightBlue.shade300,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RewardScreen()));
+                        },
+                      )
+                    : FlatButton(
+                        child: Text(
+                          'Start',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.orangeAccent,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => QuizTestScreen()));
+                        },
+                      ),
+              )
+            : ListTile(
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.dynamic_form),
+                  ],
+                ),
+                title: Text(quiz.name),
+                trailing: FlatButton(
+                  child: Text(
+                    'Locked',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: Colors.orangeAccent,
+                  onPressed: () {},
+                ),
+              ),
       ),
     );
   }
@@ -97,7 +166,9 @@ class _QuizScreenState extends State<QuizScreen> {
     return Countdown(
       duration: Duration(seconds: sec, hours: hr, minutes: min),
       onFinish: () {
-        quizes.removeAt(index);
+        setState(() {
+          change[index] = true;
+        });
       },
       builder: (BuildContext ctx, Duration remaining) {
         return Text(

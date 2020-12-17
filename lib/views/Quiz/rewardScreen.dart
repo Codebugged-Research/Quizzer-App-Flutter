@@ -12,6 +12,24 @@ class _RewardScreenState extends State<RewardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+        elevation: 0,
+        brightness: Brightness.dark,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            // _scaffoldKey.currentState.openDrawer();
+          },
+        ),
+        centerTitle: true,
+        title: Text(
+         "LeaderBoard",
+          style: Theme.of(context).primaryTextTheme.headline6.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.46),
+        ),
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,

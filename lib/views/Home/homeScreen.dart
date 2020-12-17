@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/services/quizService.dart';
+import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Home/Carousel/itemFour.dart';
 import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
 import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
@@ -20,12 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   String name = '';
   String email = '';
+  User user;
   List<Quiz> quizes = [];
   Quiz quiz1;
   Quiz quiz2;
   Quiz quiz3;
   Quiz quiz4;
   Quiz quiz5;
+  bool subscribed = false;
   List cardList = [Item1(), Item2(), Item3(), Item4()];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -35,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return result;
   }
 
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -42,7 +47,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   loadDataForUser() async {
+    setState(() {
+      loading = true;
+    });
     var auth = await AuthService.getSavedAuth();
+    user = await UserService.getUser();
+    DateTime now = DateTime.now();
+    if (user.subscription.validTill.difference(now).inDays > 0) {
+      setState(() {
+        subscribed = true;
+      });
+    }
     setState(() {
       name = auth['name'];
       email = auth['email'];
@@ -50,425 +65,608 @@ class _HomeScreenState extends State<HomeScreen> {
     quizes = await QuizService.getTodaysQuiz();
     setState(() {
       quizes.forEach((element) {
+        var tempStartDateTime = DateTime(
+            now.year,
+            now.month,
+            now.day,
+            int.parse(element.startTime.split(":").first),
+            int.parse(element.startTime.split(":").last));
+        var tempEndtDateTime = DateTime(
+            now.year,
+            now.month,
+            now.day,
+            int.parse(element.endTime.split(":").first),
+            int.parse(element.endTime.split(":").last));
+            print(tempStartDateTime);
+            print(now);
+            print(tempEndtDateTime);
         if (element.slot == '1') {
-          quiz1 = element;
+          print(now.isAfter(tempStartDateTime));
+          print(now.isAfter(tempEndtDateTime));
+          if (now.isAfter(tempStartDateTime) &&
+              now.isBefore(tempEndtDateTime)) {
+            quiz1 = element;
+          } else {
+            quiz1 = null;
+          }
         } else if (element.slot == '2') {
-          quiz2 = element;
+          print(now.isAfter(tempStartDateTime));
+          print(now.isAfter(tempEndtDateTime));
+           if (now.isAfter(tempStartDateTime) &&
+              now.isBefore(tempEndtDateTime)) {
+            quiz2 = element;
+          } else {
+            quiz2 = null;
+          }
         } else if (element.slot == '3') {
-          quiz3 = element;
+          print(now.isAfter(tempStartDateTime));
+          print(now.isAfter(tempEndtDateTime));
+           if (now.isAfter(tempStartDateTime) &&
+              now.isBefore(tempEndtDateTime)) {
+            quiz3 = element;
+          } else {
+            quiz3 = null;
+          }
         } else if (element.slot == '4') {
-          quiz4 = element;
+          print(now.isAfter(tempStartDateTime));
+          print(now.isAfter(tempEndtDateTime));
+          if (now.isAfter(tempStartDateTime) &&
+              now.isBefore(tempEndtDateTime)) {
+            quiz4 = element;
+          } else {
+            quiz4 = null;
+          }
         } else if (element.slot == '5') {
-          quiz5 = element;
+          print(now.isAfter(tempStartDateTime));
+          print(now.isAfter(tempEndtDateTime));
+          if (now.isAfter(tempStartDateTime) &&
+              now.isBefore(tempEndtDateTime)) {
+            quiz5 = element;
+          } else {
+            quiz5 = null;
+          }
         }
       });
     });
     print(quizes.length);
+    setState(() {
+      loading = false;
+    });
   }
 
   final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffkey,
-      extendBody: true,
-      backgroundColor: Colors.white,
-      body: Container(
-        height: UIConstants.fitToHeight(640, context),
-        width: UIConstants.fitToWidth(360, context),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: carouselSlider(context),
-              ),
-              carouselDots(context),
-              SizedBox(height: 30),
-              Container(
-                  height: 360,
-                  width: 360,
-                  child: Stack(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.lightBlue.shade300,
-                                    ),
-                                    height: 150,
-                                    width: 150,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/unlocked.png",
-                                          height: 56,
-                                        ),
-                                        SizedBox(height: 4),
-                                        Text(
-                                          "Quiz 1",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                onTap: quiz1 == null
-                                    ? () {
-                                        scaffkey.currentState.showSnackBar(
-                                            SnackBar(
-                                                duration:
-                                                    Duration(milliseconds: 150),
-                                                content: Text(
-                                                    "Quiz not Started !")));
-                                      }
-                                    : () {
-                                        print(quiz1.toJson());
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
-                                          return QuizTestScreen(quiz: quiz1);
-                                        }));
-                                      },
-                              ),
-                              SizedBox(width: 12),
-                              GestureDetector(
-                                child: Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.lightBlue.shade300,
+    return loading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Scaffold(
+            key: scaffkey,
+            extendBody: true,
+            backgroundColor: Colors.white,
+            body: Container(
+              height: UIConstants.fitToHeight(640, context),
+              width: UIConstants.fitToWidth(360, context),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: carouselSlider(context),
+                    ),
+                    carouselDots(context),
+                    SizedBox(height: 30),
+                    Container(
+                        height: 360,
+                        width: 360,
+                        child: Stack(
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      child: Card(
+                                        elevation: 3,
+                                        shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
-                                        height: 150,
-                                        width: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/locked.png",
-                                              height: 56,
-                                            ),
-                                            SizedBox(height: 4),
-                                            Text("Quiz 2",
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: Colors.lightBlue.shade300,
+                                          ),
+                                          height: 150,
+                                          width: 150,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/images/unlocked.png",
+                                                height: 56,
+                                              ),
+                                              SizedBox(height: 4),
+                                              Text(
+                                                "Quiz 1",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white24,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.lock,
-                                              size: 40,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: quiz2 == null
-                                    ? () {
-                                        scaffkey.currentState.showSnackBar(
-                                            SnackBar(
-                                                duration:
-                                                    Duration(milliseconds: 150),
-                                                content: Text(
-                                                    "Quiz not Started !")));
-                                      }
-                                    : () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
-                                          return QuizTestScreen(quiz: quiz2);
-                                        }));
-                                      },
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.lightBlue.shade300,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/locked.png",
-                                              height: 56,
-                                            ),
-                                            SizedBox(height: 4),
-                                            Text("Quiz 3",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white24,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.lock,
-                                              size: 40,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: quiz3 == null
-                                    ? () {
-                                        scaffkey.currentState.showSnackBar(
-                                            SnackBar(
-                                                duration:
-                                                    Duration(milliseconds: 150),
-                                                content: Text(
-                                                    "Quiz not Started !")));
-                                      }
-                                    : () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
-                                          return QuizTestScreen(quiz: quiz3);
-                                        }));
-                                      },
-                              ),
-                              SizedBox(width: 12),
-                              GestureDetector(
-                                child: Card(
-                                  elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.lightBlue.shade300,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/locked.png",
-                                              height: 56,
-                                            ),
-                                            SizedBox(height: 4),
-                                            Text(
-                                              "Quiz 4",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
+                                                        FontWeight.bold),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white24,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        height: 150,
-                                        width: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.lock,
-                                              size: 40,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onTap: quiz4 == null
-                                    ? () {
-                                        scaffkey.currentState.showSnackBar(
-                                            SnackBar(
-                                                duration:
-                                                    Duration(milliseconds: 150),
-                                                content: Text(
-                                                    "Quiz not Started !")));
-                                      }
-                                    : () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(builder:
-                                                (BuildContext context) {
-                                          return QuizTestScreen(quiz: quiz4);
-                                        }));
-                                      },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Center(
-                        child: InkWell(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 12, color: Colors.white12),
-                              borderRadius: BorderRadius.circular(90),
-                              color: Colors.white,
-                            ),
-                            height: 150,
-                            width: 150,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(90),
-                                color: Colors.orangeAccent,
-                              ),
-                              child: Card(
-                                color: Colors.lightBlue.shade300,
-                                margin: EdgeInsets.all(0),
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(90),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/trophy.png",
-                                      height: 58,
+                                      onTap: quiz1 == null
+                                          ? () {
+                                              scaffkey.currentState
+                                                  .showSnackBar(SnackBar(
+                                                      duration: Duration(
+                                                          milliseconds: 150),
+                                                      content: Text(
+                                                          "Quiz not Started or Quiz Finished!")));
+                                            }
+                                          : () {
+                                              print(quiz1.toJson());
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(builder:
+                                                      (BuildContext context) {
+                                                return QuizTestScreen(
+                                                    quiz: quiz1);
+                                              }));
+                                            },
                                     ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      "Super Quiz",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    SizedBox(width: 12),
+                                    GestureDetector(
+                                        child: Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      Colors.lightBlue.shade300,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                height: 150,
+                                                width: 150,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      "assets/images/locked.png",
+                                                      height: 56,
+                                                    ),
+                                                    SizedBox(height: 4),
+                                                    Text("Quiz 2",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                  ],
+                                                ),
+                                              ),
+                                              !subscribed
+                                                  ? Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white24,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      height: 150,
+                                                      width: 150,
+                                                    )
+                                                  : Container(),
+                                              !subscribed
+                                                  ? Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      height: 150,
+                                                      width: 150,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.lock,
+                                                            size: 40,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: subscribed
+                                            ? (quiz2 == null
+                                                ? () {
+                                                    scaffkey.currentState
+                                                        .showSnackBar(SnackBar(
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    150),
+                                                            content: Text(
+                                                                "Quiz not Started or Quiz Finished!")));
+                                                  }
+                                                : () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                      return QuizTestScreen(
+                                                          quiz: quiz2);
+                                                    }));
+                                                  })
+                                            : () {
+                                                scaffkey.currentState
+                                                    .showSnackBar(SnackBar(
+                                                        duration: Duration(
+                                                            milliseconds: 180),
+                                                        content: Text(
+                                                            "You are not a plus member !")));
+                                              }),
                                   ],
                                 ),
-                              ),
+                                SizedBox(height: 12),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                        child: Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      Colors.lightBlue.shade300,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                height: 150,
+                                                width: 150,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      "assets/images/locked.png",
+                                                      height: 56,
+                                                    ),
+                                                    SizedBox(height: 4),
+                                                    Text("Quiz 3",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        )),
+                                                  ],
+                                                ),
+                                              ),
+                                              !subscribed
+                                                  ? Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white24,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      height: 150,
+                                                      width: 150,
+                                                    )
+                                                  : Container(),
+                                              !subscribed
+                                                  ? Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      height: 150,
+                                                      width: 150,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.lock,
+                                                            size: 40,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: subscribed
+                                            ? (quiz3 == null
+                                                ? () {
+                                                    scaffkey.currentState
+                                                        .showSnackBar(SnackBar(
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    150),
+                                                            content: Text(
+                                                                "Quiz not Started or Quiz Finished!")));
+                                                  }
+                                                : () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                      return QuizTestScreen(
+                                                          quiz: quiz3);
+                                                    }));
+                                                  })
+                                            : () {
+                                                scaffkey.currentState
+                                                    .showSnackBar(SnackBar(
+                                                        duration: Duration(
+                                                            milliseconds: 180),
+                                                        content: Text(
+                                                            "You are not a plus member !")));
+                                              }),
+                                    SizedBox(width: 12),
+                                    GestureDetector(
+                                        child: Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      Colors.lightBlue.shade300,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                height: 150,
+                                                width: 150,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image.asset(
+                                                      "assets/images/locked.png",
+                                                      height: 56,
+                                                    ),
+                                                    SizedBox(height: 4),
+                                                    Text(
+                                                      "Quiz 4",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              !subscribed
+                                                  ? Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white24,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      height: 150,
+                                                      width: 150,
+                                                    )
+                                                  : Container(),
+                                              !subscribed
+                                                  ? Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      height: 150,
+                                                      width: 150,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.lock,
+                                                            size: 40,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: subscribed
+                                            ? (quiz4 == null
+                                                ? () {
+                                                    scaffkey.currentState
+                                                        .showSnackBar(SnackBar(
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    150),
+                                                            content: Text(
+                                                                "Quiz not Started or Quiz Finished!")));
+                                                  }
+                                                : () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                      return QuizTestScreen(
+                                                          quiz: quiz4);
+                                                    }));
+                                                  })
+                                            : () {
+                                                scaffkey.currentState
+                                                    .showSnackBar(SnackBar(
+                                                        duration: Duration(
+                                                            milliseconds: 180),
+                                                        content: Text(
+                                                            "You are not a plus member !")));
+                                              }),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                          onTap: quiz5 == null
-                              ? () {
-                                  scaffkey.currentState.showSnackBar(SnackBar(
-                                      duration: Duration(milliseconds: 150),
-                                      content: Text("Quiz not Started !")));
-                                }
-                              : () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                    return QuizTestScreen(quiz: quiz5);
-                                  }));
-                                },
-                        ),
-                      ),
-                    ],
-                  )),
-            ],
-          ),
-        ),
-      ),
-    );
+                            Center(
+                              child: InkWell(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 12, color: Colors.white12),
+                                      borderRadius: BorderRadius.circular(90),
+                                      color: Colors.white,
+                                    ),
+                                    height: 150,
+                                    width: 150,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(90),
+                                        color: Colors.orangeAccent,
+                                      ),
+                                      child: Card(
+                                        color: Colors.lightBlue.shade300,
+                                        margin: EdgeInsets.all(0),
+                                        elevation: 3,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(90),
+                                        ),
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/trophy.png",
+                                                  height: 58,
+                                                ),
+                                                SizedBox(height: 4),
+                                                Text(
+                                                  "Super Quiz",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            !subscribed
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white24,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                    ),
+                                                    height: 150,
+                                                    width: 150,
+                                                  )
+                                                : Container(),
+                                            !subscribed
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                    ),
+                                                    height: 150,
+                                                    width: 150,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.lock,
+                                                          size: 40,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Container(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: subscribed
+                                      ? (quiz5 == null
+                                          ? () {
+                                              scaffkey.currentState
+                                                  .showSnackBar(SnackBar(
+                                                      duration: Duration(
+                                                          milliseconds: 150),
+                                                      content: Text(
+                                                          "Quiz not Started or Quiz Finished!")));
+                                            }
+                                          : () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(builder:
+                                                      (BuildContext context) {
+                                                return QuizTestScreen(
+                                                    quiz: quiz5);
+                                              }));
+                                            })
+                                      : () {
+                                          scaffkey.currentState.showSnackBar(
+                                              SnackBar(
+                                                  duration: Duration(
+                                                      milliseconds: 180),
+                                                  content: Text(
+                                                      "You are not a plus member !")));
+                                        }),
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 
   Widget carouselSlider(context) {

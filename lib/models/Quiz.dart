@@ -20,8 +20,10 @@ class Quiz {
         this.slot,
         this.reward,
         this.date,
-        this.seconds,
+        this.startTime,
+        this.endTime,
         this.minutes,
+        this.seconds,
         this.createdAt,
         this.updatedAt,
         this.v,
@@ -33,6 +35,8 @@ class Quiz {
     String id;
     String name;
     String slot;
+    String startTime;
+    String endTime;
     String minutes;
     String seconds;
     String reward;
@@ -52,6 +56,8 @@ class Quiz {
         minutes: json["minutes"] == null ? "0" : json["minutes"],
         reward: json["reward"] == null ? "0" : json["reward"],
         date: json["date"] == null ? null : json["date"],
+        startTime: json["startTime"] == null ? null : json["startTime"],
+        endTime: json["endTime"] == null ? null : json["endTime"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"] == null ? null : json["__v"],
@@ -68,6 +74,8 @@ class Quiz {
         "minutes": minutes == null ? "0" : minutes,
         "reward": reward == null ? "0" : reward,
         "date": date == null ? null : date,
+        "startTime": startTime == null ? null : startTime,
+        "endTime": endTime == null ? null : endTime,
         "createdAt": createdAt == null ? null : createdAt.toIso8601String(),
         "updatedAt": updatedAt == null ? null : updatedAt.toIso8601String(),
         "__v": v == null ? null : v,

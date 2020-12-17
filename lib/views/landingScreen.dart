@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/components/drawerComponent.dart';
 import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/views/History/quizHistory.dart';
 import 'package:quiz_app/views/Home/homeScreen.dart';
 import 'package:quiz_app/views/Member/memberScreen.dart';
 import 'package:quiz_app/views/Profile/profileScreen.dart';
 import 'package:quiz_app/views/Quiz/quizScreen.dart';
-import 'package:quiz_app/views/Reward/rewardScreen.dart';
 
 class LandingScreen extends StatefulWidget {
   final int selectedIndex;
@@ -47,6 +47,7 @@ class _LandingScreenState extends State<LandingScreen> {
     });
   }
 
+  // ignore: unused_element
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -56,14 +57,14 @@ class _LandingScreenState extends State<LandingScreen> {
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     QuizScreen(),
-    RewardScreen(),
+    QuizHistory(),
     ProfileScreen()
   ];
 
   List names = [
     'Quiz Adda',
     'Quiz Adda',
-    'LeaderBoard',
+    'Previous Quizes',
     'Quiz Adda',
   ];
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -199,12 +200,12 @@ class _LandingScreenState extends State<LandingScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.emoji_events,
+                        Icon(Icons.history,
                             color: _selectedIndex == 2
                                 ? _selectedColor
                                 : Color(0xff80879A)),
                         Text(
-                          'Rank',
+                          'History',
                           style: TextStyle(
                               color: _selectedIndex == 2
                                   ? _selectedColor
