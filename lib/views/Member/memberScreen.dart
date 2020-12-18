@@ -26,8 +26,14 @@ class _MemberScreenState extends State<MemberScreen> {
     loadDataForScreen();
   }
 
+  bool subscribed = false;
   loadDataForScreen() async {
     user = await UserService.getUser();
+    if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
+      setState(() {
+        subscribed = true;
+      });
+    }
   }
 
   final scaffkey = new GlobalKey<ScaffoldState>();
@@ -72,9 +78,6 @@ class _MemberScreenState extends State<MemberScreen> {
                                       .headline4
                                       .copyWith(color: Colors.white),
                                 ),
-                                SizedBox(
-                                    height:
-                                        UIConstants.fitToHeight(32, context)),
                               ],
                             ),
                           ),
@@ -84,11 +87,11 @@ class _MemberScreenState extends State<MemberScreen> {
                         height: MediaQuery.of(context).size.height,
                         color: Colors.transparent,
                         child: Padding(
-                            padding: const EdgeInsets.only(top: 240.0),
+                            padding: const EdgeInsets.only(top: 50.0),
                             child: Stack(
                               children: [
                                 PlanCard(),
-                                buyWidget(context),
+                                subscribed ? Container() : buyWidget(context),
                               ],
                             )),
                       ),
@@ -105,7 +108,7 @@ class _MemberScreenState extends State<MemberScreen> {
 
   Widget buyWidget(context) {
     return Positioned(
-      top: UIConstants.fitToHeight(170, context),
+      top: UIConstants.fitToHeight(160, context),
       left: UIConstants.fitToWidth(55, context),
       right: UIConstants.fitToWidth(55, context),
       child: Container(
