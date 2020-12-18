@@ -29,10 +29,12 @@ class _MemberScreenState extends State<MemberScreen> {
   bool subscribed = false;
   loadDataForScreen() async {
     user = await UserService.getUser();
-    if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
-      setState(() {
-        subscribed = true;
-      });
+    if (user.subscription != null) {
+      if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
+        setState(() {
+          subscribed = true;
+        });
+      }
     }
   }
 
@@ -89,8 +91,13 @@ class _MemberScreenState extends State<MemberScreen> {
                         child: Padding(
                             padding: const EdgeInsets.only(top: 50.0),
                             child: Stack(
+                              alignment: Alignment.center,
                               children: [
-                                PlanCard(),
+                                PlanCard(
+                                    subscribed: subscribed,
+                                    days: user.subscription.validTill
+                                        .difference(DateTime.now())
+                                        .inDays),
                                 subscribed ? Container() : buyWidget(context),
                               ],
                             )),
@@ -108,7 +115,7 @@ class _MemberScreenState extends State<MemberScreen> {
 
   Widget buyWidget(context) {
     return Positioned(
-      top: UIConstants.fitToHeight(160, context),
+      top: UIConstants.fitToHeight(350, context),
       left: UIConstants.fitToWidth(55, context),
       right: UIConstants.fitToWidth(55, context),
       child: Container(

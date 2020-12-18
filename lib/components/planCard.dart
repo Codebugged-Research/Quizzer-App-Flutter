@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 
 class PlanCard extends StatelessWidget {
+  PlanCard({this.subscribed,this.days});
+  bool subscribed ;
+  int days;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,7 +52,7 @@ class PlanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Be a Member',
+                      subscribed ?'You are a Member' :'Be a Member',
                       style: Theme.of(context)
                           .primaryTextTheme
                           .headline6
@@ -65,12 +68,12 @@ class PlanCard extends StatelessWidget {
                               letterSpacing: 0.46,
                               fontWeight: FontWeight.bold),
                     ),
-                    Text('Play all Quiz',
+                    Text('Enjoy all Quiz',
                         style: Theme.of(context)
                             .primaryTextTheme
                             .subtitle1
                             .copyWith(color: Colors.white)),
-                    Text('12 months ',
+                    Text('$days days left',
                         style: Theme.of(context)
                             .primaryTextTheme
                             .caption

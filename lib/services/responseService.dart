@@ -55,4 +55,20 @@ class ResponseService extends AuthService {
     }
   }
 
+  // ignore: missing_return
+  static Future<List<Response>> getResponseByUserDate(var id) async {
+    http.Response response = await AuthService.makeAuthenticatedRequest(
+        AuthService.BASE_URI + 'response/UserDate/$id',
+        method: 'GET');
+    if (response.statusCode == 200) {
+      var responseMap = json.decode(response.body);
+      List<Response> responses = responseMap
+          .map<Response>(
+              (responseMap) => Response.fromJson(responseMap))
+          .toList();
+      return responses;
+    } else {
+      print("Debug");
+    }
+  }
 }

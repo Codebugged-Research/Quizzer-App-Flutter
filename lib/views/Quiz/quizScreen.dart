@@ -1,8 +1,10 @@
 import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/quizService.dart';
+import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 import 'package:quiz_app/views/Quiz/rewardScreen.dart';
@@ -15,6 +17,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   int count = 4;
   List<Quiz> quizes = [];
+  List<Response> responses = [];
 
   @override
   void initState() {
@@ -26,7 +29,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   bool loading = false;
   DateTime now = DateTime.now();
-  List<bool> change = [false, false, false, false, false];
+  List<bool> change = [];
   bool unlocked = false;
   getdata() async {
     setState(() {
@@ -34,6 +37,19 @@ class _QuizScreenState extends State<QuizScreen> {
     });
     quizes = await QuizService.getTodaysQuiz();
     user = await UserService.getUser();
+    responses = await ResponseService.getResponseByUserDate(user.id);
+    change = List.filled(quizes.length, false);
+    if (responses.length > 0) {
+      for (int i = 0; i < responses.length; i++) {
+        for (int j = 0; j < quizes.length; j++) {
+          if (quizes[j].id == responses[i].quiz.id) {
+            setState(() {
+              change[j] = true;
+            });
+          }
+        }
+      }
+    }
     try {
       if (user.subscription.validTill.difference(now).inDays > 0) {
         setState(() {
@@ -45,6 +61,7 @@ class _QuizScreenState extends State<QuizScreen> {
         unlocked = false;
       });
     }
+
     setState(() {
       loading = false;
     });
@@ -153,7 +170,9 @@ class _QuizScreenState extends State<QuizScreen> {
                               MaterialPageRoute(
                                   builder: (context) => QuizTestScreen(
                                         quiz: quizes[index],
-                                      )));
+                                      ))).then((value) {
+                            setState(() {});
+                          });
                         },
                       ),
               )
