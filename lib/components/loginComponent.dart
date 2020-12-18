@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/views/addDataPage.dart';
-import 'package:quiz_app/views/landingScreen.dart';
 
 class LoginButtonComponentAndroid extends StatelessWidget {
   final googleSignIn = GoogleSignIn();
