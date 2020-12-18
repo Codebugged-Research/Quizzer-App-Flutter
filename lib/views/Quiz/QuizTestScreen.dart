@@ -8,34 +8,42 @@ import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
 class QuizTestScreen extends StatefulWidget {
-  final Quiz quiz;
   QuizTestScreen({this.quiz});
+
+  final Quiz quiz;
+
   @override
   _QuizTestScreenState createState() => _QuizTestScreenState();
 }
 
 class _QuizTestScreenState extends State<QuizTestScreen> {
-  bool readyTap = false;
+  bool capture = false;
+  int correct = 0;
   bool endTap = false;
   bool option1 = false;
   bool option2 = false;
   bool option3 = false;
   bool option4 = false;
   Quiz quiz;
-  User user;
-  PageController _pageController = PageController(initialPage: 0);
-
+  bool readyTap = false;
   Response response;
-  DateTime start;
-  DateTime stop;
-  int correct = 0;
-  int wrong = 0;
   int reward = 0;
   int score = 0;
+  DateTime start;
+  DateTime stop;
+  User user;
+  int wrong = 0;
+  int questionLength = 0;
+  List<Widget> dots = [];
+
+  int _currentIndex = 0;
+  PageController _pageController = PageController(initialPage: 0);
+
   @override
   void initState() {
     super.initState();
     quiz = widget.quiz;
+    questionLength = quiz.questions.length;
   }
 
   loadData() async {
@@ -47,16 +55,23 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
         quiz: quiz,
         reward: reward.toString(),
         score: score.toString());
+
+    dots = List.filled(
+        questionLength,
+        Container(
+          width: 10.0,
+          height: 10.0,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            // color: _currentIndex == index ? Colors.grey : Colors.greenAccent,
+          ),
+        ));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
-    );
+  Widget dottedContainer(context) {
+    return Row(children: dots);
   }
-  
-        bool capture = false;
 
   Widget questionCard() {
     return PageView.builder(
@@ -608,6 +623,13 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
     );
   }
 }

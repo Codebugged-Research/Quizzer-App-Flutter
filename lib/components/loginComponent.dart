@@ -5,13 +5,15 @@ import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/views/addDataPage.dart';
 import 'package:quiz_app/views/landingScreen.dart';
+
 class LoginButtonComponentAndroid extends StatelessWidget {
   final googleSignIn = GoogleSignIn();
   final GlobalKey scaffkey;
   LoginButtonComponentAndroid({this.scaffkey});
   @override
   Widget build(BuildContext context) {
-    return loginButton('Sign in with Google', 'assets/images/google.png', context);
+    return loginButton(
+        'Sign in with Google', 'assets/images/google.png', context);
   }
 
   Widget loginButton(String title, String assets, BuildContext context) {
@@ -20,7 +22,6 @@ class LoginButtonComponentAndroid extends StatelessWidget {
       width: UIConstants.fitToWidth(240, context),
       child: RaisedButton(
         color: Colors.white,
-        
         onPressed: () async {
           final GoogleSignInAccount googleUser = await googleSignIn.signIn();
           final GoogleSignInAuthentication googleAuth =
@@ -32,10 +33,11 @@ class LoginButtonComponentAndroid extends StatelessWidget {
                 googleUser.id,
                 googleUser.photoUrl.toString());
             if (authenticated) {
-               Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) {
-        return AddDataScreen();
-      }));
+              print(authenticated);
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: (context) {
+                return AddDataScreen();
+              }));
             } else {
               showDialog(
                   context: context,

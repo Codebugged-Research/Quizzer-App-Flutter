@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
                   button: GoogleFonts.lato(color: Colors.white),
                   caption: GoogleFonts.lato(color: Colors.white)),
           buttonTheme: ButtonThemeData(
-              // buttonColor: Color(0xffF40555),
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(25.0)))),
