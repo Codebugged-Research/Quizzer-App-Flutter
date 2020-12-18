@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
+import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class AddDataScreen extends StatefulWidget {
   @override
@@ -18,13 +21,24 @@ class _AddDataScreenState extends State<AddDataScreen> {
   TextEditingController _upi = TextEditingController();
 
   bool isLoading = false;
+  User user;
 
   @override
   void initState() {
     super.initState();
-    String email = "sayannath@gmail.com";
-    String username = email.split("@")[0].toString();
+    loadDataForScreen();
+  }
+
+  loadDataForScreen() async {
+    setState(() {
+      isLoading = true;
+    });
+    user = await UserService.getUser();
+    String username = user.email.split("@")[0].toString();
     _username.text = username;
+    setState(() {
+      isLoading = false;
+    });
   }
 
   checkFields() {
@@ -44,14 +58,31 @@ class _AddDataScreenState extends State<AddDataScreen> {
       isLoading = true;
     });
     if (checkFields()) {
+      var contactPayload = json.encode({
+        "name": user.name,
+        "email": user.email,
+        "phone": _phone.text,
+      });
+      var contactId = await RazorPayService.createContactId(contactPayload);
+      var fundPayload = json.encode({
+        "contactId": contactId,
+        "UpiId": _upi.text,
+      });
+      var fundId = await RazorPayService.createFundAccount(fundPayload);
       var payload = json.encode({
         "username": _username.text,
         "phone": _phone.text,
-        "upiId": _upi.text
+        "upiId": _upi.text,
+        "contactId": contactId,
+        "fundAccount": fundId
       });
       print(payload);
       bool updated = await UserService.updateUser(payload);
       print(updated);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return LandingScreen(selectedIndex: 0);
+      }));
     } else {
       scaffkey.currentState.showSnackBar(new SnackBar(
         content: new Text("fill all the fields!!!"),
@@ -62,16 +93,8 @@ class _AddDataScreenState extends State<AddDataScreen> {
     });
   }
 
-  Widget _input(
-      TextEditingController _text,
-      int textWidth,
-      String validation,
-      bool,
-      String label,
-      String hint,
-      IconData icon,
-      TextInputType type
-      ) {
+  Widget _input(TextEditingController _text, int textWidth, String validation,
+      bool, String label, String hint, IconData icon, TextInputType type) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: SizedBox(

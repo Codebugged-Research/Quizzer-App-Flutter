@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/views/addDataPage.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 class LoginButtonComponentAndroid extends StatelessWidget {
   final googleSignIn = GoogleSignIn();
@@ -33,7 +34,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
             if (authenticated) {
                Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) {
-        return LandingScreen(selectedIndex: 0);
+        return AddDataScreen();
       }));
             } else {
               showDialog(
