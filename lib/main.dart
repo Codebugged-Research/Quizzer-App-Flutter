@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_app/views/addDataPage.dart';
 import 'package:quiz_app/views/splashScreen.dart';
 
 void main() => runApp(MyApp());
@@ -33,8 +34,8 @@ class MyApp extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(25.0)))),
-      //home: PaymentScreen(),
-       home: SplashScreen(),
+       home: AddDataScreen(),
+       //home: SplashScreen(),
     );
   }
 }

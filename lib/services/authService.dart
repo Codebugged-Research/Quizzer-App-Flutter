@@ -65,7 +65,7 @@ class AuthService extends BaseService {
   static Future<bool> authenticate(String displayName, String email,
       String password, String photoUrl) async {
     var payload = json
-        .encode({'name': displayName, 'email': email, 'password': password});
+        .encode({'name': displayName, 'email': email, 'password': password, 'photoUrl': photoUrl});
     print('$payload');
     http.Response response = await BaseService.makeUnauthenticatedRequest(
         BaseService.BASE_URI + 'app/login',

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:quiz_app/models/File.dart';
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/services/fileService.dart';
 import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Home/Carousel/itemFour.dart';
@@ -23,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String email = '';
   User user;
   List<Quiz> quizes = [];
+  List<Files> files = [];
   Quiz quiz1;
   Quiz quiz2;
   Quiz quiz3;
@@ -51,6 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     var auth = await AuthService.getSavedAuth();
     user = await UserService.getUser();
+    try {
+      files = await FileService.getAllFile();
+    } catch (e) {
+      print(e);
+    }
     DateTime now = DateTime.now();
     try {
       if (user.subscription.validTill.difference(now).inDays > 0) {
