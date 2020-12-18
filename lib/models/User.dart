@@ -61,7 +61,7 @@ class User {
         photoUrl: json["photoUrl"] == null ? null : json["photoUrl"],
         phone: json["phone"] == null ? null : json["phone"],
         username: json["username"] == null ? null : json["username"],
-        reward: json["reward"] == null ? 0 : json["reward"],
+        reward: json["reward"] == null ? "0" : json["reward"],
         email: json["email"] == null ? null : json["email"],
         contactId: json["contactId"] == null ? null : json["contactId"],
         fundAccount: json["fundAccount"] == null ? null : json["fundAccount"],
