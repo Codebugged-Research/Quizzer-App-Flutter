@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isLoading = true;
     });
     var auth = await AuthService.getSavedAuth();
-    
+
     try {
       photoUrl = auth['photoUrl'];
       print(photoUrl);
@@ -138,8 +138,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ]),
+                    profileInfo('Username', '${user.username}', Icons.person),
                     profileInfo('Phone Number', '${user.phone}', Icons.call),
                     profileInfo('Email', '${user.email}', Icons.mail),
+                    profileInfo('UPI ID', '${user.upiId}', Icons.money),
+                    profileInfo('Rewards', '${user.reward}', Icons.emoji_events)
                   ],
                 ),
               ),

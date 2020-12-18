@@ -26,6 +26,7 @@ class User {
     this.photoUrl,
     this.contactId,
     this.fundAccount,
+    this.username,
     this.upiId,
     this.createdAt,
     this.updatedAt,
@@ -44,6 +45,7 @@ class User {
   String photoUrl;
   String contactId;
   String fundAccount;
+  String username;
   String upiId;
   DateTime createdAt;
   DateTime updatedAt;
@@ -58,7 +60,8 @@ class User {
         name: json["name"] == null ? null : json["name"],
         photoUrl: json["photoUrl"] == null ? null : json["photoUrl"],
         phone: json["phone"] == null ? null : json["phone"],
-        reward: json["reward"] == null ? null : json["reward"],
+        username: json["username"] == null ? null : json["username"],
+        reward: json["reward"] == null ? 0 : json["reward"],
         email: json["email"] == null ? null : json["email"],
         contactId: json["contactId"] == null ? null : json["contactId"],
         fundAccount: json["fundAccount"] == null ? null : json["fundAccount"],
@@ -84,6 +87,7 @@ class User {
         "phone": phone == null ? null : phone,
         "name": name == null ? null : name,
         "photoUrl": photoUrl == null ? null : photoUrl,
+        "username": username == null ? null : username,
         "reward": reward == null ? null : reward,
         "email": email == null ? null : email,
         "subscription": subscription == null ? null : subscription.toJson(),
