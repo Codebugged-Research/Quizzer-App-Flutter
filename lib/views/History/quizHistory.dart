@@ -13,7 +13,7 @@ class _QuizHistoryState extends State<QuizHistory> {
   @override
   void initState() { 
     super.initState();
-    
+    loadDataScreen();
   }
   
   List<Response> quizResponses = [];
@@ -25,6 +25,7 @@ class _QuizHistoryState extends State<QuizHistory> {
     });
     user = await UserService.getUser();
     quizResponses = await ResponseService.getResponseByUser(user.id);
+    print(quizResponses);
     setState(() {
       isLoading = false;
     });
@@ -56,6 +57,7 @@ class _QuizHistoryState extends State<QuizHistory> {
                                 radius: 65,
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.green,
+                                backgroundImage: NetworkImage(quizResponses[0].user.photoUrl),
                               ),
                               SizedBox(height: 10),
                               Text(
@@ -80,7 +82,7 @@ class _QuizHistoryState extends State<QuizHistory> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            itemCount: 20,
+                            itemCount: quizResponses.length,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               return Padding(
@@ -97,7 +99,7 @@ class _QuizHistoryState extends State<QuizHistory> {
                                       leading: CircleAvatar(
                                         radius: 30,
                                         backgroundColor: Colors.white,
-                                        child: Image.network(quizResponses[index].user.photoUrl),
+                                        backgroundImage: NetworkImage(quizResponses[index].user.photoUrl),
                                       ),
                                       title: Text(quizResponses[index].user.name),
                                       trailing: Text(quizResponses[index].score),

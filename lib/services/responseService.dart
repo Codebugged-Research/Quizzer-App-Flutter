@@ -11,9 +11,10 @@ class ResponseService extends AuthService {
     var auth = await AuthService.getSavedAuth();
     String id = auth['id'];
     http.Response response = await AuthService.makeAuthenticatedRequest(
-        AuthService.BASE_URI + 'subscription/create/$id',
+        AuthService.BASE_URI + 'response/submit',
         method: 'POST',
         body: payload);
+        print(response.statusCode);
     if (response.statusCode == 200) {
       return true;
     } else {

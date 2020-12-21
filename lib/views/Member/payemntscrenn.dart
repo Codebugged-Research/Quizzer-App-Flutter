@@ -92,7 +92,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     user = await UserService.getUser();
     setState(() {
       options = {
-        'key': "rzp_test_sOzJvizxWHgZgS",
+        'key': "rzp_test_YGmmPUQEmTBUaA",
         'amount': 10000,
         'name': 'Quiz Adda',
         'order_id': widget.orderId,

@@ -29,13 +29,13 @@ class _MemberScreenState extends State<MemberScreen> {
   bool subscribed = false;
   loadDataForScreen() async {
     user = await UserService.getUser();
-    if (user.subscription != null) {
-      if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
-        setState(() {
-          subscribed = true;
-        });
-      }
-    }
+    // if (user.subscription != null) {
+    //   if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
+    //     setState(() {
+    //       subscribed = true;
+    //     });
+    //   }
+    // }
   }
 
   final scaffkey = new GlobalKey<ScaffoldState>();
@@ -94,11 +94,8 @@ class _MemberScreenState extends State<MemberScreen> {
                               alignment: Alignment.center,
                               children: [
                                 PlanCard(
-                                    subscribed: subscribed,
-                                    days: user.subscription.validTill
-                                        .difference(DateTime.now())
-                                        .inDays),
-                                subscribed ? Container() : buyWidget(context),
+                                   ),
+                                 buyWidget(context),
                               ],
                             )),
                       ),

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:countdown_flutter/countdown_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
@@ -35,8 +38,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   int wrong = 0;
   int questionLength = 0;
   List<Widget> dots = [];
-
-  int _currentIndex = 0;
   PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -44,17 +45,20 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
     super.initState();
     quiz = widget.quiz;
     questionLength = quiz.questions.length;
+    loadData();
   }
 
   loadData() async {
     user = await UserService.getUser();
-    response = Response(
-        correct: correct.toString(),
-        wrong: wrong.toString(),
-        user: user,
-        quiz: quiz,
-        reward: reward.toString(),
-        score: score.toString());
+    setState(() {
+      response = Response(
+          correct: correct.toString(),
+          wrong: wrong.toString(),
+          user: user,
+          quiz: quiz,
+          reward: reward.toString(),
+          score: score.toString());
+    });
 
     dots = List.filled(
         questionLength,
@@ -512,11 +516,10 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget endCard() {
-    setState(() {
+    setState(()  {
       score = int.parse(quiz.incorrectScore) * wrong +
           int.parse(quiz.correctScore) * correct;
     });
-
     var tempTime = stop.difference(start);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -613,7 +616,9 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     style: Theme.of(context).textTheme.headline6.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await ResponseService.submitResponse(
+                        jsonEncode(response.toJson()));
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => LandingScreen(
                               selectedIndex: 0,

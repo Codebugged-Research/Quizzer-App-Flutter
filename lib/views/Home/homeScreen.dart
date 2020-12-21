@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Quiz quiz2;
   Quiz quiz3;
   Quiz quiz4;
-  Quiz quiz5;
   bool subscribed = false;
   List cardList = [Item1(), Item2(), Item3(), Item4()];
   List<T> map<T>(List list, Function handler) {
@@ -119,13 +118,6 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz4 = element;
           } else {
             quiz4 = null;
-          }
-        } else if (element.slot == '5') {
-          if (now.isAfter(tempStartDateTime) &&
-              now.isBefore(tempEndtDateTime)) {
-            quiz5 = element;
-          } else {
-            quiz5 = null;
           }
         }
       });
@@ -343,6 +335,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                           ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.lightBlue.shade300,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            height: 150,
+                                            width: 150,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/timeline.png",
+                                                  height: 56,
+                                                ),
+                                                SizedBox(height: 4),
+                                                Text("Feed",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          // Navigator.of(context).push(
+                                          //     MaterialPageRoute(
+                                          //         builder:
+                                          //             (BuildContext
+                                          //                 context) {
+
+                                          // }));
+                                        }),
+                                    SizedBox(width: 12),
+                                    GestureDetector(
+                                        child: Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
                                           child: Stack(
                                             children: [
                                               Container(
@@ -363,12 +400,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       height: 56,
                                                     ),
                                                     SizedBox(height: 4),
-                                                    Text("Quiz 3",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        )),
+                                                    Text(
+                                                      "Quiz 3",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -427,111 +466,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 (BuildContext
                                                                     context) {
                                                       return QuizTestScreen(
-                                                          quiz: quiz3);
-                                                    }));
-                                                  })
-                                            : () {
-                                                scaffkey.currentState
-                                                    .showSnackBar(SnackBar(
-                                                        duration: Duration(
-                                                            milliseconds: 180),
-                                                        content: Text(
-                                                            "You are not a plus member !")));
-                                              }),
-                                    SizedBox(width: 12),
-                                    GestureDetector(
-                                        child: Card(
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      Colors.lightBlue.shade300,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                                height: 150,
-                                                width: 150,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      "assets/images/locked.png",
-                                                      height: 56,
-                                                    ),
-                                                    SizedBox(height: 4),
-                                                    Text(
-                                                      "Quiz 4",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              !subscribed
-                                                  ? Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white24,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                      height: 150,
-                                                      width: 150,
-                                                    )
-                                                  : Container(),
-                                              !subscribed
-                                                  ? Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                      height: 150,
-                                                      width: 150,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(
-                                                            Icons.lock,
-                                                            size: 40,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Container(),
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: subscribed
-                                            ? (quiz4 == null
-                                                ? () {
-                                                    scaffkey.currentState
-                                                        .showSnackBar(SnackBar(
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    150),
-                                                            content: Text(
-                                                                "Quiz not Started or Quiz Finished!")));
-                                                  }
-                                                : () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                      return QuizTestScreen(
                                                           quiz: quiz4);
                                                     }));
                                                   })
@@ -547,119 +481,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             ),
-                            Center(
-                              child: InkWell(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 12, color: Colors.white12),
-                                      borderRadius: BorderRadius.circular(90),
-                                      color: Colors.white,
-                                    ),
-                                    height: 150,
-                                    width: 150,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(90),
-                                        color: Colors.orangeAccent,
-                                      ),
-                                      child: Card(
-                                        color: Colors.lightBlue.shade300,
-                                        margin: EdgeInsets.all(0),
-                                        elevation: 3,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(90),
-                                        ),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/trophy.png",
-                                                  height: 58,
-                                                ),
-                                                SizedBox(height: 4),
-                                                Text(
-                                                  "Super Quiz",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            !subscribed
-                                                ? Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white24,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                    height: 150,
-                                                    width: 150,
-                                                  )
-                                                : Container(),
-                                            !subscribed
-                                                ? Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                    height: 150,
-                                                    width: 150,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.lock,
-                                                          size: 40,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  )
-                                                : Container(),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: subscribed
-                                      ? (quiz5 == null
-                                          ? () {
-                                              scaffkey.currentState
-                                                  .showSnackBar(SnackBar(
-                                                      duration: Duration(
-                                                          milliseconds: 150),
-                                                      content: Text(
-                                                          "Quiz not Started or Quiz Finished!")));
-                                            }
-                                          : () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(builder:
-                                                      (BuildContext context) {
-                                                return QuizTestScreen(
-                                                    quiz: quiz5);
-                                              }));
-                                            })
-                                      : () {
-                                          scaffkey.currentState.showSnackBar(
-                                              SnackBar(
-                                                  duration: Duration(
-                                                      milliseconds: 180),
-                                                  content: Text(
-                                                      "You are not a plus member !")));
-                                        }),
-                            ),
+                            superquiz(context),
                           ],
                         )),
                   ],
@@ -667,6 +489,105 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           );
+  }
+
+  Widget superquiz(context) {
+    return Center(
+      child: InkWell(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 12, color: Colors.white12),
+            borderRadius: BorderRadius.circular(90),
+            color: Colors.white,
+          ),
+          height: 150,
+          width: 150,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(90),
+              color: Colors.orangeAccent,
+            ),
+            child: Card(
+              color: Colors.lightBlue.shade300,
+              margin: EdgeInsets.all(0),
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(90),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/trophy.png",
+                        height: 58,
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "Super Quiz",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  !subscribed
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white24,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          height: 150,
+                          width: 150,
+                        )
+                      : Container(),
+                  !subscribed
+                      ? Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          height: 150,
+                          width: 150,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.lock,
+                                size: 40,
+                              )
+                            ],
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        onTap: subscribed
+            ? (quiz4 == null
+                ? () {
+                    scaffkey.currentState.showSnackBar(SnackBar(
+                        duration: Duration(milliseconds: 150),
+                        content: Text("Quiz not Started or Quiz Finished!")));
+                  }
+                : () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return QuizTestScreen(quiz: quiz4);
+                    }));
+                  })
+            : () {
+                scaffkey.currentState.showSnackBar(SnackBar(
+                    duration: Duration(milliseconds: 180),
+                    content: Text("You are not a plus member !")));
+              },
+      ),
+    );
   }
 
   Widget carouselSlider(context) {
