@@ -12,6 +12,7 @@ import 'package:quiz_app/views/Home/Carousel/itemFour.dart';
 import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
 import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
 import 'package:quiz_app/views/Home/Carousel/itemTwo.dart';
+import 'package:quiz_app/views/Home/feed.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -337,8 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color:
-                                                  Colors.lightBlue.shade300,
+                                              color: Colors.lightBlue.shade300,
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
@@ -364,13 +364,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                         onTap: () {
-                                          // Navigator.of(context).push(
-                                          //     MaterialPageRoute(
-                                          //         builder:
-                                          //             (BuildContext
-                                          //                 context) {
-
-                                          // }));
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(builder:
+                                                  (BuildContext context) {
+                                            return FeedScreen();
+                                          }));
                                         }),
                                     SizedBox(width: 12),
                                     GestureDetector(
