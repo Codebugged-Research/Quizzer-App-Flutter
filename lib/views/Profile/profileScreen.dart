@@ -57,14 +57,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       title: Text('$labelText',
           style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Montserrat',
-              fontSize: 17,
-              fontWeight: FontWeight.bold)),
+              color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold)),
       subtitle: Text(
         '$labelValue',
-        style: TextStyle(
-            fontFamily: 'Montserrat', fontSize: 15, color: Colors.black),
+        style: TextStyle(fontSize: 15, color: Colors.black),
       ),
     );
   }
@@ -142,7 +138,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     profileInfo('Phone Number', '${user.phone}', Icons.call),
                     profileInfo('Email', '${user.email}', Icons.mail),
                     profileInfo('UPI ID', '${user.upiId}', Icons.money),
-                    profileInfo('Rewards', '${user.reward}', Icons.emoji_events)
+                    profileInfo(
+                        'Rewards', '₹ ${user.reward}', Icons.emoji_events)
                   ],
                 ),
               ),
