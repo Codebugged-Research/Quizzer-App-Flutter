@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:quiz_app/models/User.dart';
-
 Subscription subscriptionFromJson(String str) => Subscription.fromJson(json.decode(str));
 
 String subscriptionToJson(Subscription data) => json.encode(data.toJson());

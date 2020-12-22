@@ -20,6 +20,7 @@ class QuizTestScreen extends StatefulWidget {
 }
 
 class _QuizTestScreenState extends State<QuizTestScreen> {
+  //TODO:add quiz timmer and chk response to be submitted
   bool capture = false;
   int correct = 0;
   bool endTap = false;
@@ -56,6 +57,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
           wrong: wrong.toString(),
           user: user,
           quiz: quiz,
+          userRole: user.role,
           reward: reward.toString(),
           score: score.toString());
     });
@@ -567,10 +569,12 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               SizedBox(height: 12),
               Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: [                  
                   Icon(
-                    Icons.lock_clock,
-                    color: Colors.white,
+                    Icons.lock_clock,color: Colors.white,),
+                    
+                  Text("  TimeTaken :  ", style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold)
                   ),
                   Text(
                     "${tempTime.inHours}:${tempTime.inMinutes.remainder(60)}:${tempTime.inSeconds.remainder(60)}",

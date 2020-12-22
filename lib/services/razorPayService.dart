@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:quiz_app/services/authService.dart';
-import 'package:quiz_app/services/userService.dart';
 
 class RazorPayService extends AuthService {
   static Future createOrderId(var payload) async {
@@ -19,6 +18,7 @@ class RazorPayService extends AuthService {
     }
   }
 
+  // ignore: missing_return
   static Future<String> createContactId(var payload) async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
         AuthService.BASE_URI + 'razorPay/createContact',
@@ -35,6 +35,7 @@ class RazorPayService extends AuthService {
     }
   }
 
+  // ignore: missing_return
   static Future<String> createFundAccount(var payload) async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
         AuthService.BASE_URI + 'razorPay/createFundAcct',

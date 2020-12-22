@@ -81,6 +81,7 @@ class _RewardScreenState extends State<RewardScreen> {
                                 radius: 65,
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.green,
+                                backgroundImage: NetworkImage(quizResponses.first.user.photoUrl),
                               ),
                               SizedBox(height: 10),
                               Text(
@@ -103,7 +104,7 @@ class _RewardScreenState extends State<RewardScreen> {
                             ],
                           ),
                         ),
-                        Expanded(
+                       quizResponses.length ==1 ? Container():  Expanded(
                           child: ListView.builder(
                             itemCount: 20,
                             scrollDirection: Axis.vertical,

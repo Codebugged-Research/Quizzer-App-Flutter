@@ -8,8 +8,6 @@ class ResponseService extends AuthService {
 
   //Submit Response
   static Future<bool> submitResponse(var payload) async {
-    var auth = await AuthService.getSavedAuth();
-    String id = auth['id'];
     http.Response response = await AuthService.makeAuthenticatedRequest(
         AuthService.BASE_URI + 'response/submit',
         method: 'POST',

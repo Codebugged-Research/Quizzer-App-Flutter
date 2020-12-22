@@ -9,7 +9,7 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  @override
+  // @override
   GlobalKey<ScaffoldState> scaffKey = new GlobalKey();
 
   void launchMail() async {

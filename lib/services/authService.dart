@@ -8,6 +8,7 @@ class AuthService extends BaseService {
   static const BASE_URI = "http://68.183.247.45/";
   static Map<String, dynamic> _authDetails;
   static const String authNamespace = "auth";
+  // ignore: missing_return
   static Future<http.Response> makeAuthenticatedRequest(String url,
       {String method = 'POST',
       body,

@@ -3,16 +3,14 @@ import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:quiz_app/models/File.dart';
 import 'package:quiz_app/models/Quiz.dart';
+import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/services/fileService.dart';
 import 'package:quiz_app/services/quizService.dart';
+import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
-import 'package:quiz_app/views/Home/Carousel/itemFour.dart';
-import 'package:quiz_app/views/Home/Carousel/itemOne.dart';
-import 'package:quiz_app/views/Home/Carousel/itemThree.dart';
-import 'package:quiz_app/views/Home/Carousel/itemTwo.dart';
-import 'package:quiz_app/views/Home/feed.dart';
+import 'package:quiz_app/views/Home/feedScreen.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Quiz quiz3;
   Quiz quiz4;
   bool subscribed = false;
-  List cardList = [Item1(), Item2(), Item3(), Item4()];
+  List cardList = [];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
@@ -48,14 +46,23 @@ class _HomeScreenState extends State<HomeScreen> {
     loadDataForUser();
   }
 
+  List<Response> responses = [];
+
   loadDataForUser() async {
     setState(() {
       loading = true;
     });
     var auth = await AuthService.getSavedAuth();
     user = await UserService.getUser();
+    responses = await ResponseService.getResponseByUserDate(user.id);
     try {
-      files = await FileService.getAllFile();
+      files = await FileService.getallcards();
+      files.forEach((element) {
+        cardList.add(Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+            child: Image.network(element.imageUrl, fit: BoxFit.fitWidth)));
+      });
     } catch (e) {
       print(e);
     }
@@ -95,6 +102,13 @@ class _HomeScreenState extends State<HomeScreen> {
         if (element.slot == '1') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
+            // responses.forEach((res) {
+            //   if (res.quiz.id == element.id) {
+            //     quiz1 = null;
+            //   } else {
+            //     quiz1 = element;
+            //   }
+            // }); //TODO: do response check
             quiz1 = element;
           } else {
             quiz1 = null;
@@ -203,12 +217,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       onTap: quiz1 == null
                                           ? () {
-                                              scaffkey.currentState
-                                                  .showSnackBar(SnackBar(
-                                                      duration: Duration(
-                                                          milliseconds: 150),
-                                                      content: Text(
-                                                          "Quiz not Started or Quiz Finished!")));
+                                              showDialog(
+                                                  context: (context),
+                                                  builder: (contex) =>
+                                                      AlertDialog(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12)),
+                                                        title: Text("Alert"),
+                                                        content: Text(
+                                                            "Quiz not Started or Quiz Finished!"),
+                                                      ));
                                             }
                                           : () {
                                               Navigator.of(context).push(
@@ -296,13 +317,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                         onTap: subscribed
                                             ? (quiz2 == null
                                                 ? () {
-                                                    scaffkey.currentState
-                                                        .showSnackBar(SnackBar(
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    150),
-                                                            content: Text(
-                                                                "Quiz not Started or Quiz Finished!")));
+                                                    showDialog(
+                                                        context: (context),
+                                                        builder:
+                                                            (contex) =>
+                                                                AlertDialog(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              12)),
+                                                                  title: Text(
+                                                                      "Alert"),
+                                                                  content: Text(
+                                                                      "Quiz not Started or Quiz Finished!"),
+                                                                ));
                                                   }
                                                 : () {
                                                     Navigator.of(context).push(
@@ -315,12 +343,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     }));
                                                   })
                                             : () {
-                                                scaffkey.currentState
-                                                    .showSnackBar(SnackBar(
-                                                        duration: Duration(
-                                                            milliseconds: 180),
-                                                        content: Text(
-                                                            "You are not a plus member !")));
+                                                showDialog(
+                                                    context: (context),
+                                                    builder: (contex) =>
+                                                        AlertDialog(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12)),
+                                                          title: Text("Alert"),
+                                                          content: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Text(
+                                                                  "You are not a Plus Member"),
+                                                              FlatButton(
+                                                                child: Text(
+                                                                    "Subscribe?"),
+                                                                onPressed:
+                                                                    () {},
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ));
                                               }),
                                   ],
                                 ),
@@ -449,13 +497,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                         onTap: subscribed
                                             ? (quiz3 == null
                                                 ? () {
-                                                    scaffkey.currentState
-                                                        .showSnackBar(SnackBar(
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    150),
-                                                            content: Text(
-                                                                "Quiz not Started or Quiz Finished!")));
+                                                    showDialog(
+                                                        context: (context),
+                                                        builder:
+                                                            (contex) =>
+                                                                AlertDialog(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              12)),
+                                                                  title: Text(
+                                                                      "Alert"),
+                                                                  content: Text(
+                                                                      "Quiz not Started or Quiz Finished!"),
+                                                                ));
                                                   }
                                                 : () {
                                                     Navigator.of(context).push(
@@ -468,12 +523,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     }));
                                                   })
                                             : () {
-                                                scaffkey.currentState
-                                                    .showSnackBar(SnackBar(
-                                                        duration: Duration(
-                                                            milliseconds: 180),
-                                                        content: Text(
-                                                            "You are not a plus member !")));
+                                                showDialog(
+                                                    context: (context),
+                                                    builder: (contex) =>
+                                                        AlertDialog(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12)),
+                                                          title: Text("Alert"),
+                                                          content: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Text(
+                                                                  "You are not a Plus Member"),
+                                                              FlatButton(
+                                                                child: Text(
+                                                                    "Subscribe?"),
+                                                                onPressed:
+                                                                    () {},
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ));
                                               }),
                                   ],
                                 ),
@@ -593,7 +668,7 @@ class _HomeScreenState extends State<HomeScreen> {
       options: CarouselOptions(
         height: UIConstants.fitToHeight(100, context),
         autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
+        autoPlayInterval: Duration(seconds: 4),
         autoPlayAnimationDuration: Duration(milliseconds: 600),
         autoPlayCurve: Curves.fastOutSlowIn,
         pauseAutoPlayOnTouch: true,

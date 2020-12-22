@@ -7,6 +7,7 @@ class BaseService {
     "Content-Type": "application/json"
   };
 
+  // ignore: missing_return
   static Future<http.Response> makeUnauthenticatedRequest(String url,
       {String method = 'POST',
         body,

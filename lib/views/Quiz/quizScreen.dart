@@ -37,30 +37,30 @@ class _QuizScreenState extends State<QuizScreen> {
     });
     quizes = await QuizService.getTodaysQuiz();
     user = await UserService.getUser();
-    // responses = await ResponseService.getResponseByUserDate(user.id);
+    responses = await ResponseService.getResponseByUserDate(user.id);
     change = List.filled(quizes.length, false);
-    // if (responses.length > 0) {
-    //   for (int i = 0; i < responses.length; i++) {
-    //     for (int j = 0; j < quizes.length; j++) {
-    //       if (quizes[j].id == responses[i].quiz.id) {
-    //         setState(() {
-    //           change[j] = true;
-    //         });
-    //       }
-    //     }
-    //   }
-    // }
-    // try {
-    //   if (user.subscription.validTill.difference(now).inDays > 0) {
-    //     setState(() {
-    //       unlocked = true;
-    //     });
-    //   }
-    // } catch (e) {
-    //   setState(() {
-    //     unlocked = false;
-    //   });
-    // }
+    if (responses.length > 0) {
+      for (int i = 0; i < responses.length; i++) {
+        for (int j = 0; j < quizes.length; j++) {
+          if (quizes[j].id == responses[i].quiz.id) {
+            setState(() {
+              change[j] = true;
+            });
+          }
+        }
+      }
+    }
+    try {
+      if (user.subscription.validTill.difference(now).inDays > 0) {
+        setState(() {
+          unlocked = true;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        unlocked = false;
+      });
+    }
 
     setState(() {
       loading = false;
@@ -105,12 +105,15 @@ class _QuizScreenState extends State<QuizScreen> {
         int.parse(quiz.endTime.split(":").first),
         int.parse(quiz.endTime.split(":").last));
     int remain = 0;
-    if (now.isAfter(tempStartDateTime) && now.isBefore(tempEndtDateTime)) {
-      remain = tempEndtDateTime.difference(now).inSeconds;
-      change[index] = false;
-    } else {
-      change[index] = true;
+    if (!change[index]) {
+      if (now.isAfter(tempStartDateTime) && now.isBefore(tempEndtDateTime)) {
+        remain = tempEndtDateTime.difference(now).inSeconds;
+        change[index] = false;
+      } else {
+        change[index] = true;
+      }
     }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Card(

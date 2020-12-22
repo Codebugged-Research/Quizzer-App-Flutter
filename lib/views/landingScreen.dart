@@ -92,6 +92,7 @@ class _LandingScreenState extends State<LandingScreen> {
         ),
       ),
       drawer: Drawer(
+        //TODO:show google dp
         child: DrawerComponent(name: name, email: email, initial: initials),
       ),
       body: isLoading

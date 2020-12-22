@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/backgroundPainter.dart';
 import 'package:quiz_app/components/loginComponent.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
-import 'package:quiz_app/views/landingScreen.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
