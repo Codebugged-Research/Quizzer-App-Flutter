@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/views/Drawer/aboutUsScreen.dart';
+import 'package:quiz_app/views/Drawer/contactScreen.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 import 'package:quiz_app/views/loginScreen.dart';
+import 'dart:io' show Platform;
+
+import 'package:share_extend/share_extend.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerComponent extends StatelessWidget {
   final String name;
   final String email;
-  DrawerComponent({this.name, this.email});
+  final String initial;
+  DrawerComponent({this.name, this.email, this.initial});
 
   signOut(context) async {
     await AuthService.clearAuth();
@@ -14,6 +21,22 @@ class DrawerComponent extends StatelessWidget {
         .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
       return LogInScreen();
     }));
+  }
+
+  rateApp() async {
+    String url =
+        'https://play.google.com/store/apps/details?id=nl.wikit.cvmaken&hl=en_IN&gl=US';
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+  }
+
+  shareApp() async {
+    String url =
+        'https://play.google.com/store/apps/details?id=nl.wikit.cvmaken&hl=en_IN&gl=US';
+    if (Platform.isAndroid) {
+      await ShareExtend.share('Check out this Amazing Quiz App $url', "text");
+    }
   }
 
   @override
@@ -39,7 +62,7 @@ class DrawerComponent extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Text(
-                  "${name[0].toUpperCase()}",
+                  "$initial",
                   style: TextStyle(fontSize: 40.0, color: Colors.black),
                 ),
               ),
@@ -72,7 +95,7 @@ class DrawerComponent extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return LandingScreen(selectedIndex: 0);
+                  return AboutUsScreen();
                 }));
               },
             ),
@@ -88,7 +111,7 @@ class DrawerComponent extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return LandingScreen(selectedIndex: 0);
+                  return ContactScreen();
                 }));
               },
             ),
@@ -101,11 +124,8 @@ class DrawerComponent extends StatelessWidget {
                     .copyWith(color: Colors.black),
               ),
               trailing: Icon(Icons.share, color: Colors.black),
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return LandingScreen(selectedIndex: 0);
-                }));
+              onTap: () async {
+                await shareApp();
               },
             ),
             ListTile(
@@ -117,11 +137,8 @@ class DrawerComponent extends StatelessWidget {
                     .copyWith(color: Colors.black),
               ),
               trailing: Icon(Icons.star, color: Colors.black),
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return LandingScreen(selectedIndex: 0);
-                }));
+              onTap: () async {
+                rateApp();
               },
             ),
             Divider(
