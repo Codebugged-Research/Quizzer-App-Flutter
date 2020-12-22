@@ -631,7 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _currentIndex == index ? Colors.grey : Colors.greenAccent,
+            color: _currentIndex != index ? Colors.grey : Colors.greenAccent,
           ),
         );
       }),

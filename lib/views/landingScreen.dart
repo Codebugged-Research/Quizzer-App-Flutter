@@ -19,6 +19,7 @@ class _LandingScreenState extends State<LandingScreen> {
   bool isLoading = false;
   String name = '';
   String email = '';
+  String initials = '';
   Color _selectedColor = Colors.orangeAccent;
 
   @override
@@ -30,18 +31,13 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   loadDataForUser() async {
-    var auth = await AuthService.getSavedAuth();
-    name = auth['name'];
-    email = auth['email'];
-    print(name);
-    print(email);
-  }
-
-  loadDataForScreen() async {
     setState(() {
       isLoading = true;
     });
-    // user = await UserService.getUser();
+    var auth = await AuthService.getSavedAuth();
+    name = auth['name'];
+    email = auth['email'];
+    initials = name.substring(0, 1);
     setState(() {
       isLoading = false;
     });
@@ -89,14 +85,14 @@ class _LandingScreenState extends State<LandingScreen> {
         centerTitle: true,
         title: Text(
           names[_selectedIndex],
-          style: Theme.of(context).primaryTextTheme.headline6.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.46),
+          style: Theme.of(context)
+              .primaryTextTheme
+              .headline6
+              .copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.46),
         ),
       ),
       drawer: Drawer(
-        child: DrawerComponent(
-          name: name,
-          email: email,
-        ),
+        child: DrawerComponent(name: name, email: email, initial: initials),
       ),
       body: isLoading
           ? Center(

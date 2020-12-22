@@ -60,6 +60,7 @@ class User {
         name: json["name"] == null ? null : json["name"],
         photoUrl: json["photoUrl"] == null ? null : json["photoUrl"],
         phone: json["phone"] == null ? null : json["phone"],
+        upiId: json["upiId"] == null ? null : json["upiId"],
         username: json["username"] == null ? null : json["username"],
         reward: json["reward"] == null ? "0" : json["reward"],
         email: json["email"] == null ? null : json["email"],
