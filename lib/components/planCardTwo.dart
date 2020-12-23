@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 
-class PlanCard extends StatelessWidget {
+class PlanCardTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class PlanCard extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
-                colors: [const Color(0xff0CC1A1), const Color(0xff0D6EC7)],
+                colors: [const Color(0xffFEBC11), const Color(0xffEB372B)],
               ),
               borderRadius: BorderRadius.circular(15.0),
             ),
@@ -57,7 +57,7 @@ class PlanCard extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                     Text(
-                      '₹ 100',
+                      '₹ 200',
                       style: Theme.of(context)
                           .primaryTextTheme
                           .headline4
@@ -71,7 +71,7 @@ class PlanCard extends StatelessWidget {
                             .primaryTextTheme
                             .subtitle1
                             .copyWith(color: Colors.white)),
-                    Text('1 month',
+                    Text('3 months',
                         style: Theme.of(context)
                             .primaryTextTheme
                             .caption
