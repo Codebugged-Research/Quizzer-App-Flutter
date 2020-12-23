@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/User.dart';
-import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 

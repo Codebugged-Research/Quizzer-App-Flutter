@@ -93,7 +93,7 @@ class _LandingScreenState extends State<LandingScreen> {
             ),
             drawer: Drawer(
               child: DrawerComponent(
-                  name: user.name, email: user.email, photUrl: user.photoUrl),
+                  name: user.name, email: user.email, photUrl: user.photoUrl, username: user.username),
             ),
             body: _widgetOptions.elementAt(_selectedIndex),
             floatingActionButton: Padding(

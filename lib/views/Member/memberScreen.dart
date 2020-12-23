@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/planCard.dart';
+import 'package:quiz_app/components/planCardTwo.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
-import 'package:quiz_app/views/Member/payemntscrenn.dart';
+import 'package:quiz_app/views/Member/paymentScreen.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class MemberScreen extends StatefulWidget {
   @override
@@ -30,13 +33,14 @@ class _MemberScreenState extends State<MemberScreen> {
   bool subscribed = false;
   loadDataForScreen() async {
     user = await UserService.getUser();
-    // if (user.subscription != null) {
-    //   if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
-    //     setState(() {
-    //       subscribed = true;
-    //     });
-    //   }
-    // }
+    if (user.subscription != null) {
+      if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
+        setState(() {
+          subscribed = true;
+        });
+      }
+      showDialogScreen();
+    }
   }
 
   final scaffkey = new GlobalKey<ScaffoldState>();
@@ -51,57 +55,63 @@ class _MemberScreenState extends State<MemberScreen> {
       child: Scaffold(
         key: scaffkey,
         body: !isLoading
-            ? CustomPaint(
-                painter: CurvePainter(),
-                child: SingleChildScrollView(
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Container(
-                        height: UIConstants.fitToHeight(320, context),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    height:
-                                        UIConstants.fitToHeight(75, context)),
-                                Text(
-                                  'Subscription',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline4
-                                      .copyWith(color: Colors.white),
-                                ),
-                              ],
-                            ),
+            ? SingleChildScrollView(
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Container(
+                      height: UIConstants.fitToHeight(200, context),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: UIConstants.fitToHeight(32, context)),
+                              Text(
+                                'Subscription',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline4
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        color: Colors.transparent,
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 50.0),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                PlanCard(
-                                   ),
-                                 buyWidget(context),
-                              ],
-                            )),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.transparent,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              PlanCard(),
+                              buyWidgetOne(context),
+                            ],
+                          ),
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              PlanCardTwo(),
+                              buyWidgetTwo(context),
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )
             : Center(
@@ -111,9 +121,9 @@ class _MemberScreenState extends State<MemberScreen> {
     );
   }
 
-  Widget buyWidget(context) {
+  Widget buyWidgetOne(context) {
     return Positioned(
-      top: UIConstants.fitToHeight(350, context),
+      top: UIConstants.fitToHeight(160, context),
       left: UIConstants.fitToWidth(55, context),
       right: UIConstants.fitToWidth(55, context),
       child: Container(
@@ -137,7 +147,6 @@ class _MemberScreenState extends State<MemberScreen> {
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(
                   jsonEncode({"amount": 10000}));
-              print(orderId);
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => RazorPayScreen()));
             },
@@ -152,30 +161,100 @@ class _MemberScreenState extends State<MemberScreen> {
           )),
     );
   }
-}
 
-class CurvePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint();
-    paint.color = Colors.lightBlue.shade300;
-    paint.style = PaintingStyle.fill;
-
-    var path = Path();
-
-    path.moveTo(0, size.height * 0.9167);
-    path.quadraticBezierTo(size.width * 0.25, size.height * 0.875,
-        size.width * 0.5, size.height * 0.9167);
-    path.quadraticBezierTo(size.width * 0.75, size.height * 0.9584,
-        size.width * 1.0, size.height * 0.9167);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-
-    canvas.drawPath(path, paint);
+  Widget buyWidgetTwo(context) {
+    return Positioned(
+      top: UIConstants.fitToHeight(160, context),
+      left: UIConstants.fitToWidth(55, context),
+      right: UIConstants.fitToWidth(55, context),
+      child: Container(
+          height: UIConstants.fitToHeight(40, context),
+          width: UIConstants.fitToWidth(110, context),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.0),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(2, 2),
+                  blurRadius: 2,
+                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                ),
+                BoxShadow(
+                  offset: Offset(2, 2),
+                  blurRadius: 2,
+                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                ),
+              ]),
+          child: MaterialButton(
+            onPressed: () async {
+              orderId = await RazorPayService.createOrderId(
+                  jsonEncode({"amount": 20000}));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => RazorPayScreen()));
+            },
+            color: Colors.white,
+            child: Text(
+              'Subscribe!',
+              style: Theme.of(context)
+                  .primaryTextTheme
+                  .button
+                  .copyWith(color: Colors.black),
+            ),
+          )),
+    );
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+  showDialogScreen() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => WillPopScope(
+            // ignore: missing_return
+            onWillPop: () {},
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              title: Text('You are already subscribed!!!',
+                  style: GoogleFonts.sourceSansPro(
+                      textStyle: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold))),
+              actions: [
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  color: Color(0xff000000),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  color: Color(0xff000000),
+                  onPressed: () async {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                LandingScreen(selectedIndex: 0)),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: Text(
+                    "Home",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            )));
   }
 }
