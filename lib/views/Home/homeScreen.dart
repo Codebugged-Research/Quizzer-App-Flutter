@@ -5,7 +5,6 @@ import 'package:quiz_app/models/File.dart';
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
-import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/services/fileService.dart';
 import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/services/responseService.dart';

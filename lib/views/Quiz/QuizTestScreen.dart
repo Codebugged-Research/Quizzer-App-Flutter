@@ -20,7 +20,6 @@ class QuizTestScreen extends StatefulWidget {
 }
 
 class _QuizTestScreenState extends State<QuizTestScreen> {
-  //TODO:add quiz timmer and chk response to be submitted
   bool capture = false;
   int correct = 0;
   bool endTap = false;
@@ -40,7 +39,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   int questionLength = 0;
   List<Widget> dots = [];
   PageController _pageController = PageController(initialPage: 0);
-
+  var tempTime;
   @override
   void initState() {
     super.initState();
@@ -116,7 +115,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                     width: 4)),
                             child: Center(
                               child: Text(
-                                "${index + 1}/10",
+                                "${index + 1}/${quiz.questions.length}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle2
@@ -160,10 +159,49 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.lock_clock,
+                            color: Colors.white,
+                          ),
+                          Text("  Timer :  ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                          Countdown(
+                            duration: Duration(
+                                minutes: int.parse(quiz.minutes),
+                                seconds: int.parse(quiz.seconds)),
+                            onFinish: () {
+                              setState(() {
+                                endTap = true;
+                                stop = DateTime.now();
+                                tempTime = stop.difference(start);
+                              });
+                            },
+                            builder: (BuildContext ctx, Duration remaining) {
+                              return Text(
+                                '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)  }',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.05),
                       Container(
-                        height: UIConstants.fitToHeight(180, context),
+                        height: UIConstants.fitToHeight(160, context),
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -362,6 +400,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             setState(() {
                               endTap = true;
                               stop = DateTime.now();
+                              tempTime = stop.difference(start);
                             });
                           } else {
                             _pageController.animateToPage(index + 1,
@@ -506,6 +545,10 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
     );
   }
 
+  submit() async {
+    await ResponseService.submitResponse(jsonEncode(response.toJson()));
+  }
+
   Widget endCard() {
     setState(() {
       score = int.parse(quiz.incorrectScore) * wrong +
@@ -519,8 +562,8 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
           reward: reward.toString(),
           score: score.toString());
     });
+    submit();
 
-    var tempTime = stop.difference(start);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -620,8 +663,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
-                    await ResponseService.submitResponse(
-                        jsonEncode(response.toJson()));
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (context) => LandingScreen(
                               selectedIndex: 0,

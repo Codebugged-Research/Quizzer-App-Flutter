@@ -58,23 +58,24 @@ class _AddDataScreenState extends State<AddDataScreen> {
       isLoading = true;
     });
     if (checkFields()) {
-      var contactPayload = json.encode({
-        "name": user.name,
-        "email": user.email,
-        "phone": _phone.text,
-      });
-      var contactId = await RazorPayService.createContactId(contactPayload);
-      var fundPayload = json.encode({
-        "contactId": contactId,
-        "UpiId": _upi.text,
-      });
-      var fundId = await RazorPayService.createFundAccount(fundPayload);
+      //uncomment when payout is required
+      // var contactPayload = json.encode({
+      //   "name": user.name,
+      //   "email": user.email,
+      //   "phone": _phone.text,
+      // });
+      // var contactId = await RazorPayService.createContactId(contactPayload);
+      // var fundPayload = json.encode({
+      //   "contactId": contactId,
+      //   "UpiId": _upi.text,
+      // });
+      // var fundId = await RazorPayService.createFundAccount(fundPayload);
       var payload = json.encode({
         "username": _username.text,
         "phone": _phone.text,
         "upiId": _upi.text,
-        "contactId": contactId,
-        "fundAccount": fundId
+        // "contactId": contactId,
+        // "fundAccount": fundId
       });
       print(payload);
       bool updated = await UserService.updateUser(payload);
