@@ -52,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       loading = true;
     });
-    var auth = await AuthService.getSavedAuth();
     user = await UserService.getUser();
     responses = await ResponseService.getResponseByUserDate(user.id);
+    print(responses.length);
     try {
       files = await FileService.getallcards();
       files.forEach((element) {
@@ -78,11 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
         subscribed = false;
       });
     }
-
-    setState(() {
-      name = auth['name'];
-      email = auth['email'];
-    });
     quizes = await QuizService.getTodaysQuiz();
     setState(() {
       quizes.forEach((element) {
@@ -98,39 +93,73 @@ class _HomeScreenState extends State<HomeScreen> {
             now.day,
             int.parse(element.endTime.split(":").first),
             int.parse(element.endTime.split(":").last));
-
         if (element.slot == '1') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
-            // responses.forEach((res) {
-            //   if (res.quiz.id == element.id) {
-            //     quiz1 = null;
-            //   } else {
-            //     quiz1 = element;
-            //   }
-            // }); //TODO: do response check
-            quiz1 = element;
+            if (responses.length > 0) {
+              responses.forEach((res) {
+                if (res.quiz.id == element.id) {
+                  quiz1 = null;
+                } else {
+                  quiz1 = element;
+                }
+              });
+            } else {
+              quiz1 = element;
+            }
           } else {
             quiz1 = null;
           }
         } else if (element.slot == '2') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
-            quiz2 = element;
+            if (responses.length > 0) {
+              responses.forEach((res) {
+                if (res.quiz.id == element.id) {
+                  quiz2 = null;
+                } else {
+                  quiz2 = element;
+                }
+              });
+            } else {
+              quiz2 = element;
+            }
           } else {
             quiz2 = null;
           }
         } else if (element.slot == '3') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
-            quiz3 = element;
+            if (responses.length > 0) {
+              responses.forEach((res) {
+                print(res.quiz.slot);
+                if (res.quiz.id == element.id) {
+                  quiz3 = null;
+                } else {
+                  quiz3 = element;
+                }
+              });
+            } else {
+              quiz3 = element;
+            }
           } else {
             quiz3 = null;
           }
         } else if (element.slot == '4') {
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
-            quiz4 = element;
+            if (responses.length > 0) {
+              responses.forEach((res) {
+                print(res.quiz.slot);
+                if (res.quiz.id == element.id) {
+                  quiz4 = null;
+                } else {
+                  quiz4 = element;
+                }
+              });
+            } else {
+              quiz4 = element;
+            }
           } else {
             quiz4 = null;
           }
@@ -142,8 +171,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return loading
@@ -151,7 +178,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
-            key: scaffkey,
             extendBody: true,
             backgroundColor: Colors.white,
             body: Container(
@@ -644,9 +670,15 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: subscribed
             ? (quiz4 == null
                 ? () {
-                    scaffkey.currentState.showSnackBar(SnackBar(
-                        duration: Duration(milliseconds: 150),
-                        content: Text("Quiz not Started or Quiz Finished!")));
+                    showDialog(
+                        context: (context),
+                        builder: (contex) => AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12)),
+                              title: Text("Alert"),
+                              content:
+                                  Text("Quiz not Started or Quiz Finished!"),
+                            ));
                   }
                 : () {
                     Navigator.of(context).push(
@@ -655,9 +687,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     }));
                   })
             : () {
-                scaffkey.currentState.showSnackBar(SnackBar(
-                    duration: Duration(milliseconds: 180),
-                    content: Text("You are not a plus member !")));
+                showDialog(
+                    context: (context),
+                    builder: (contex) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          title: Text("Alert"),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text("You are not a Plus Member"),
+                              FlatButton(
+                                child: Text("Subscribe?"),
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ));
               },
       ),
     );

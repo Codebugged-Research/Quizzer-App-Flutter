@@ -46,6 +46,7 @@ class _RewardScreenState extends State<RewardScreen> {
                 ),
                 onPressed: () {
                   // _scaffoldKey.currentState.openDrawer();
+                  Navigator.of(context).pop();
                 },
               ),
               centerTitle: true,
@@ -75,6 +76,7 @@ class _RewardScreenState extends State<RewardScreen> {
                                 topRight: Radius.circular(0.0),
                               )),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CircleAvatar(
@@ -84,18 +86,28 @@ class _RewardScreenState extends State<RewardScreen> {
                                 backgroundImage: NetworkImage(quizResponses.first.user.photoUrl),
                               ),
                               SizedBox(height: 10),
-                              Text(
-                                quizResponses.first.score,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    .copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                              ),
+                               Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '₹ ${quizResponses.first.reward}   |   ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5
+                                          .copyWith(color: Colors.white,fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      quizResponses.first.score,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5
+                                          .copyWith(color: Colors.white,fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               SizedBox(height: 10),
                               Text(
-                                quizResponses.first.user.name,
+                                quizResponses.first.user.username,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -104,9 +116,9 @@ class _RewardScreenState extends State<RewardScreen> {
                             ],
                           ),
                         ),
-                       quizResponses.length ==1 ? Container():  Expanded(
+                       quizResponses.length == 1 ? Container():  Expanded(
                           child: ListView.builder(
-                            itemCount: 20,
+                            itemCount: quizResponses.length,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               return Padding(
@@ -126,7 +138,25 @@ class _RewardScreenState extends State<RewardScreen> {
                                         child: Image.network(quizResponses[index].user.photoUrl),
                                       ),
                                       title: Text(quizResponses[index].user.name),
-                                      trailing: Text(quizResponses[index].score),
+                                      trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '₹ ${quizResponses[index].reward}   |   ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6
+                                          .copyWith(color: Colors.green),
+                                    ),
+                                    Text(
+                                      quizResponses[index].score,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
                                     ),
                                   ),
                                 ),

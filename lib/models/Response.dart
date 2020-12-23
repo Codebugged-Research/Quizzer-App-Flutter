@@ -49,11 +49,11 @@ class Response {
         "_id": id == null ? null : id,
         "correct": correct == null ? null : correct,
         "wrong": wrong == null ? null : wrong,
-        "user": user == null ? null : user.toJson(),
-        "quiz": quiz == null ? null : quiz.toJson(),
         "reward": reward == null ? null : reward,
         "score": score == null ? null : score,
         "userRole": userRole ==null ? null:userRole,
+        "user": user == null ? null : user.toJson(),
+        "quiz": quiz == null ? null : quiz.toJson(),
         "createdAt": createdAt == null ? null : createdAt.toIso8601String(),
         "updatedAt": updatedAt == null ? null : updatedAt.toIso8601String(),
     };

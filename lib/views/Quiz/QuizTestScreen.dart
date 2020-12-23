@@ -51,17 +51,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   loadData() async {
     user = await UserService.getUser();
-    setState(() {
-      response = Response(
-          correct: correct.toString(),
-          wrong: wrong.toString(),
-          user: user,
-          quiz: quiz,
-          userRole: user.role,
-          reward: reward.toString(),
-          score: score.toString());
-    });
-
     dots = List.filled(
         questionLength,
         Container(
@@ -518,10 +507,19 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget endCard() {
-    setState(()  {
+    setState(() {
       score = int.parse(quiz.incorrectScore) * wrong +
           int.parse(quiz.correctScore) * correct;
+      response = Response(
+          correct: correct.toString(),
+          wrong: wrong.toString(),
+          user: user,
+          quiz: quiz,
+          userRole: user.role,
+          reward: reward.toString(),
+          score: score.toString());
     });
+
     var tempTime = stop.difference(start);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -569,13 +567,14 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               SizedBox(height: 12),
               Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [                  
+                children: [
                   Icon(
-                    Icons.lock_clock,color: Colors.white,),
-                    
-                  Text("  TimeTaken :  ", style: Theme.of(context).textTheme.headline6.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold)
+                    Icons.lock_clock,
+                    color: Colors.white,
                   ),
+                  Text("  TimeTaken :  ",
+                      style: Theme.of(context).textTheme.headline6.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
                   Text(
                     "${tempTime.inHours}:${tempTime.inMinutes.remainder(60)}:${tempTime.inSeconds.remainder(60)}",
                     style: Theme.of(context).textTheme.headline6.copyWith(

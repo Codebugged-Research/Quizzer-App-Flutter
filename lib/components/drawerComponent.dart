@@ -12,8 +12,9 @@ import 'package:url_launcher/url_launcher.dart';
 class DrawerComponent extends StatelessWidget {
   final String name;
   final String email;
-  final String initial;
-  DrawerComponent({this.name, this.email, this.initial});
+  final String photUrl;
+  final String username;
+  DrawerComponent({this.name, this.email, this.photUrl,this.username});
 
   signOut(context) async {
     await AuthService.clearAuth();
@@ -49,11 +50,11 @@ class DrawerComponent extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.lightBlue.shade300,
               ),
-              accountName: Text('$name',
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subtitle1
-                      .copyWith(color: Colors.black)),
+              accountName: Text('$username',
+                 style: Theme.of(context)
+                     .primaryTextTheme
+                     .subtitle1
+                     .copyWith(color: Colors.black)),
               accountEmail: Text('$email',
                   style: Theme.of(context)
                       .primaryTextTheme
@@ -61,10 +62,11 @@ class DrawerComponent extends StatelessWidget {
                       .copyWith(color: Colors.black)),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Text(
-                  "$initial",
-                  style: TextStyle(fontSize: 40.0, color: Colors.black),
-                ),
+                backgroundImage: NetworkImage(photUrl),
+                // child: Text(
+                //   "$initial",
+                //   style: TextStyle(fontSize: 40.0, color: Colors.black),
+                // ),
               ),
             ),
             ListTile(
