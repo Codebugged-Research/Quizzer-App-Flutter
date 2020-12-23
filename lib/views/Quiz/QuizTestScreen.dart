@@ -69,6 +69,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   Widget questionCard() {
     return PageView.builder(
+      physics:new NeverScrollableScrollPhysics(),
       controller: _pageController,
       itemCount: quiz.questions.length,
       itemBuilder: (context, index) {

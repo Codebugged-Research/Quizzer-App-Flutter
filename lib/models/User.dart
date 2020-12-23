@@ -58,7 +58,7 @@ class User {
         role: json["role"] == null ? null : json["role"],
         id: json["_id"] == null ? null : json["_id"],
         name: json["name"] == null ? null : json["name"],
-        photoUrl: json["photoUrl"] == null ? "https://i.picsum.photos/id/1011/5472/3648.jpg" : json["photoUrl"],
+        photoUrl: json["photoUrl"] == null ? "https://p.kindpng.com/picc/s/252-2524695_dummy-profile-image-jpg-hd-png-download.png" : json["photoUrl"],
         phone: json["phone"] == null ? null : json["phone"],
         upiId: json["upiId"] == null ? null : json["upiId"],
         username: json["username"] == null ? null : json["username"],

@@ -63,10 +63,10 @@ class DrawerComponent extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 backgroundImage: NetworkImage(photUrl),
-                child: Text(
-                  "$initial",
+                child: photUrl == null ? Text(
+                  "${name.split(" ").first.split("").first}",
                   style: TextStyle(fontSize: 40.0, color: Colors.black),
-                ),
+                ):Container(),
               ),
             ),
             ListTile(
