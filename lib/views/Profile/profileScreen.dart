@@ -3,6 +3,7 @@ import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/services/userService.dart';
+import 'package:quiz_app/views/Profile/editScreen.dart';
 import 'package:quiz_app/views/loginScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -119,14 +120,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       letterSpacing: 0.46)),
                               Padding(
                                 padding: EdgeInsets.only(
+                                  top: 10,
                                     bottom:
                                         UIConstants.fitToHeight(20, context)),
-                                child: Text(
-                                  'User',
-                                  style: TextStyle(
-                                      color: Colors.white.withOpacity(0.5),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500),
+                                child: InkWell(
+                                   onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => EditScreen()));
+                                },
+                                  child: Text(
+                                    'Edit',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                               )
                             ],
