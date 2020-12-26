@@ -194,8 +194,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     carouselDots(context),
                     SizedBox(height: 30),
                     Container(
-                        height: 360,
-                        width: 360,
+                        height: UIConstants.fitToHeight(360,context),
+                        width:  UIConstants.fitToWidth(360,context),
                         child: Stack(
                           children: [
                             Column(
@@ -218,8 +218,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BorderRadius.circular(12),
                                             color: Colors.lightBlue.shade300,
                                           ),
-                                          height: 150,
-                                          width: 150,
+                                          height: 160,
+                                          width: 160,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
@@ -230,7 +230,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               SizedBox(height: 4),
                                               Text(
-                                                "Quiz 1",
+                                                quiz1 == null
+                                                    ? "Quiz 1"
+                                                    : quiz1.name,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 2),
+                                              Text(
+                                                quiz1 == null
+                                                    ? ""
+                                                    : quiz1.startTime + "\n" + quiz1.endTime,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
@@ -282,8 +294,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: 150,
-                                                width: 150,
+                                                height: 160,
+                                                width: 160,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -310,8 +322,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 150,
-                                                      width: 150,
+                                                      height: 160,
+                                                      width: 160,
                                                     )
                                                   : Container(),
                                               !subscribed
@@ -321,8 +333,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 150,
-                                                      width: 150,
+                                                      height: 160,
+                                                      width: 160,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -415,8 +427,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            height: 150,
-                                            width: 150,
+                                            height: 160,
+                                            width: 160,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -460,8 +472,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: 150,
-                                                width: 150,
+                                                height: 160,
+                                                width: 160,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -490,8 +502,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 150,
-                                                      width: 150,
+                                                      height: 160,
+                                                      width: 160,
                                                     )
                                                   : Container(),
                                               !subscribed
@@ -501,8 +513,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 150,
-                                                      width: 150,
+                                                      height: 160,
+                                                      width: 160,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -633,77 +645,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  !subscribed
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white24,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          height: 150,
-                          width: 150,
-                        )
-                      : Container(),
-                  !subscribed
-                      ? Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          height: 150,
-                          width: 150,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                size: 40,
-                              )
-                            ],
-                          ),
-                        )
-                      : Container(),
                 ],
               ),
             ),
           ),
         ),
-        onTap: subscribed
-            ? (quiz4 == null
-                ? () {
-                    showDialog(
-                        context: (context),
-                        builder: (contex) => AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
-                              title: Text("Alert"),
-                              content:
-                                  Text("Quiz not Started or Quiz Finished!"),
-                            ));
-                  }
-                : () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return QuizTestScreen(quiz: quiz4);
-                    }));
-                  })
-            : () {
+        onTap: (quiz4 == null
+            ? () {
                 showDialog(
                     context: (context),
                     builder: (contex) => AlertDialog(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           title: Text("Alert"),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text("You are not a Plus Member"),
-                              FlatButton(
-                                child: Text("Subscribe?"),
-                                onPressed: () {},
-                              )
-                            ],
-                          ),
+                          content: Text("Quiz not Started or Quiz Finished!"),
                         ));
-              },
+              }
+            : () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return QuizTestScreen(quiz: quiz4);
+                }));
+              }),
       ),
     );
   }

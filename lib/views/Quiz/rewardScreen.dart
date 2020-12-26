@@ -132,12 +132,13 @@ class _RewardScreenState extends State<RewardScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 4.0, vertical: 8),
                                     child: ListTile(
-                                      leading: CircleAvatar(
+                                      leading: Text(index.toString()),
+                                      title: CircleAvatar(
                                         radius: 30,
                                         backgroundColor: Colors.white,
                                         child: Image.network(quizResponses[index].user.photoUrl),
                                       ),
-                                      title: Text(quizResponses[index].user.name),
+                                      subtitle: Text(quizResponses[index].user.name),
                                       trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
