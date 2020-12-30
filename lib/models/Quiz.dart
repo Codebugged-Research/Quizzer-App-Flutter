@@ -19,6 +19,7 @@ class Quiz {
         this.name,
         this.slot,
         this.reward,
+        this.description,
         this.date,
         this.startTime,
         this.endTime,
@@ -36,6 +37,7 @@ class Quiz {
     String name;
     String slot;
     String startTime;
+    String description;
     String endTime;
     String minutes;
     String seconds;
@@ -51,6 +53,7 @@ class Quiz {
         incorrectScore: json["incorrect_score"] == null ? null : json["incorrect_score"],
         id: json["_id"] == null ? null : json["_id"],
         name: json["name"] == null ? null : json["name"],
+        description: json["description"] == null ? null : json["description"],
         slot: json["slot"] == null ? null : json["slot"],
         seconds: json["seconds"] == null ? "0": json["seconds"],
         minutes: json["minutes"] == null ? "0" : json["minutes"],
@@ -69,6 +72,7 @@ class Quiz {
         "incorrect_score": incorrectScore == null ? null : incorrectScore,
         "_id": id == null ? null : id,
         "name": name == null ? null : name,
+        "description": description == null ? null : description,
         "slot": slot == null ? null : slot,
         "seconds": seconds == null ? "0" : seconds,
         "minutes": minutes == null ? "0" : minutes,
