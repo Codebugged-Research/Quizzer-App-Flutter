@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/responseService.dart';
@@ -134,7 +135,13 @@ class _QuizHistoryState extends State<QuizHistory> {
                 ],
               ),
             )
-          : Center(child: Text("No Responses")),
+          : Center(
+              child: Text("No Responses",
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20)))),
     );
   }
 }
