@@ -8,8 +8,10 @@ import 'package:quiz_app/views/landingScreen.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class RazorPayScreen extends StatefulWidget {
-  RazorPayScreen({this.orderId});
   final String orderId;
+  final String amount;
+  RazorPayScreen({this.orderId, this.amount});
+
   @override
   _RazorPayScreenState createState() => _RazorPayScreenState();
 }
@@ -55,7 +57,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => LandingScreen(
               selectedIndex: 0,
-            )));    
+            )));
     _razorpay.clear();
   }
 
@@ -93,7 +95,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     setState(() {
       options = {
         'key': "rzp_test_YGmmPUQEmTBUaA",
-        'amount': 10000,
+        'amount': int.parse(widget.amount),
         'name': 'Quiz Adda',
         'order_id': widget.orderId,
         'currency': "INR",

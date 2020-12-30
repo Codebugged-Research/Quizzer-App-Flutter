@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 
 class PlanCardTwo extends StatelessWidget {
-
+  String deducted="0";
+  PlanCardTwo({this.deducted});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,7 +58,7 @@ class PlanCardTwo extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                     Text(
-                      '₹ 200',
+                      '₹ ${(int.parse("200")-int.parse(deducted)).toString()}',
                       style: Theme.of(context)
                           .primaryTextTheme
                           .headline4
