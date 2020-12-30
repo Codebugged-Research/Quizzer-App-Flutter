@@ -12,7 +12,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return loginButton(
-        'Sign in with Google', 'assets/images/Google.png', context);
+        'Sign in with Google', 'assets/images/google.png', context);
   }
 
   Widget loginButton(String title, String assets, BuildContext context) {
@@ -21,7 +21,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
       width: UIConstants.fitToWidth(240, context),
       child: MaterialButton(
         elevation: 0,
-        color: Colors.deepOrange,
+        color: Color(0xffdd4b39),
         onPressed: () async {
           final GoogleSignInAccount googleUser = await googleSignIn.signIn();
           final GoogleSignInAuthentication googleAuth =
