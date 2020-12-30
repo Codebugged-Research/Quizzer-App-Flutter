@@ -465,7 +465,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               Text(
-                "\n\n\n\n\n\n\n\n\n",
+                quiz.description,
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),
