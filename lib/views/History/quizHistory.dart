@@ -61,7 +61,7 @@ class _QuizHistoryState extends State<QuizHistory> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
-                                          QuizDetailScreen()));
+                                          QuizDetailScreen(quiz:quizResponses[index].quiz)));
                                 },
                                 leading: CircleAvatar(
                                   radius: 30,

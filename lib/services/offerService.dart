@@ -5,6 +5,7 @@ import 'package:quiz_app/models/Offer.dart';
 import 'package:quiz_app/services/authService.dart';
 
 class OfferService extends AuthService {
+  // ignore: missing_return
   static Future<List<Offer>> getAllOffers() async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
         AuthService.BASE_URI + 'offer/app',
