@@ -51,6 +51,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                           SizedBox(
                               height: UIConstants.fitToHeight(24, context)),
                           CircleAvatar(
+                            backgroundColor: Colors.white,
                             child: ClipOval(
                               child: Image.asset(
                                 'assets/images/logo.png',

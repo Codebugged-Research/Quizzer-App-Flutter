@@ -105,7 +105,7 @@ class _QuizHistoryState extends State<QuizHistory> {
                   style: GoogleFonts.montserrat(
                       textStyle: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w500,
                           fontSize: 20)))),
     );
   }

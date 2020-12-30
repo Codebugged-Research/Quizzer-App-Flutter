@@ -15,7 +15,7 @@ class _ContactScreenState extends State<ContactScreen> {
   void launchMail() async {
     final Uri params = Uri(
         scheme: 'mailto',
-        path: 'sayannath235@gmail.com',
+        path: 'quizplus.money@gmail.com',
         query: 'subject=Quiz Adda App Feedback&body=Hello!');
     String url = params.toString();
     if (await canLaunch(url)) {
@@ -60,6 +60,7 @@ class _ContactScreenState extends State<ContactScreen> {
                           SizedBox(
                               height: UIConstants.fitToHeight(24, context)),
                           CircleAvatar(
+                            backgroundColor: Colors.white,
                             child: ClipOval(
                               child: Image.asset(
                                 'assets/images/logo.png',
