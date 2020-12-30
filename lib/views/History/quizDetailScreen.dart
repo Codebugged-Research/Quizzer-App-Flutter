@@ -15,7 +15,6 @@ class _QuizDetailScreenState extends State<QuizDetailScreen> {
   @override
   void initState() {
     quiz = widget.quiz;
-    // TODO: implement initState
     super.initState();
   }
 

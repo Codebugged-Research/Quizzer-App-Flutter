@@ -27,6 +27,7 @@ class _MemberScreenState extends State<MemberScreen> {
   Offer offer;
   String orderId;
   var options;
+  var _selectedItem;
 
   @override
   void initState() {
@@ -42,13 +43,11 @@ class _MemberScreenState extends State<MemberScreen> {
     user = await UserService.getUser();
     offers = await OfferService.getAllOffers();
     offers.forEach((element) {
-        offerItems.add(DropdownMenuItem(
-          value: int.parse(element.amount),
-          child: Text(element.name),
-        ));
+      offerItems.add(DropdownMenuItem(
+        value: int.parse(element.amount),
+        child: Text(element.name),
+      ));
     });
-    print(offerItems[0].child);
-    print(offerItems[1].child);
     setState(() {
       _selectedItem = (offerItems[0].value);
       isLoading = false;
@@ -63,7 +62,7 @@ class _MemberScreenState extends State<MemberScreen> {
     }
   }
 
-  var _selectedItem;
+
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   @override
@@ -103,8 +102,15 @@ class _MemberScreenState extends State<MemberScreen> {
                                     .headline4
                                     .copyWith(color: Colors.white),
                               ),
-
-                              // Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
+                              SizedBox(
+                                  height: UIConstants.fitToHeight(16, context)),
+                              Text(
+                                'Select Offers!',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
+                              ),
                               SizedBox(
                                   height: UIConstants.fitToHeight(32, context)),
                             ],
@@ -120,51 +126,52 @@ class _MemberScreenState extends State<MemberScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: UIConstants.fitToHeight(72, context),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                    isDense: true,
-                                    hint: Text(
-                                      'Select Offers!',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
+                              height: UIConstants.fitToHeight(90, context)),
+                          offerItems != null
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: Colors.white,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                          isDense: true,
+                                          hint: Text(
+                                            'Select Offers!',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          iconEnabledColor: Colors.black,
+                                          value: _selectedItem,
+                                          items: offerItems,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _selectedItem = (value);
+                                            });
+                                          }),
                                     ),
-                                    iconEnabledColor: Colors.black,
-                                    value: _selectedItem,
-                                    items: offerItems,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedItem = (value);
-                                      });
-                                    }),
-                              ),
-                            ),
-                          ),
+                                  ),
+                                )
+                              : Container(),
                           SizedBox(
                             height: UIConstants.fitToHeight(32, context),
                           ),
                           Stack(
                             alignment: Alignment.center,
                             children: [
-                              PlanCard(),
+                              PlanCard(deducted: _selectedItem.toString()),
                               buyWidgetOne(context),
                             ],
                           ),
                           Stack(
                             alignment: Alignment.center,
                             children: [
-                              PlanCardTwo(),
+                              PlanCardTwo(deducted: _selectedItem.toString()),
                               buyWidgetTwo(context),
                             ],
                           ),
@@ -206,9 +213,9 @@ class _MemberScreenState extends State<MemberScreen> {
           child: MaterialButton(
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(
-                  jsonEncode({"amount": 10000}));
+                  jsonEncode({"amount": (10000 - (int.parse("${_selectedItem.toString()}") * 100)).toString()}));
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => RazorPayScreen()));
+                  MaterialPageRoute(builder: (context) => RazorPayScreen(orderId: orderId, amount: (10000 - (int.parse("${_selectedItem.toString()}") * 100)).toString(),)));
             },
             color: Colors.white,
             child: Text(
@@ -247,9 +254,9 @@ class _MemberScreenState extends State<MemberScreen> {
           child: MaterialButton(
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(
-                  jsonEncode({"amount": 20000}));
+                  jsonEncode({"amount": (20000 - (int.parse("${_selectedItem.toString()}") * 100)).toString()}));
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => RazorPayScreen()));
+                  MaterialPageRoute(builder: (context) => RazorPayScreen(orderId: orderId, amount: (20000 - (int.parse("${_selectedItem.toString()}") * 100)).toString(),)));
             },
             color: Colors.white,
             child: Text(
