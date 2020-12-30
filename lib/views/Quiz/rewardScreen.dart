@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/Response.dart';
@@ -132,32 +133,52 @@ class _RewardScreenState extends State<RewardScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 4.0, vertical: 8),
                                     child: ListTile(
-                                      leading: Text(index.toString()),
-                                      title: CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.white,
-                                        child: Image.network(quizResponses[index].user.photoUrl),
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                                      leading: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text((index+1).toString(),style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6
+                                                  .copyWith(color: Colors.black),),
+                                              SizedBox(width: 8,),
+                                              CircleAvatar(
+                                                radius: 22,
+                                                backgroundColor: Colors.white,
+                                                backgroundImage: NetworkImage(quizResponses[index].user.photoUrl),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      subtitle: Text(quizResponses[index].user.name),
-                                      trailing: Row(
+                                      title: Text(quizResponses[index].user.username),
+                                      trailing: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      '₹ ${quizResponses[index].reward}   |   ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .copyWith(color: Colors.green),
+                                          '₹ ${quizResponses[index].reward}   |   ',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6
+                                              .copyWith(color: Colors.green),
                                     ),
                                     Text(
-                                      quizResponses[index].score,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .copyWith(color: Colors.black),
+                                          quizResponses[index].score,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6
+                                              .copyWith(color: Colors.black),
                                     ),
                                   ],
                                 ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

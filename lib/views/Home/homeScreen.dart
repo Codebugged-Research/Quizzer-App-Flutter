@@ -260,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ? () {
                                               showDialog(
                                                   context: (context),
-                                                  builder: (contex) =>
+                                                  builder: (context) =>
                                                       AlertDialog(
                                                         shape: RoundedRectangleBorder(
                                                             borderRadius:

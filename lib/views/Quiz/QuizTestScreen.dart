@@ -8,6 +8,7 @@ import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
+import 'package:quiz_app/views/Member/memberScreen.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
 class QuizTestScreen extends StatefulWidget {
@@ -69,7 +70,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   Widget questionCard() {
     return PageView.builder(
-      physics:new NeverScrollableScrollPhysics(),
+      physics: new NeverScrollableScrollPhysics(),
       controller: _pageController,
       itemCount: quiz.questions.length,
       itemBuilder: (context, index) {
@@ -187,7 +188,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             },
                             builder: (BuildContext ctx, Duration remaining) {
                               return Text(
-                                '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)  }',
+                                '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -432,7 +433,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 50),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 22),
           decoration: BoxDecoration(
@@ -462,6 +463,11 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     .textTheme
                     .headline5
                     .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "\n\n\n\n\n\n\n\n\n",
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 22),
               Text(
@@ -569,7 +575,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 50),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 22),
           decoration: BoxDecoration(
@@ -629,12 +635,36 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               SizedBox(height: 30),
               ListTile(
                 title: Text(
-                  "Attemped",
+                  "Attempted",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 trailing: Text(
                   (correct + wrong).toString(),
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "Correct",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                trailing: Text(
+                  (correct).toString(),
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "Wrong",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                trailing: Text(
+                  (wrong).toString(),
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -664,10 +694,51 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => LandingScreen(
-                              selectedIndex: 0,
-                            )));
+                    if (user.subscription == null) {
+                      showDialog(
+                          context: (context),
+                          builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                content: Text(
+                                    "Subscribe for more exciting quizzes and rewards"),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MemberScreen()));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal:8.0, vertical: 2),
+                                      child: Text("Subscribe",
+                                          style: TextStyle(color: Colors.white)),
+                                    ),
+                                    color: Colors.lightBlue.shade300,
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LandingScreen(
+                                                    selectedIndex: 0,
+                                                  )));
+                                    },
+                                    child: Text("No"),
+                                  ),
+                                ],
+                              ));
+                    } else {
+                      print(user.subscription.validTill
+                          .difference(DateTime.now())
+                          .inDays);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => LandingScreen(
+                                selectedIndex: 0,
+                              )));
+                    }
                   }),
             ],
           ),

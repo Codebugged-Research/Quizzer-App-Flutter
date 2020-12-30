@@ -98,7 +98,7 @@ class _QuizScreenState extends State<QuizScreen> {
         now.day,
         int.parse(quiz.startTime.split(":").first),
         int.parse(quiz.startTime.split(":").last));
-    var tempEndtDateTime = DateTime(
+    var tempEndDateTime = DateTime(
         now.year,
         now.month,
         now.day,
@@ -106,8 +106,8 @@ class _QuizScreenState extends State<QuizScreen> {
         int.parse(quiz.endTime.split(":").last));
     int remain = 0;
     if (!change[index]) {
-      if (now.isAfter(tempStartDateTime) && now.isBefore(tempEndtDateTime)) {
-        remain = tempEndtDateTime.difference(now).inSeconds;
+      if (now.isAfter(tempStartDateTime) && now.isBefore(tempEndDateTime)) {
+        remain = tempEndDateTime.difference(now).inSeconds;
         change[index] = false;
       } else {
         change[index] = true;
@@ -131,18 +131,20 @@ class _QuizScreenState extends State<QuizScreen> {
                 subtitle: Row(
                   children: [
                     Icon(Icons.lock_clock),
-                    Countdown(
-                      duration: Duration(seconds: remain),
-                      onFinish: () {
-                        setState(() {
-                          change[index] = true;
-                        });
-                      },
-                      builder: (BuildContext ctx, Duration remaining) {
-                        return Text(
-                            '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)}');
-                      },
-                    ),
+                    remain == 0
+                        ? Text("${quiz.startTime}-${quiz.endTime}")
+                        : Countdown(
+                            duration: Duration(seconds: remain),
+                            onFinish: () {
+                              setState(() {
+                                change[index] = true;
+                              });
+                            },
+                            builder: (BuildContext ctx, Duration remaining) {
+                              return Text(
+                                  '${remaining.inHours}:${remaining.inMinutes.remainder(60)}:${remaining.inSeconds.remainder(60)}');
+                            },
+                          ),
                   ],
                 ),
                 trailing: change[index]

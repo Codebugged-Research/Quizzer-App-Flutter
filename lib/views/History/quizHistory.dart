@@ -3,6 +3,7 @@ import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
+import 'package:quiz_app/views/History/quizDetailScreen.dart';
 
 class QuizHistory extends StatefulWidget {
   @override
@@ -39,47 +40,6 @@ class _QuizHistoryState extends State<QuizHistory> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  // Container(
-                  //   height: 250,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   decoration: BoxDecoration(
-                  //       color: Colors.lightBlue.shade300,
-                  //       borderRadius: BorderRadius.only(
-                  //         topLeft: Radius.circular(0.0),
-                  //         bottomLeft: Radius.circular(27.0),
-                  //         bottomRight: Radius.circular(27.0),
-                  //         topRight: Radius.circular(0.0),
-                  //       )),
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       CircleAvatar(
-                  //         radius: 65,
-                  //         backgroundColor: Colors.white,
-                  //         foregroundColor: Colors.green,
-                  //         backgroundImage: NetworkImage(quizResponses[0].user.photoUrl),
-                  //       ),
-                  //       SizedBox(height: 10),
-                  //       Text(
-                  //         quizResponses.first.score,
-                  //         style: Theme.of(context)
-                  //             .textTheme
-                  //             .headline5
-                  //             .copyWith(
-                  //                 color: Colors.white,
-                  //                 fontWeight: FontWeight.bold),
-                  //       ),
-                  //       SizedBox(height: 10),
-                  //       Text(
-                  //         quizResponses.first.user.name,
-                  // style: Theme.of(context)
-                  //     .textTheme
-                  //     .headline6
-                  //     .copyWith(color: Colors.white),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: quizResponses.length,
@@ -97,6 +57,11 @@ class _QuizHistoryState extends State<QuizHistory> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 4.0, vertical: 8),
                               child: ListTile(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          QuizDetailScreen()));
+                                },
                                 leading: CircleAvatar(
                                   radius: 30,
                                   backgroundColor: Colors.white,
