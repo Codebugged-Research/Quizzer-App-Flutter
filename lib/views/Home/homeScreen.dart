@@ -596,7 +596,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 (BuildContext
                                                                     context) {
                                                       return QuizTestScreen(
-                                                          quiz: quiz4);
+                                                          quiz: quiz3);
                                                     }));
                                                   })
                                             : () {
