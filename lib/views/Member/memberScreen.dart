@@ -43,11 +43,14 @@ class _MemberScreenState extends State<MemberScreen> {
     offers = await OfferService.getAllOffers();
     offers.forEach((element) {
         offerItems.add(DropdownMenuItem(
-          value: element.name,
+          value: int.parse(element.amount),
           child: Text(element.name),
         ));
     });
+    print(offerItems[0].child);
+    print(offerItems[1].child);
     setState(() {
+      _selectedItem = (offerItems[0].value);
       isLoading = false;
     });
     if (user.subscription != null) {
@@ -60,7 +63,7 @@ class _MemberScreenState extends State<MemberScreen> {
     }
   }
 
-  int _selectedItem = 100;
+  var _selectedItem;
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   @override
@@ -142,7 +145,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     items: offerItems,
                                     onChanged: (value) {
                                       setState(() {
-                                        _selectedItem = value;
+                                        _selectedItem = (value);
                                       });
                                     }),
                               ),
