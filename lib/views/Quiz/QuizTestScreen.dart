@@ -51,20 +51,55 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   loadData() async {
     user = await UserService.getUser();
-    dots = List.filled(
-        questionLength,
-        Container(
+    for(int i = 0 ; i<  questionLength; i++){
+     setState(() {
+       dots.add(Container(
+         width: 10.0,
+         height: 10.0,
+         margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+         decoration: BoxDecoration(
+           shape: BoxShape.circle,
+           color: Colors.white,
+         ),
+       ));
+     });
+    }
+
+
+  }
+  changeColor(int i,bool change){
+    print(dots[i]);
+    if(change){
+      setState(() {
+        dots[i] = Container(
           width: 10.0,
           height: 10.0,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: capture ? Colors.greenAccent : Colors.orange,
+            color: Colors.greenAccent,
           ),
-        ));
+        );
+
+      });
+      print(dots[i]);
+    }else{
+      setState(() {
+        dots[i] = Container(
+          width: 10.0,
+          height: 10.0,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.orangeAccent,
+          ),
+        );
+      });
+    }
+
   }
 
-  Widget dottedContainer(context) {
+  Widget dottedContainer() {
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +120,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
             child: Column(
               children: [
                 Container(
-                  //height: MediaQuery.of(context).size.height * 0.5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(22),
@@ -207,8 +241,8 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.05),
                         Align(
-                          alignment: Alignment.center,
-                            child: dottedContainer(context)),
+                            alignment: Alignment.center,
+                            child: dottedContainer()),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.05),
                         Container(
@@ -227,7 +261,8 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                           shadows: [
                                         Shadow(
                                             offset: Offset(1, 1),
-                                            color: Colors.black.withOpacity(0.4),
+                                            color:
+                                                Colors.black.withOpacity(0.4),
                                             blurRadius: 0.1),
                                       ]),
                                   textAlign: TextAlign.center,
@@ -313,15 +348,17 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               minWidth: 150,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12)),
-                              color: option3 ? Colors.greenAccent : Colors.white,
+                              color:
+                                  option3 ? Colors.greenAccent : Colors.white,
                               child: Text(
                                 "${quiz.questions[index].options[2]}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
                                     .copyWith(
-                                        color:
-                                            option3 ? Colors.white : Colors.black,
+                                        color: option3
+                                            ? Colors.white
+                                            : Colors.black,
                                         fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
@@ -339,15 +376,17 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                               minWidth: 150,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12)),
-                              color: option4 ? Colors.greenAccent : Colors.white,
+                              color:
+                                  option4 ? Colors.greenAccent : Colors.white,
                               child: Text(
                                 "${quiz.questions[index].options[3]}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
                                     .copyWith(
-                                        color:
-                                            option4 ? Colors.white : Colors.black,
+                                        color: option4
+                                            ? Colors.white
+                                            : Colors.black,
                                         fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
@@ -370,10 +409,17 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                           color: Colors.lightBlue.shade300,
                           child: Text(
                             "Next",
-                            style: Theme.of(context).textTheme.headline6.copyWith(
-                                color: Colors.white, fontWeight: FontWeight.bold),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
+                            print(index);
+                            print(capture);
+                            changeColor(index,capture);
                             if (option1 && capture) {
                               if (quiz.questions[index].answer == "1") {
                                 correct++;
@@ -407,6 +453,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             option3 = false;
                             option4 = false;
                             capture = false;
+
                             if (quiz.questions.length == index + 1) {
                               setState(() {
                                 endTap = true;
@@ -474,10 +521,15 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                     .headline5
                     .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
               ),
+              SizedBox(height: 16),
               Text(
                 quiz.description,
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: Colors.white,),
               ),
               SizedBox(height: 22),
               Text(
@@ -721,9 +773,11 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                                   MemberScreen()));
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal:8.0, vertical: 2),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0, vertical: 2),
                                       child: Text("Subscribe",
-                                          style: TextStyle(color: Colors.white)),
+                                          style:
+                                              TextStyle(color: Colors.white)),
                                     ),
                                     color: Colors.lightBlue.shade300,
                                   ),
@@ -760,7 +814,8 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
+      body:
+          endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
     );
   }
 }
