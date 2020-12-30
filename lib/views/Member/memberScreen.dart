@@ -52,6 +52,14 @@ class _MemberScreenState extends State<MemberScreen> {
       showDialogScreen();
     }
   }
+  int _selectedItem = 100;
+  List<DropdownMenuItem> _dropdownMenuItems = [
+    DropdownMenuItem(child: Text("OFFER 100"),value: 100,),
+    DropdownMenuItem(child: Text("OFFER 75"),value: 75,),
+    DropdownMenuItem(child: Text("OFFER 50"),value: 50,),
+    DropdownMenuItem(child: Text("OFFER 25"),value: 25,),
+    DropdownMenuItem(child: Text("OFFER 0"),value: 0,)
+  ];
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   @override
@@ -70,7 +78,7 @@ class _MemberScreenState extends State<MemberScreen> {
                   alignment: Alignment.topCenter,
                   children: [
                     Container(
-                      height: UIConstants.fitToHeight(200, context),
+                      height: UIConstants.fitToHeight(260, context),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: Colors.black,
@@ -92,11 +100,11 @@ class _MemberScreenState extends State<MemberScreen> {
                                     .headline4
                                     .copyWith(color: Colors.white),
                               ),
+
+
+                              // Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
                               SizedBox(
-                                  height: UIConstants.fitToHeight(16, context)),
-                              Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
-                              SizedBox(
-                                  height: UIConstants.fitToHeight(16, context)),
+                                  height: UIConstants.fitToHeight(32, context)),
 
                             ],
                           ),
@@ -110,7 +118,27 @@ class _MemberScreenState extends State<MemberScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: UIConstants.fitToHeight(48, context),),
+                          SizedBox(height: UIConstants.fitToHeight(72, context),),
+                          Container(
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),
+                              color: Colors.white,),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal:12.0),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  hint: Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
+                                  iconEnabledColor: Colors.black,
+                                    value: _selectedItem,
+                                    items: _dropdownMenuItems,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectedItem = value;
+                                      });
+                                    }),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: UIConstants.fitToHeight(32, context),),
                           Stack(
                             alignment: Alignment.center,
                             children: [
@@ -125,6 +153,7 @@ class _MemberScreenState extends State<MemberScreen> {
                               buyWidgetTwo(context),
                             ],
                           ),
+                          
                         ],
                       ),
                     ),
