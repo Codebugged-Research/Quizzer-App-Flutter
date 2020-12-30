@@ -86,7 +86,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                      "Greeting from Quiz-Adda,\n\nAs we all know the importance of GK and Current Affairs in all the competitive exams conducted by IBPS,SSC,UPSC,STATE-PCS NTPC RRB.\n\nWe also know the weightage of static gk and current affairs questions in General awareness section.SO here Quiz-Adda providing you an opportunity to get rewards for your knowledge.\n\nIn our app you can practice quizes on daily basis and we will give cash reward to winners. We are happy to have you here and wish you a great and bright future ahead.",
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.lato(
                           textStyle: TextStyle(

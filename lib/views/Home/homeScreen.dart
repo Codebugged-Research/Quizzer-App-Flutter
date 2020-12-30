@@ -260,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ? () {
                                               showDialog(
                                                   context: (context),
-                                                  builder: (contex) =>
+                                                  builder: (context) =>
                                                       AlertDialog(
                                                         shape: RoundedRectangleBorder(
                                                             borderRadius:
@@ -378,11 +378,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     showDialog(
                                                         context: (context),
                                                         builder:
-                                                            (contex) =>
+                                                            (context) =>
                                                                 AlertDialog(
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
+
                                                                               12)),
                                                                   title: Text(
                                                                       "Alert"),
@@ -404,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             : () {
                                                 showDialog(
                                                   context: (context),
-                                                  builder: (contex) =>
+                                                  builder: (context) =>
                                                       AlertDialog(
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -576,7 +577,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     showDialog(
                                                         context: (context),
                                                         builder:
-                                                            (contex) =>
+                                                            (context) =>
                                                                 AlertDialog(
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius:
@@ -601,7 +602,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             : () {
                                                 showDialog(
                                                     context: (context),
-                                                    builder: (contex) =>
+                                                    builder: (context) =>
                                                         AlertDialog(
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
@@ -693,7 +694,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ? () {
                 showDialog(
                     context: (context),
-                    builder: (contex) => AlertDialog(
+                    builder: (context) => AlertDialog(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           title: Text("Alert"),
