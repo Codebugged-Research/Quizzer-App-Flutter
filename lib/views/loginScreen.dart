@@ -31,6 +31,7 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: scaffkey,
       body: CustomPaint(
         painter: BackgroundSignIn(),
@@ -55,13 +56,15 @@ class _LogInScreenState extends State<LogInScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: UIConstants.fitToHeight(350, context),
+                  height: UIConstants.fitToHeight(75, context),
+                ),
+                Image.asset('assets/images/logo.png',height: UIConstants.fitToHeight(200, context),),
+                SizedBox(
+                  height: UIConstants.fitToHeight(50, context),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40.0),
-                  child: Container(
-                    child: LoginButtonComponentAndroid(),
-                  ),
+                  child: LoginButtonComponentAndroid(),
                 ),
               ],
             ),

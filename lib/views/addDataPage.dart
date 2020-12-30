@@ -18,6 +18,20 @@ class _AddDataScreenState extends State<AddDataScreen> {
   TextEditingController _username = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _upi = TextEditingController();
+  List<String> exams = [];
+  List<String> interests = [];
+  List<DropdownMenuItem> examsList = [
+    DropdownMenuItem(
+      child: Text("JEE"),
+      value: "JEE",
+    ),
+  ];
+  List<DropdownMenuItem> interestsList = [
+    DropdownMenuItem(
+      child: Text("Current Affairs"),
+      value: "Current Affairs",
+    ),
+  ];
 
   bool isLoading = false;
   User user;
@@ -57,22 +71,12 @@ class _AddDataScreenState extends State<AddDataScreen> {
       isLoading = true;
     });
     if (checkFields()) {
-      //uncomment when payout is required
-      // var contactPayload = json.encode({
-      //   "name": user.name,
-      //   "email": user.email,
-      //   "phone": _phone.text,
-      // });
-      // var contactId = await RazorPayService.createContactId(contactPayload);
-      // var fundPayload = json.encode({
-      //   "contactId": contactId,
-      //   "UpiId": _upi.text,
-      // });
-      // var fundId = await RazorPayService.createFundAccount(fundPayload);
       var payload = json.encode({
         "username": _username.text,
         "phone": _phone.text,
         "upiId": _upi.text,
+        "exams": exams,
+        "interests": interests,
         // "contactId": contactId,
         // "fundAccount": fundId
       });
@@ -91,6 +95,39 @@ class _AddDataScreenState extends State<AddDataScreen> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  Widget _dropDown(List<DropdownMenuItem> source, List target, String hint) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: UIConstants.fitToWidth(40, context),
+        right: UIConstants.fitToWidth(40, context),
+      ),
+      child: FormField(
+        builder: (FormFieldState state) {
+          return DropdownButtonFormField(
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: hint,
+              hintStyle: TextStyle(fontSize: 15.0, color: Colors.black),
+              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.circular(10.0)),
+            ),
+            isDense: true,
+            items: source,
+            icon: Icon(Icons.category),
+            onChanged: (value) {
+              setState(() {
+                target.add(value);
+              });
+            },
+          );
+        },
+      ),
+    );
   }
 
   Widget _input(TextEditingController _text, int textWidth, String validation,
@@ -192,7 +229,11 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 'UPI ID',
                                 'UPI ID',
                                 Icons.money,
-                                TextInputType.name)
+                                TextInputType.name),
+                            _dropDown(examsList, exams, "Choose Your Exam"),
+                            SizedBox(height:16),
+                            _dropDown(interestsList, interests,
+                                "Choose Your Interests"),
                           ],
                         ),
                       )),

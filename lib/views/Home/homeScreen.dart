@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:quiz_app/models/File.dart';
@@ -194,8 +195,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     carouselDots(context),
                     SizedBox(height: 30),
                     Container(
-                        height: UIConstants.fitToHeight(360,context),
-                        width:  UIConstants.fitToWidth(360,context),
+                        height: UIConstants.fitToHeight(360, context),
+                        width: UIConstants.fitToWidth(360, context),
                         child: Stack(
                           children: [
                             Column(
@@ -231,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               SizedBox(height: 4),
                                               Text(
                                                 quiz1 == null
-                                                    ? "Quiz 1"
+                                                    ? "No"
                                                     : quiz1.name,
                                                 style: TextStyle(
                                                     color: Colors.white,
@@ -241,8 +242,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               SizedBox(height: 2),
                                               Text(
                                                 quiz1 == null
-                                                    ? ""
-                                                    : quiz1.startTime + "\n" + quiz1.endTime,
+                                                    ? "Quiz"
+                                                    : quiz1.startTime +
+                                                        "\n" +
+                                                        quiz1.endTime,
+                                                textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
@@ -305,12 +309,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       height: 56,
                                                     ),
                                                     SizedBox(height: 4),
-                                                    Text("Quiz 2",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
+                                                    Text(
+                                                      quiz2 == null
+                                                          ? "No"
+                                                          : quiz2.name,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    SizedBox(height: 2),
+                                                    Text(
+                                                      quiz2 == null
+                                                          ? "Quiz"
+                                                          : quiz2.startTime +
+                                                              "\n" +
+                                                              quiz2.endTime,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -371,41 +392,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   }
                                                 : () {
                                                     Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                      return QuizTestScreen(
-                                                          quiz: quiz2);
-                                                    }));
+                                                      MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return QuizTestScreen(
+                                                              quiz: quiz2);
+                                                        },
+                                                      ),
+                                                    );
                                                   })
                                             : () {
                                                 showDialog(
-                                                    context: (context),
-                                                    builder: (contex) =>
-                                                        AlertDialog(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12)),
-                                                          title: Text("Alert"),
-                                                          content: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Text(
-                                                                  "You are not a Plus Member"),
-                                                              FlatButton(
-                                                                child: Text(
-                                                                    "Subscribe?"),
-                                                                onPressed:
-                                                                    () {},
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ));
+                                                  context: (context),
+                                                  builder: (contex) =>
+                                                      AlertDialog(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12)),
+                                                    title: Text("Alert"),
+                                                    content: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Text(
+                                                            "You are not a Plus Member"),
+                                                        FlatButton(
+                                                          child: Text(
+                                                              "Subscribe?"),
+                                                          onPressed: () {},
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
                                               }),
                                   ],
                                 ),
@@ -450,10 +472,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         onTap: () {
                                           Navigator.of(context).push(
-                                              MaterialPageRoute(builder:
-                                                  (BuildContext context) {
-                                            return FeedScreen();
-                                          }));
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                                return FeedScreen();
+                                              },
+                                            ),
+                                          );
                                         }),
                                     SizedBox(width: 12),
                                     GestureDetector(
@@ -484,12 +508,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     SizedBox(height: 4),
                                                     Text(
-                                                      "Quiz 3",
+                                                      quiz3 == null
+                                                          ? "No"
+                                                          : quiz3.name,
                                                       style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    SizedBox(height: 2),
+                                                    Text(
+                                                      quiz3 == null
+                                                          ? "Quiz"
+                                                          : quiz3.startTime +
+                                                              "\n" +
+                                                              quiz3.endTime,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ],
                                                 ),
@@ -689,12 +728,36 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       items: cardList.map((card) {
         return Builder(builder: (BuildContext context) {
-          return Container(
-            height: MediaQuery.of(context).size.height * 0.30,
-            width: MediaQuery.of(context).size.width,
-            child: Card(
-              color: Colors.blueAccent,
-              child: card,
+          return InkWell(
+            onTap: () {
+              showDialog(
+                context: (context),
+                builder: (context) => AlertDialog(
+                  content:
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child:
+                    PinchZoomImage(
+                      image: card,
+                      zoomedBackgroundColor: Color.fromRGBO(240, 240, 240, 1.0),
+                      hideStatusBarWhileZooming: true,
+                      onZoomStart: () {
+                        // print('Zoom started');
+                      },
+                      onZoomEnd: () {
+                        // print('Zoom finished');
+                      },
+                    ),
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.30,
+              width: MediaQuery.of(context).size.width,
+              child: Card(
+                child: card,
+              ),
             ),
           );
         });

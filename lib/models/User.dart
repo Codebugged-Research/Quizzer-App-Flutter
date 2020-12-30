@@ -24,6 +24,7 @@ class User {
     this.subscription,
     this.password,
     this.photoUrl,
+    this.exams,
     this.contactId,
     this.fundAccount,
     this.username,
@@ -34,6 +35,7 @@ class User {
   });
 
   List<dynamic> interests;
+  List<dynamic> exams;
   String role;
   String id;
   String name;
@@ -55,6 +57,9 @@ class User {
         interests: json["interests"] == null
             ? null
             : List<dynamic>.from(json["interests"].map((x) => x)),
+    exams: json["exams"] == null
+        ? null
+        : List<dynamic>.from(json["exams"].map((x) => x)),
         role: json["role"] == null ? null : json["role"],
         id: json["_id"] == null ? null : json["_id"],
         name: json["name"] == null ? null : json["name"],

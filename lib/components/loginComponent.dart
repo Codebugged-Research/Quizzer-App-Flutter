@@ -12,15 +12,16 @@ class LoginButtonComponentAndroid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return loginButton(
-        'Sign in with Google', 'assets/images/google.png', context);
+        'Sign in with Google', 'assets/images/Google.png', context);
   }
 
   Widget loginButton(String title, String assets, BuildContext context) {
-    return SizedBox(
+    return Container(
       height: UIConstants.fitToHeight(40, context),
       width: UIConstants.fitToWidth(240, context),
-      child: RaisedButton(
-        color: Colors.white,
+      child: MaterialButton(
+        elevation: 0,
+        color: Colors.deepOrange,
         onPressed: () async {
           final GoogleSignInAccount googleUser = await googleSignIn.signIn();
           final GoogleSignInAuthentication googleAuth =
@@ -59,7 +60,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(assets),
+            Image.asset(assets,height: 24,),
             SizedBox(
               width: UIConstants.fitToWidth(8, context),
             ),
@@ -67,7 +68,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
               '$title',
               style: GoogleFonts.roboto(
                   textStyle: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 16,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w500)),
