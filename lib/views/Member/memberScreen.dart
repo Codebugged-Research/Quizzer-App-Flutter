@@ -23,6 +23,7 @@ class _MemberScreenState extends State<MemberScreen> {
   bool isLoading = false;
   User user;
   List<Offer> offers = [];
+  List<DropdownMenuItem> offerItems = [];
   Offer offer;
   String orderId;
   var options;
@@ -40,6 +41,12 @@ class _MemberScreenState extends State<MemberScreen> {
     });
     user = await UserService.getUser();
     offers = await OfferService.getAllOffers();
+    offers.forEach((element) {
+        offerItems.add(DropdownMenuItem(
+          value: element.name,
+          child: Text(element.name),
+        ));
+    });
     setState(() {
       isLoading = false;
     });
@@ -52,14 +59,8 @@ class _MemberScreenState extends State<MemberScreen> {
       showDialogScreen();
     }
   }
+
   int _selectedItem = 100;
-  List<DropdownMenuItem> _dropdownMenuItems = [
-    DropdownMenuItem(child: Text("OFFER 100"),value: 100,),
-    DropdownMenuItem(child: Text("OFFER 75"),value: 75,),
-    DropdownMenuItem(child: Text("OFFER 50"),value: 50,),
-    DropdownMenuItem(child: Text("OFFER 25"),value: 25,),
-    DropdownMenuItem(child: Text("OFFER 0"),value: 0,)
-  ];
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   @override
@@ -68,7 +69,6 @@ class _MemberScreenState extends State<MemberScreen> {
       value: const SystemUiOverlayStyle(
         // For Android.
         statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.dark,
       ),
       child: Scaffold(
         key: scaffkey,
@@ -101,11 +101,9 @@ class _MemberScreenState extends State<MemberScreen> {
                                     .copyWith(color: Colors.white),
                               ),
 
-
                               // Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
                               SizedBox(
                                   height: UIConstants.fitToHeight(32, context)),
-
                             ],
                           ),
                         ),
@@ -118,18 +116,30 @@ class _MemberScreenState extends State<MemberScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: UIConstants.fitToHeight(72, context),),
+                          SizedBox(
+                            height: UIConstants.fitToHeight(72, context),
+                          ),
                           Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: Colors.white,
+                            ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal:12.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                  hint: Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
-                                  iconEnabledColor: Colors.black,
+                                    isDense: true,
+                                    hint: Text(
+                                      'Select Offers!',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    iconEnabledColor: Colors.black,
                                     value: _selectedItem,
-                                    items: _dropdownMenuItems,
+                                    items: offerItems,
                                     onChanged: (value) {
                                       setState(() {
                                         _selectedItem = value;
@@ -138,7 +148,9 @@ class _MemberScreenState extends State<MemberScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: UIConstants.fitToHeight(32, context),),
+                          SizedBox(
+                            height: UIConstants.fitToHeight(32, context),
+                          ),
                           Stack(
                             alignment: Alignment.center,
                             children: [
@@ -153,7 +165,6 @@ class _MemberScreenState extends State<MemberScreen> {
                               buyWidgetTwo(context),
                             ],
                           ),
-                          
                         ],
                       ),
                     ),
