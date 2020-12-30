@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/planCard.dart';
 import 'package:quiz_app/components/planCardTwo.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
+import 'package:quiz_app/models/Offer.dart';
 import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/offerService.dart';
 import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Member/paymentScreen.dart';
@@ -20,6 +22,8 @@ class MemberScreen extends StatefulWidget {
 class _MemberScreenState extends State<MemberScreen> {
   bool isLoading = false;
   User user;
+  List<Offer> offers = [];
+  Offer offer;
   String orderId;
   var options;
 
@@ -28,11 +32,17 @@ class _MemberScreenState extends State<MemberScreen> {
     super.initState();
     loadDataForScreen();
   }
-  //TODO:do the 2 card system :: sayan and update role please
 
   bool subscribed = false;
   loadDataForScreen() async {
+    setState(() {
+      isLoading = true;
+    });
     user = await UserService.getUser();
+    offers = await OfferService.getAllOffers();
+    setState(() {
+      isLoading = false;
+    });
     if (user.subscription != null) {
       if (user.subscription.validTill.difference(DateTime.now()).inDays >= 0) {
         setState(() {
@@ -82,6 +92,12 @@ class _MemberScreenState extends State<MemberScreen> {
                                     .headline4
                                     .copyWith(color: Colors.white),
                               ),
+                              SizedBox(
+                                  height: UIConstants.fitToHeight(16, context)),
+                              Text('Select Offers!', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),),
+                              SizedBox(
+                                  height: UIConstants.fitToHeight(16, context)),
+
                             ],
                           ),
                         ),
@@ -94,6 +110,7 @@ class _MemberScreenState extends State<MemberScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: UIConstants.fitToHeight(48, context),),
                           Stack(
                             alignment: Alignment.center,
                             children: [
