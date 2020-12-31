@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:countdown_flutter/countdown_flutter.dart';
@@ -32,7 +33,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   bool readyTap = false;
   Response response;
   int reward = 0;
-  int score = 0;
+  double score = 0;
   DateTime start;
   DateTime stop;
   User user;
@@ -49,54 +50,24 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
     loadData();
   }
 
+  List<int> responses = [];
+
   loadData() async {
     user = await UserService.getUser();
-    for(int i = 0 ; i<  questionLength; i++){
-     setState(() {
-       dots.add(Container(
-         width: 10.0,
-         height: 10.0,
-         margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-         decoration: BoxDecoration(
-           shape: BoxShape.circle,
-           color: Colors.white,
-         ),
-       ));
-     });
-    }
-
-
-  }
-  changeColor(int i,bool change){
-    print(dots[i]);
-    if(change){
+    for (int i = 0; i < questionLength; i++) {
       setState(() {
-        dots[i] = Container(
-          width: 10.0,
-          height: 10.0,
+        responses.add(0);
+        dots.add(Container(
+          width: 16.0,
+          height: 16.0,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.greenAccent,
+            color: Colors.white,
           ),
-        );
-
-      });
-      print(dots[i]);
-    }else{
-      setState(() {
-        dots[i] = Container(
-          width: 10.0,
-          height: 10.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.orangeAccent,
-          ),
-        );
+        ));
       });
     }
-
   }
 
   Widget dottedContainer() {
@@ -108,7 +79,55 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   Widget questionCard() {
     return PageView.builder(
-      physics: new NeverScrollableScrollPhysics(),
+      onPageChanged: (val) {
+        if (responses[val] != 0) {
+          setState(() {
+            if (responses[val] == 1) {
+              option1 = true;
+            } else if (responses[val] == 2) {
+              option2 = true;
+            } else if (responses[val] == 3) {
+              option3 = true;
+            } else if (responses[val] == 4) {
+              option4 = true;
+            }
+          });
+        } else {
+          setState(() {
+            option1 = false;
+            option2 = false;
+            option3 = false;
+            option4 = false;
+          });
+        }
+
+        if (responses[val - 1] != 0) {
+          setState(() {
+            dots[val - 1] = Container(
+              width: 16.0,
+              height: 16.0,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.greenAccent,
+              ),
+            );
+          });
+        } else {
+          setState(() {
+            dots[val - 1] = Container(
+              width: 16.0,
+              height: 16.0,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.orangeAccent,
+              ),
+            );
+          });
+        }
+        print(val);
+      },
       controller: _pageController,
       itemCount: quiz.questions.length,
       itemBuilder: (context, index) {
@@ -277,195 +296,138 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.5,
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          MaterialButton(
-                            height: 60,
-                            minWidth: 150,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            color: option1 ? Colors.greenAccent : Colors.white,
-                            child: Text(
-                              "${quiz.questions[index].options[0]}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                      color:
-                                          option1 ? Colors.white : Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                option1 = true;
-                                option2 = false;
-                                option3 = false;
-                                option4 = false;
-                                capture = true;
-                              });
-                            },
-                          ),
-                          SizedBox(width: 20),
-                          MaterialButton(
-                            height: 60,
-                            minWidth: 150,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            color: option2 ? Colors.greenAccent : Colors.white,
-                            child: Text(
-                              "${quiz.questions[index].options[1]}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                      color:
-                                          option2 ? Colors.white : Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                option1 = false;
-                                option2 = true;
-                                option3 = false;
-                                option4 = false;
-                                capture = true;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          MaterialButton(
-                              height: 60,
-                              minWidth: 150,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
-                              color:
-                                  option3 ? Colors.greenAccent : Colors.white,
-                              child: Text(
-                                "${quiz.questions[index].options[2]}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .copyWith(
-                                        color: option3
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  option1 = false;
-                                  option2 = false;
-                                  option3 = true;
-                                  option4 = false;
-                                  capture = true;
-                                });
-                              }),
-                          SizedBox(width: 20),
-                          MaterialButton(
-                              height: 60,
-                              minWidth: 150,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
-                              color:
-                                  option4 ? Colors.greenAccent : Colors.white,
-                              child: Text(
-                                "${quiz.questions[index].options[3]}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .copyWith(
-                                        color: option4
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  option1 = false;
-                                  option2 = false;
-                                  option3 = false;
-                                  option4 = true;
-                                  capture = true;
-                                });
-                              }),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      MaterialButton(
-                          height: 45,
-                          minWidth: 180,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          color: Colors.lightBlue.shade300,
-                          child: Text(
-                            "Next",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {
-                            print(index);
-                            print(capture);
-                            changeColor(index,capture);
-                            if (option1 && capture) {
-                              if (quiz.questions[index].answer == "1") {
-                                correct++;
-                              } else {
-                                wrong++;
-                              }
-                            }
-                            if (option2 && capture) {
-                              if (quiz.questions[index].answer == "2") {
-                                correct++;
-                              } else {
-                                wrong++;
-                              }
-                            }
-                            if (option3 && capture) {
-                              if (quiz.questions[index].answer == "3") {
-                                correct++;
-                              } else {
-                                wrong++;
-                              }
-                            }
-                            if (option4 && capture) {
-                              if (quiz.questions[index].answer == "4") {
-                                correct++;
-                              } else {
-                                wrong++;
-                              }
-                            }
-                            option1 = false;
+                      ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        tileColor: option1 ? Colors.greenAccent : Colors.white,
+                        title: Text(
+                          "${quiz.questions[index].options[0]}",
+                          style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: option1 ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            option1 = true;
                             option2 = false;
                             option3 = false;
                             option4 = false;
-                            capture = false;
-
-                            if (quiz.questions.length == index + 1) {
+                            capture = true;
+                            responses[index] = 1;
+                          });
+                          if (quiz.questions.length == index + 1) {
+                            var duration = new Duration(milliseconds: 1500);
+                            return new Timer(duration, () {
                               setState(() {
                                 endTap = true;
                                 stop = DateTime.now();
                                 tempTime = stop.difference(start);
                               });
-                            } else {
-                              _pageController.animateToPage(index + 1,
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.ease);
-                            }
-                          }),
+                            });
+                          }
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        tileColor: option2 ? Colors.greenAccent : Colors.white,
+                        title: Text(
+                          "${quiz.questions[index].options[1]}",
+                          style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: option2 ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            option1 = false;
+                            option2 = true;
+                            option3 = false;
+                            option4 = false;
+                            capture = true;
+                            responses[index] = 2;
+                          });
+                          if (quiz.questions.length == index + 1) {
+                            var duration = new Duration(milliseconds: 1500);
+                            return new Timer(duration, () {
+                              setState(() {
+                                endTap = true;
+                                stop = DateTime.now();
+                                tempTime = stop.difference(start);
+                              });
+                            });
+                          }
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        tileColor: option3 ? Colors.greenAccent : Colors.white,
+                        title: Text(
+                          "${quiz.questions[index].options[2]}",
+                          style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: option3 ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            option1 = false;
+                            option2 = false;
+                            option3 = true;
+                            option4 = false;
+                            capture = true;
+                            responses[index] = 3;
+                          });
+                          if (quiz.questions.length == index + 1) {
+                            var duration = new Duration(milliseconds: 1500);
+                            return new Timer(duration, () {
+                              setState(() {
+                                endTap = true;
+                                stop = DateTime.now();
+                                tempTime = stop.difference(start);
+                              });
+                            });
+                          }
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        tileColor: option4 ? Colors.greenAccent : Colors.white,
+                        title: Text(
+                          "${quiz.questions[index].options[3]}",
+                          style: Theme.of(context).textTheme.headline6.copyWith(
+                              color: option4 ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            option1 = false;
+                            option2 = false;
+                            option3 = false;
+                            option4 = true;
+                            capture = true;
+                            responses[index] = 4;
+                          });
+                          if (quiz.questions.length == index + 1) {
+                            var duration = new Duration(milliseconds: 800);
+                            return new Timer(duration, () {
+                              setState(() {
+                                endTap = true;
+                                stop = DateTime.now();
+                                tempTime = stop.difference(start);
+                              });
+                            });
+                          }
+                        },
+                      ),
                     ],
                   ),
                 )
@@ -478,6 +440,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget infoCard() {
+    //right wrong
     var now = DateTime.now();
     var tempEndtDateTime = DateTime(
         now.year,
@@ -526,10 +489,9 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                 quiz.description,
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(color: Colors.white,),
+                style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white,
+                    ),
               ),
               SizedBox(height: 22),
               Text(
@@ -589,6 +551,30 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
+              ListTile(
+                title: Text(
+                  "Correct Grade",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                trailing: Text(
+                  "${quiz.correctScore}",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "*Incorrect Grade",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                trailing: Text(
+                  "${quiz.incorrectScore}",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
               SizedBox(height: 28),
               MaterialButton(
                   height: 45,
@@ -619,9 +605,18 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget endCard() {
+    for(int i = 0 ;i<quiz.questions.length;i++){
+     setState(() {
+       if( int.parse(quiz.questions[i].answer) == responses[i] ){
+         correct ++;
+       }else{
+         wrong++;
+       }
+     });
+    }
     setState(() {
-      score = int.parse(quiz.incorrectScore) * wrong +
-          int.parse(quiz.correctScore) * correct;
+      score = double.parse(quiz.incorrectScore) * wrong +
+          double.parse(quiz.correctScore) * correct;
       response = Response(
           correct: correct.toString(),
           wrong: wrong.toString(),
@@ -814,8 +809,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
+      body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
     );
   }
 }

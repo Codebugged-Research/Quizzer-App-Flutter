@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/views/Drawer/aboutUsScreen.dart';
 import 'package:quiz_app/views/Drawer/contactScreen.dart';
@@ -14,10 +15,12 @@ class DrawerComponent extends StatelessWidget {
   final String email;
   final String photUrl;
   final String username;
+  final googleSignIn = GoogleSignIn();
   DrawerComponent({this.name, this.email, this.photUrl,this.username});
 
   signOut(context) async {
     await AuthService.clearAuth();
+    await googleSignIn.signOut();
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
       return LogInScreen();
