@@ -8,6 +8,8 @@ import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
 class AddDataScreen extends StatefulWidget {
+  final User user;
+  AddDataScreen({this.user});
   @override
   _AddDataScreenState createState() => _AddDataScreenState();
 }
@@ -15,6 +17,7 @@ class AddDataScreen extends StatefulWidget {
 class _AddDataScreenState extends State<AddDataScreen> {
   final GlobalKey<ScaffoldState> scaffkey = new GlobalKey<ScaffoldState>();
   final formkey = new GlobalKey<FormState>();
+  User user;
   TextEditingController _username = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _upi = TextEditingController();
@@ -34,11 +37,11 @@ class _AddDataScreenState extends State<AddDataScreen> {
   ];
 
   bool isLoading = false;
-  User user;
 
   @override
   void initState() {
     super.initState();
+    user = widget.user;
     loadDataForScreen();
   }
 
@@ -89,7 +92,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
       }));
     } else {
       scaffkey.currentState.showSnackBar(new SnackBar(
-        content: new Text("fill all the fields!!!"),
+        content: new Text("Fill all the fields!!!"),
       ));
     }
     setState(() {
@@ -130,7 +133,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
     );
   }
 
-  Widget _input(TextEditingController _text, int textWidth, String validation,
+  Widget _input(TextEditingController _text, String initialString, int textWidth, String validation,
       bool, String label, String hint, IconData icon, TextInputType type) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
@@ -138,6 +141,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
         width: UIConstants.fitToWidth(textWidth, context),
         child: TextFormField(
           controller: _text,
+          initialValue: '$initialString',
           textCapitalization: TextCapitalization.sentences,
           keyboardType: type,
           decoration: InputDecoration(
@@ -181,7 +185,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
                       children: [
                         SizedBox(height: UIConstants.fitToHeight(100, context)),
                         Text(
-                          'Add your data',
+                          'Edit your Profile',
                           style: GoogleFonts.sourceSansPro(
                               textStyle: TextStyle(
                                   color: Color(0xff0000000),
@@ -205,6 +209,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
                           children: [
                             _input(
                                 _username,
+                                '${user.username}',
                                 280,
                                 'Please fill the Username',
                                 false,
@@ -214,6 +219,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 TextInputType.name),
                             _input(
                                 _phone,
+                                '${user.phone}',
                                 280,
                                 'Please fill the Phone Number',
                                 false,
@@ -223,6 +229,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 TextInputType.phone),
                             _input(
                                 _upi,
+                                '${user.upiId}',
                                 280,
                                 'Please fill the UPI ID',
                                 false,
@@ -231,7 +238,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 Icons.money,
                                 TextInputType.name),
                             _dropDown(examsList, exams, "Choose Your Exam"),
-                            SizedBox(height:16),
+                            SizedBox(height: 16),
                             _dropDown(interestsList, interests,
                                 "Choose Your Interests"),
                           ],

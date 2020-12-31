@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -30,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Quiz quiz3;
   Quiz quiz4;
   bool subscribed = false;
+  TextEditingController _numberController;
+  final scaffkey = new GlobalKey<ScaffoldState>();
   List cardList = [];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
@@ -43,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _numberController = TextEditingController();
     loadDataForUser();
   }
 
@@ -169,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       loading = false;
     });
+    user.phone == null ? addPhoneNumber() : print("Hi!");
   }
 
   @override
@@ -178,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
+            key: scaffkey,
             extendBody: true,
             backgroundColor: Colors.white,
             body: Container(
@@ -383,7 +391,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-
                                                                               12)),
                                                                   title: Text(
                                                                       "Alert"),
@@ -734,11 +741,9 @@ class _HomeScreenState extends State<HomeScreen> {
               showDialog(
                 context: (context),
                 builder: (context) => AlertDialog(
-                  content:
-                  Container(
+                  content: Container(
                     width: MediaQuery.of(context).size.width,
-                    child:
-                    PinchZoomImage(
+                    child: PinchZoomImage(
                       image: card,
                       zoomedBackgroundColor: Color.fromRGBO(240, 240, 240, 1.0),
                       hideStatusBarWhileZooming: true,
@@ -781,5 +786,110 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }),
     );
+  }
+
+  addPhoneNumber() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => WillPopScope(
+            // ignore: missing_return
+            onWillPop: () {},
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              title: Text('Add your Phone Number!!!',
+                  style: GoogleFonts.sourceSansPro(
+                      textStyle: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold))),
+              content: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: _numberController,
+                        keyboardType: TextInputType.phone,
+                        validator: (val) {
+                          if (val.length == null) {
+                            return "Phone Number cannot be Empty";
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: new InputDecoration(
+                          labelText: "Enter your Number!",
+                          labelStyle:
+                              TextStyle(color: Colors.black, fontSize: 14),
+                          prefix: Text('+91 '),
+                          fillColor: Colors.black,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                            borderSide: new BorderSide(),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
+              actions: [
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  color: Color(0xff000000),
+                  onPressed: () async {
+                    if (_numberController.text.length != 10 ||
+                        _numberController.text == "" ||
+                        _numberController.text == " ") {
+                      scaffkey.currentState.showSnackBar(SnackBar(
+                        content: Text("Please fill your Number."),
+                        duration: Duration(seconds: 2),
+                      ));
+                    } else {
+                      await updatePhoneNumber();
+                    }
+                  },
+                  child: Text(
+                    "Add",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            )));
+  }
+
+  updatePhoneNumber() async {
+    var payload = json.encode({"phone": _numberController.text});
+    try {
+      bool updated = await UserService.updateUser(payload);
+      if (updated) {
+        Navigator.of(context).pop();
+        scaffkey.currentState.showSnackBar(new SnackBar(
+          content: new Text("Phone Number added!!!"),
+        ));
+      } else {
+        scaffkey.currentState.showSnackBar(new SnackBar(
+          content:
+              new Text("Failed to add Phone Number. Please try again later!!!"),
+        ));
+      }
+    } catch (e) {
+      scaffkey.currentState.showSnackBar(new SnackBar(
+        content: new Text("Something went Wrong. Please try again later!!!"),
+      ));
+      print(e);
+    }
   }
 }

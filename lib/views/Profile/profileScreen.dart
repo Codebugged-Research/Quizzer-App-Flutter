@@ -4,6 +4,7 @@ import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Profile/editScreen.dart';
+import 'package:quiz_app/views/addDataPage.dart';
 import 'package:quiz_app/views/loginScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -126,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: InkWell(
                                    onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => EditScreen()));
+                                      builder: (context) => AddDataScreen()));
                                 },
                                   child: Text(
                                     'Edit',

@@ -110,7 +110,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 }),
                 SizedBox(height: 16),
                 cardDetails(context, 'Phone', Icons.call, onTap: () {
-                  launch(('tel://09874948100'));
+                  launch(('tel://07734015723'));
                 }),
               ],
             ),
