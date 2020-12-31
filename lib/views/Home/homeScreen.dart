@@ -14,6 +14,7 @@ import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Home/feedScreen.dart';
+import 'package:quiz_app/views/Member/memberScreen.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,6 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
   User user;
   List<Quiz> quizes = [];
   List<Files> files = [];
+  Quiz tempQuiz1;
+  Quiz tempQuiz2;
+  Quiz tempQuiz3;
+  Quiz tempQuiz4;
   Quiz quiz1;
   Quiz quiz2;
   Quiz quiz3;
@@ -100,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
             int.parse(element.endTime.split(":").first),
             int.parse(element.endTime.split(":").last));
         if (element.slot == '1') {
+          tempQuiz1 = element;
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             if (responses.length > 0) {
@@ -117,6 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz1 = null;
           }
         } else if (element.slot == '2') {
+          tempQuiz2 = element;
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             if (responses.length > 0) {
@@ -134,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz2 = null;
           }
         } else if (element.slot == '3') {
+          tempQuiz3 = element;
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             if (responses.length > 0) {
@@ -152,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
             quiz3 = null;
           }
         } else if (element.slot == '4') {
+          tempQuiz4 = element;
           if (now.isAfter(tempStartDateTime) &&
               now.isBefore(tempEndtDateTime)) {
             if (responses.length > 0) {
@@ -169,6 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
           } else {
             quiz4 = null;
           }
+        }else{
+
         }
       });
     });
@@ -239,9 +250,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               SizedBox(height: 4),
                                               Text(
-                                                quiz1 == null
+                                                tempQuiz1 == null
                                                     ? "No"
-                                                    : quiz1.name,
+                                                    : tempQuiz1.name,
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight:
@@ -249,11 +260,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               SizedBox(height: 2),
                                               Text(
-                                                quiz1 == null
+                                                tempQuiz1 == null
                                                     ? "Quiz"
-                                                    : quiz1.startTime +
+                                                    : tempQuiz1.startTime +
                                                         "\n" +
-                                                        quiz1.endTime,
+                                                    tempQuiz1.endTime,
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: Colors.white,
@@ -318,9 +329,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     SizedBox(height: 4),
                                                     Text(
-                                                      quiz2 == null
+                                                      tempQuiz2 == null
                                                           ? "No"
-                                                          : quiz2.name,
+                                                          : tempQuiz2.name,
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight:
@@ -328,11 +339,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     SizedBox(height: 2),
                                                     Text(
-                                                      quiz2 == null
+                                                      tempQuiz2 == null
                                                           ? "Quiz"
-                                                          : quiz2.startTime +
+                                                          : tempQuiz2.startTime +
                                                               "\n" +
-                                                              quiz2.endTime,
+                                                          tempQuiz2.endTime,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -427,11 +438,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       children: [
                                                         Text(
                                                             "You are not a Plus Member"),
-                                                        FlatButton(
-                                                          child: Text(
-                                                              "Subscribe?"),
-                                                          onPressed: () {},
-                                                        )
+                                                        MaterialButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pushReplacement(
+                                                                MaterialPageRoute(
+                                                                    builder: (context) =>
+                                                                        MemberScreen()));
+                                                          },
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.symmetric(
+                                                                horizontal: 8.0, vertical: 2),
+                                                            child: Text("Subscribe",
+                                                                style:
+                                                                TextStyle(color: Colors.white)),
+                                                          ),
+                                                          color: Colors.lightBlue.shade300,
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -516,9 +538,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     SizedBox(height: 4),
                                                     Text(
-                                                      quiz3 == null
+                                                      tempQuiz3 == null
                                                           ? "No"
-                                                          : quiz3.name,
+                                                          : tempQuiz3.name,
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight:
@@ -526,11 +548,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                     SizedBox(height: 2),
                                                     Text(
-                                                      quiz3 == null
+                                                      tempQuiz3 == null
                                                           ? "Quiz"
-                                                          : quiz3.startTime +
+                                                          : tempQuiz3.startTime +
                                                               "\n" +
-                                                              quiz3.endTime,
+                                                          tempQuiz3.endTime,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -624,12 +646,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             children: [
                                                               Text(
                                                                   "You are not a Plus Member"),
-                                                              FlatButton(
-                                                                child: Text(
-                                                                    "Subscribe?"),
-                                                                onPressed:
-                                                                    () {},
-                                                              )
+                                                              MaterialButton(
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pushReplacement(
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              MemberScreen()));
+                                                                },
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.symmetric(
+                                                                      horizontal: 8.0, vertical: 2),
+                                                                  child: Text("Subscribe",
+                                                                      style:
+                                                                      TextStyle(color: Colors.white)),
+                                                                ),
+                                                                color: Colors.lightBlue.shade300,
+                                                              ),
                                                             ],
                                                           ),
                                                         ));
@@ -680,15 +712,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Image.asset(
                         "assets/images/trophy.png",
-                        height: 58,
+                        height: 45,
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "Super Quiz",
+                        tempQuiz4 == null ? "No Super":"Super Quiz",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      Text(
+                        tempQuiz4 == null
+                            ? "Quiz"
+                            : tempQuiz4.startTime +
+                            "\n" +
+                            tempQuiz4.endTime,
+                        textAlign:
+                        TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight:
+                            FontWeight.bold),
                       ),
                     ],
                   ),

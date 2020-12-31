@@ -758,7 +758,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 content: Text(
-                                    "Subscribe for more exciting quizzes and rewards"),
+                                    "You could have own cash prizes. Be a plus member now and earn rewards!"),
                                 actions: [
                                   MaterialButton(
                                     onPressed: () {
@@ -785,7 +785,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                                     selectedIndex: 0,
                                                   )));
                                     },
-                                    child: Text("No"),
+                                    child: Text("Skip"),
                                   ),
                                 ],
                               ));
