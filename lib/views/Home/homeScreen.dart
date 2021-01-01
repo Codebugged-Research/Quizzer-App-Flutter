@@ -238,40 +238,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BorderRadius.circular(12),
                                             color: Colors.lightBlue.shade300,
                                           ),
-                                          height: 160,
-                                          width: 160,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/unlocked.png",
-                                                height: 56,
-                                              ),
-                                              SizedBox(height: 4),
-                                              Text(
-                                                tempQuiz1 == null
-                                                    ? "No"
-                                                    : tempQuiz1.name,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 2),
-                                              Text(
-                                                tempQuiz1 == null
-                                                    ? "Quiz"
-                                                    : tempQuiz1.startTime +
-                                                        "\n" +
-                                                    tempQuiz1.endTime,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
+                                          height: UIConstants.fitToHeight(150, context),
+                                          width: UIConstants.fitToWidth(140, context),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(32.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/images/unlocked.png",
+                                                  height: 56,
+                                                ),
+                                                SizedBox(height: 4),
+                                                Text(
+                                                  tempQuiz1 == null
+                                                      ? "No"
+                                                      : tempQuiz1.name,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                SizedBox(height: 2),
+                                                Text(
+                                                  tempQuiz1 == null
+                                                      ? "Quiz"
+                                                      : tempQuiz1.startTime +
+                                                          "\n" +
+                                                      tempQuiz1.endTime,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -317,8 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: 160,
-                                                width: 160,
+                                                height: UIConstants.fitToHeight(150, context),
+                                                width: UIConstants.fitToWidth(140, context),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -479,8 +482,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            height: 160,
-                                            width: 160,
+                                            height: UIConstants.fitToHeight(150, context),
+                                            width: UIConstants.fitToWidth(140, context),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -526,8 +529,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: 160,
-                                                width: 160,
+                                                height: UIConstants.fitToHeight(150, context),
+                                                width: UIConstants.fitToWidth(140, context),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -689,8 +692,8 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(90),
             color: Colors.white,
           ),
-          height: 150,
-          width: 150,
+          height: UIConstants.fitToHeight(150, context),
+          width: UIConstants.fitToWidth(140, context),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(90),
