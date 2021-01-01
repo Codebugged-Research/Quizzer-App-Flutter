@@ -178,9 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else {
             quiz4 = null;
           }
-        }else{
-
-        }
+        } else {}
       });
     });
     setState(() {
@@ -212,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: carouselSlider(context),
                     ),
                     carouselDots(context),
-                    SizedBox(height: 8),
+                    SizedBox(height: UIConstants.fitToHeight(8, context)),
                     Container(
                         height: UIConstants.fitToHeight(360, context),
                         width: UIConstants.fitToWidth(360, context),
@@ -238,8 +236,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BorderRadius.circular(12),
                                             color: Colors.lightBlue.shade300,
                                           ),
-                                          height: UIConstants.fitToHeight(150, context),
-                                          width: UIConstants.fitToWidth(140, context),
+                                          height: UIConstants.fitToHeight(
+                                              150, context),
+                                          width: UIConstants.fitToWidth(
+                                              140, context),
                                           child: Padding(
                                             padding: const EdgeInsets.all(32.0),
                                             child: Column(
@@ -248,9 +248,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Image.asset(
                                                   "assets/images/unlocked.png",
-                                                  height: 56,
+                                                  height: 40,
                                                 ),
-                                                SizedBox(height: 4),
+                                                SizedBox(
+                                                    height:
+                                                        UIConstants.fitToHeight(
+                                                            4, context)),
                                                 Text(
                                                   tempQuiz1 == null
                                                       ? "No"
@@ -260,13 +263,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
-                                                SizedBox(height: 2),
+                                                SizedBox(
+                                                    height:
+                                                        UIConstants.fitToHeight(
+                                                            2, context)),
                                                 Text(
                                                   tempQuiz1 == null
                                                       ? "Quiz"
                                                       : tempQuiz1.startTime +
                                                           "\n" +
-                                                      tempQuiz1.endTime,
+                                                          tempQuiz1.endTime,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: Colors.white,
@@ -303,7 +309,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               }));
                                             },
                                     ),
-                                    SizedBox(width: 12),
+                                    SizedBox(
+                                        width: UIConstants.fitToHeight(
+                                            12, context)),
                                     GestureDetector(
                                         child: Card(
                                           elevation: 3,
@@ -320,17 +328,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: UIConstants.fitToHeight(150, context),
-                                                width: UIConstants.fitToWidth(140, context),
+                                                height: UIConstants.fitToHeight(
+                                                    150, context),
+                                                width: UIConstants.fitToWidth(
+                                                    140, context),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Image.asset(
                                                       "assets/images/locked.png",
-                                                      height: 56,
+                                                      height: 40,
                                                     ),
-                                                    SizedBox(height: 4),
+                                                    SizedBox(
+                                                        height: UIConstants
+                                                            .fitToHeight(
+                                                                4, context)),
                                                     Text(
                                                       tempQuiz2 == null
                                                           ? "No"
@@ -340,13 +353,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                    SizedBox(height: 2),
+                                                    SizedBox(
+                                                        height: UIConstants
+                                                            .fitToHeight(
+                                                                2, context)),
                                                     Text(
                                                       tempQuiz2 == null
                                                           ? "Quiz"
-                                                          : tempQuiz2.startTime +
+                                                          : tempQuiz2
+                                                                  .startTime +
                                                               "\n" +
-                                                          tempQuiz2.endTime,
+                                                              tempQuiz2.endTime,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -443,19 +460,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             "You are not a Plus Member"),
                                                         MaterialButton(
                                                           onPressed: () {
-                                                            Navigator.of(context).pushReplacement(
-                                                                MaterialPageRoute(
-                                                                    builder: (context) =>
-                                                                        MemberScreen()));
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushReplacement(
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                MemberScreen()));
                                                           },
                                                           child: Padding(
-                                                            padding: const EdgeInsets.symmetric(
-                                                                horizontal: 8.0, vertical: 2),
-                                                            child: Text("Subscribe",
-                                                                style:
-                                                                TextStyle(color: Colors.white)),
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        8.0,
+                                                                    vertical:
+                                                                        2),
+                                                            child: Text(
+                                                                "Subscribe",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white)),
                                                           ),
-                                                          color: Colors.lightBlue.shade300,
+                                                          color: Colors
+                                                              .lightBlue
+                                                              .shade300,
                                                         ),
                                                       ],
                                                     ),
@@ -464,7 +493,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               }),
                                   ],
                                 ),
-                                SizedBox(height: 12),
+                                SizedBox(
+                                    height:
+                                        UIConstants.fitToHeight(12, context)),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -482,17 +513,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            height: UIConstants.fitToHeight(150, context),
-                                            width: UIConstants.fitToWidth(140, context),
+                                            height: UIConstants.fitToHeight(
+                                                150, context),
+                                            width: UIConstants.fitToWidth(
+                                                140, context),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
                                                   "assets/images/timeline.png",
-                                                  height: 56,
+                                                  height: 40,
                                                 ),
-                                                SizedBox(height: 4),
+                                                SizedBox(
+                                                    height:
+                                                        UIConstants.fitToHeight(
+                                                            4, context)),
                                                 Text("Feed",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -512,7 +548,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           );
                                         }),
-                                    SizedBox(width: 12),
+                                    SizedBox(
+                                        width: UIConstants.fitToHeight(
+                                            12, context)),
                                     GestureDetector(
                                         child: Card(
                                           elevation: 3,
@@ -529,17 +567,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: UIConstants.fitToHeight(150, context),
-                                                width: UIConstants.fitToWidth(140, context),
+                                                height: UIConstants.fitToHeight(
+                                                    150, context),
+                                                width: UIConstants.fitToWidth(
+                                                    140, context),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Image.asset(
                                                       "assets/images/locked.png",
-                                                      height: 56,
+                                                      height: 40,
                                                     ),
-                                                    SizedBox(height: 4),
+                                                    SizedBox(
+                                                        height: UIConstants
+                                                            .fitToHeight(
+                                                                4, context)),
                                                     Text(
                                                       tempQuiz3 == null
                                                           ? "No"
@@ -549,13 +592,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                    SizedBox(height: 2),
+                                                    SizedBox(
+                                                        height: UIConstants
+                                                            .fitToHeight(
+                                                                2, context)),
                                                     Text(
                                                       tempQuiz3 == null
                                                           ? "Quiz"
-                                                          : tempQuiz3.startTime +
+                                                          : tempQuiz3
+                                                                  .startTime +
                                                               "\n" +
-                                                          tempQuiz3.endTime,
+                                                              tempQuiz3.endTime,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -634,40 +681,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                             : () {
                                                 showDialog(
                                                     context: (context),
-                                                    builder: (context) =>
-                                                        AlertDialog(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12)),
-                                                          title: Text("Alert"),
-                                                          content: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Text(
-                                                                  "You are not a Plus Member"),
-                                                              MaterialButton(
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pushReplacement(
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              MemberScreen()));
-                                                                },
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.symmetric(
-                                                                      horizontal: 8.0, vertical: 2),
-                                                                  child: Text("Subscribe",
-                                                                      style:
-                                                                      TextStyle(color: Colors.white)),
-                                                                ),
-                                                                color: Colors.lightBlue.shade300,
+                                                    builder:
+                                                        (context) =>
+                                                            AlertDialog(
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              12)),
+                                                              title:
+                                                                  Text("Alert"),
+                                                              content: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Text(
+                                                                      "You are not a Plus Member"),
+                                                                  MaterialButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pushReplacement(
+                                                                              MaterialPageRoute(builder: (context) => MemberScreen()));
+                                                                    },
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                          horizontal:
+                                                                              8.0,
+                                                                          vertical:
+                                                                              2),
+                                                                      child: Text(
+                                                                          "Subscribe",
+                                                                          style:
+                                                                              TextStyle(color: Colors.white)),
+                                                                    ),
+                                                                    color: Colors
+                                                                        .lightBlue
+                                                                        .shade300,
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            ],
-                                                          ),
-                                                        ));
+                                                            ));
                                               }),
                                   ],
                                 ),
@@ -715,11 +773,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Image.asset(
                         "assets/images/trophy.png",
-                        height: 45,
+                        height: 40,
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: UIConstants.fitToHeight(4, context)),
                       Text(
-                        tempQuiz4 == null ? "No Super":"Super Quiz",
+                        tempQuiz4 == null ? "No Super" : "Super Quiz",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -728,15 +786,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         tempQuiz4 == null
                             ? "Quiz"
-                            : tempQuiz4.startTime +
-                            "\n" +
-                            tempQuiz4.endTime,
-                        textAlign:
-                        TextAlign.center,
+                            : tempQuiz4.startTime + "\n" + tempQuiz4.endTime,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight:
-                            FontWeight.bold),
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -857,7 +910,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: 20),
+                      SizedBox(height: UIConstants.fitToHeight(20, context)),
                       TextFormField(
                         controller: _numberController,
                         keyboardType: TextInputType.phone,
