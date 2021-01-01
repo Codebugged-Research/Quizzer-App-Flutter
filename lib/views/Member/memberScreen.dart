@@ -62,8 +62,6 @@ class _MemberScreenState extends State<MemberScreen> {
     }
   }
 
-
-
   final scaffkey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -91,29 +89,7 @@ class _MemberScreenState extends State<MemberScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                  height: UIConstants.fitToHeight(32, context)),
-                              Text(
-                                'Subscription',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline4
-                                    .copyWith(color: Colors.white),
-                              ),
-                              SizedBox(
-                                  height: UIConstants.fitToHeight(16, context)),
-                              Text(
-                                'Select Offers!',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                  height: UIConstants.fitToHeight(32, context)),
-                            ],
+                            children: [],
                           ),
                         ),
                       ),
@@ -126,7 +102,26 @@ class _MemberScreenState extends State<MemberScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                              height: UIConstants.fitToHeight(90, context)),
+                              height: UIConstants.fitToHeight(32, context)),
+                          Text(
+                            'Subscription',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .headline4
+                                .copyWith(color: Colors.white),
+                          ),
+                          SizedBox(
+                              height: UIConstants.fitToHeight(16, context)),
+                          Text(
+                            'Select Offers!',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                              height: UIConstants.fitToHeight(24, context)),
                           offerItems != null
                               ? Container(
                                   decoration: BoxDecoration(
@@ -212,10 +207,21 @@ class _MemberScreenState extends State<MemberScreen> {
               ]),
           child: MaterialButton(
             onPressed: () async {
-              orderId = await RazorPayService.createOrderId(
-                  jsonEncode({"amount": (10000 - (int.parse("${_selectedItem.toString()}") * 100)).toString()}));
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => RazorPayScreen(orderId: orderId, amount: (10000 - (int.parse("${_selectedItem.toString()}") * 100)).toString(),)));
+              orderId = await RazorPayService.createOrderId(jsonEncode({
+                "amount":
+                    (10000 - (int.parse("${_selectedItem.toString()}") * 100))
+                        .toString()
+              }));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RazorPayScreen(
+                            orderId: orderId,
+                            amount: (10000 -
+                                    (int.parse("${_selectedItem.toString()}") *
+                                        100))
+                                .toString(),
+                          )));
             },
             color: Colors.white,
             child: Text(
@@ -253,10 +259,21 @@ class _MemberScreenState extends State<MemberScreen> {
               ]),
           child: MaterialButton(
             onPressed: () async {
-              orderId = await RazorPayService.createOrderId(
-                  jsonEncode({"amount": (20000 - (int.parse("${_selectedItem.toString()}") * 100)).toString()}));
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => RazorPayScreen(orderId: orderId, amount: (20000 - (int.parse("${_selectedItem.toString()}") * 100)).toString(),)));
+              orderId = await RazorPayService.createOrderId(jsonEncode({
+                "amount":
+                    (20000 - (int.parse("${_selectedItem.toString()}") * 100))
+                        .toString()
+              }));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RazorPayScreen(
+                            orderId: orderId,
+                            amount: (20000 -
+                                    (int.parse("${_selectedItem.toString()}") *
+                                        100))
+                                .toString(),
+                          )));
             },
             color: Colors.white,
             child: Text(
@@ -285,22 +302,6 @@ class _MemberScreenState extends State<MemberScreen> {
                       textStyle: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold))),
               actions: [
-                MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  color: Color(0xff000000),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 MaterialButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),

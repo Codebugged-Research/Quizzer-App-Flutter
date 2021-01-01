@@ -186,9 +186,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     user.phone == null ? addPhoneNumber() : print("Hi!");
   }
+  double screenHeight;
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
     return loading
         ? Center(
             child: CircularProgressIndicator(),
@@ -206,14 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: carouselSlider(context),
                     ),
                     carouselDots(context),
-                    SizedBox(height: UIConstants.fitToHeight(8, context)),
                     Container(
-                        height: UIConstants.fitToHeight(360, context),
-                        width: UIConstants.fitToWidth(360, context),
+                        height: UIConstants.fitToHeight(screenHeight*0.55, context),
+                        width: UIConstants.fitToWidth(screenHeight*0.55, context),
                         child: Stack(
                           children: [
                             Column(
@@ -236,10 +237,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BorderRadius.circular(12),
                                             color: Colors.lightBlue.shade300,
                                           ),
-                                          height: UIConstants.fitToHeight(
-                                              150, context),
-                                          width: UIConstants.fitToWidth(
-                                              140, context),
+                                          height: screenHeight*0.23,
+                                          width: screenHeight*0.23,
                                           child: Padding(
                                             padding: const EdgeInsets.all(32.0),
                                             child: Column(
@@ -248,12 +247,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Image.asset(
                                                   "assets/images/unlocked.png",
-                                                  height: 40,
+                                                  height: 32,
                                                 ),
                                                 SizedBox(
                                                     height:
                                                         UIConstants.fitToHeight(
-                                                            4, context)),
+                                                            6, context)),
                                                 Text(
                                                   tempQuiz1 == null
                                                       ? "No"
@@ -263,10 +262,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
-                                                SizedBox(
-                                                    height:
-                                                        UIConstants.fitToHeight(
-                                                            2, context)),
+                                                // SizedBox(
+                                                //     height:
+                                                //         UIConstants.fitToHeight(
+                                                //             2, context)),
                                                 Text(
                                                   tempQuiz1 == null
                                                       ? "Quiz"
@@ -311,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     SizedBox(
                                         width: UIConstants.fitToHeight(
-                                            12, context)),
+                                            8, context)),
                                     GestureDetector(
                                         child: Card(
                                           elevation: 3,
@@ -328,22 +327,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: UIConstants.fitToHeight(
-                                                    150, context),
-                                                width: UIConstants.fitToWidth(
-                                                    140, context),
+                                                height: screenHeight*0.23,
+                                                width: screenHeight*0.23,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Image.asset(
                                                       "assets/images/locked.png",
-                                                      height: 40,
+                                                      height: 32,
                                                     ),
                                                     SizedBox(
                                                         height: UIConstants
                                                             .fitToHeight(
-                                                                4, context)),
+                                                                6, context)),
                                                     Text(
                                                       tempQuiz2 == null
                                                           ? "No"
@@ -353,10 +350,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                    SizedBox(
-                                                        height: UIConstants
-                                                            .fitToHeight(
-                                                                2, context)),
+                                                    // SizedBox(
+                                                    //     height: UIConstants
+                                                    //         .fitToHeight(
+                                                    //             2, context)),
                                                     Text(
                                                       tempQuiz2 == null
                                                           ? "Quiz"
@@ -382,8 +379,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 160,
-                                                      width: 160,
+                                                height: screenHeight*0.23,
+                                                width: screenHeight*0.23,
                                                     )
                                                   : Container(),
                                               !subscribed
@@ -393,8 +390,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 160,
-                                                      width: 160,
+                                                height: screenHeight*0.23,
+                                                width: screenHeight*0.23,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -495,7 +492,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 SizedBox(
                                     height:
-                                        UIConstants.fitToHeight(12, context)),
+                                        UIConstants.fitToHeight(8, context)),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -513,22 +510,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            height: UIConstants.fitToHeight(
-                                                150, context),
-                                            width: UIConstants.fitToWidth(
-                                                140, context),
+                                            height: screenHeight*0.23,
+                                            width: screenHeight*0.23,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Image.asset(
                                                   "assets/images/timeline.png",
-                                                  height: 40,
+                                                  height: 32,
                                                 ),
                                                 SizedBox(
                                                     height:
                                                         UIConstants.fitToHeight(
-                                                            4, context)),
+                                                            6, context)),
                                                 Text("Feed",
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -550,7 +545,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         }),
                                     SizedBox(
                                         width: UIConstants.fitToHeight(
-                                            12, context)),
+                                            8, context)),
                                     GestureDetector(
                                         child: Card(
                                           elevation: 3,
@@ -567,22 +562,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                 ),
-                                                height: UIConstants.fitToHeight(
-                                                    150, context),
-                                                width: UIConstants.fitToWidth(
-                                                    140, context),
+                                                height: screenHeight*0.23,
+                                                width: screenHeight*0.23,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Image.asset(
                                                       "assets/images/locked.png",
-                                                      height: 40,
+                                                      height: 32,
                                                     ),
                                                     SizedBox(
                                                         height: UIConstants
                                                             .fitToHeight(
-                                                                4, context)),
+                                                                6, context)),
                                                     Text(
                                                       tempQuiz3 == null
                                                           ? "No"
@@ -592,10 +585,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                    SizedBox(
-                                                        height: UIConstants
-                                                            .fitToHeight(
-                                                                2, context)),
+                                                    // SizedBox(
+                                                    //     height: UIConstants
+                                                    //         .fitToHeight(
+                                                    //             2, context)),
                                                     Text(
                                                       tempQuiz3 == null
                                                           ? "Quiz"
@@ -621,8 +614,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 160,
-                                                      width: 160,
+                                                height: screenHeight*0.23,
+                                                width: screenHeight*0.23,
                                                     )
                                                   : Container(),
                                               !subscribed
@@ -632,8 +625,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                      height: 160,
-                                                      width: 160,
+                                                height: screenHeight*0.23,
+                                                width: screenHeight*0.23,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -746,12 +739,12 @@ class _HomeScreenState extends State<HomeScreen> {
       child: InkWell(
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 12, color: Colors.white12),
+            border: Border.all(width: 10, color: Colors.white12),
             borderRadius: BorderRadius.circular(90),
             color: Colors.white,
           ),
-          height: UIConstants.fitToHeight(150, context),
-          width: UIConstants.fitToWidth(140, context),
+          height: screenHeight*0.21,
+          width: screenHeight*0.21,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(90),
@@ -773,7 +766,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Image.asset(
                         "assets/images/trophy.png",
-                        height: 40,
+                        height: 32,
                       ),
                       SizedBox(height: UIConstants.fitToHeight(4, context)),
                       Text(
@@ -822,7 +815,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget carouselSlider(context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: UIConstants.fitToHeight(100, context),
+        height: UIConstants.fitToHeight((screenHeight*0.18), context),
         autoPlay: true,
         autoPlayInterval: Duration(seconds: 4),
         autoPlayAnimationDuration: Duration(milliseconds: 600),
