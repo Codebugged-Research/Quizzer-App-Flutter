@@ -133,7 +133,7 @@ class _AddDataScreenState extends State<AddDataScreen> {
     );
   }
 
-  Widget _input(TextEditingController _text, String initialString, int textWidth, String validation,
+  Widget _input(TextEditingController _text, int textWidth, String validation,
       bool, String label, String hint, IconData icon, TextInputType type) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
@@ -141,7 +141,6 @@ class _AddDataScreenState extends State<AddDataScreen> {
         width: UIConstants.fitToWidth(textWidth, context),
         child: TextFormField(
           controller: _text,
-          initialValue: '$initialString',
           textCapitalization: TextCapitalization.sentences,
           keyboardType: type,
           decoration: InputDecoration(
@@ -209,7 +208,6 @@ class _AddDataScreenState extends State<AddDataScreen> {
                           children: [
                             _input(
                                 _username,
-                                '${user.username}',
                                 280,
                                 'Please fill the Username',
                                 false,
@@ -219,7 +217,6 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 TextInputType.name),
                             _input(
                                 _phone,
-                                '${user.phone}',
                                 280,
                                 'Please fill the Phone Number',
                                 false,
@@ -229,7 +226,6 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 TextInputType.phone),
                             _input(
                                 _upi,
-                                '${user.upiId}',
                                 280,
                                 'Please fill the UPI ID',
                                 false,

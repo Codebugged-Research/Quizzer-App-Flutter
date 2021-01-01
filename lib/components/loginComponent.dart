@@ -5,6 +5,7 @@ import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/views/Home/homeScreen.dart';
 import 'package:quiz_app/views/addDataPage.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class LoginButtonComponentAndroid extends StatelessWidget {
   final googleSignIn = GoogleSignIn();
@@ -37,7 +38,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
               print(authenticated);
               Navigator.of(context)
                   .pushReplacement(MaterialPageRoute(builder: (context) {
-                return HomeScreen();
+                return LandingScreen(selectedIndex: 0,);
               }));
             } else {
               showDialog(

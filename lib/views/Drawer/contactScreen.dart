@@ -96,7 +96,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                      "For any Query, Contact Us",
                       textAlign: TextAlign.justify,
                       style: GoogleFonts.lato(
                           textStyle: TextStyle(
@@ -112,6 +112,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 cardDetails(context, 'Phone', Icons.call, onTap: () {
                   launch(('tel://07734015723'));
                 }),
+                SizedBox(height: UIConstants.fitToHeight(16, context),)
               ],
             ),
           ),

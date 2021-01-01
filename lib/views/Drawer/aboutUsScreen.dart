@@ -96,7 +96,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                               letterSpacing: 0.23,
                               fontWeight: FontWeight.w500)),
                     )),
-                cardDetails(context, 'Privacy Policy', onTap: () {})
+                cardDetails(context, 'Privacy Policy', onTap: () {}),
+                SizedBox(height: UIConstants.fitToHeight(16, context),)
               ],
             ),
           ),

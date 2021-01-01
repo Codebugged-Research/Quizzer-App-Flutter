@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: carouselSlider(context),
                     ),
                     carouselDots(context),
-                    SizedBox(height: 30),
+                    SizedBox(height: 8),
                     Container(
                         height: UIConstants.fitToHeight(360, context),
                         width: UIConstants.fitToWidth(360, context),
