@@ -18,6 +18,7 @@ class RazorPayScreen extends StatefulWidget {
 
 class _RazorPayScreenState extends State<RazorPayScreen> {
   Razorpay _razorpay = Razorpay();
+  String amount;
   User user;
   var options;
   Future payData() async {
@@ -85,6 +86,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
   void initState() {
     super.initState();
     loadDataScreen();
+    amount = widget.amount;
   }
 
   loadDataScreen() async {
@@ -95,12 +97,12 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     setState(() {
       options = {
         'key': "rzp_test_1NWHtjsvqni1Kg",
-        'amount': 10000,
+        'amount': amount,
         'name': 'Quiz Adda',
         'order_id': widget.orderId,
         'currency': "INR",
         'theme.color': "#528ff0",
-        'buttontext': "Pay",
+        // 'buttontext': "Pay",
         'description': 'Pay to be a Member',
         "prefill": {"contact": "${user.phone}", "email": "${user.email}"},
       };
