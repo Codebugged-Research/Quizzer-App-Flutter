@@ -257,15 +257,15 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
+                        // SizedBox(
+                        //     height: MediaQuery.of(context).size.height * 0.05),
                         Align(
                             alignment: Alignment.center,
                             child: dottedContainer()),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05),
+                            height: MediaQuery.of(context).size.height * 0.03),
                         Container(
-                          height: UIConstants.fitToHeight(160, context),
+                          height: UIConstants.fitToHeight(170, context),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
@@ -290,12 +290,15 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                             ),
                           ),
                         ),
+
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.005),
                       ],
                     ),
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  // height: MediaQuery.of(context).size.height * 0.5,
                   padding: EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -453,7 +456,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 16),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 22),
           decoration: BoxDecoration(
@@ -474,7 +477,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
             children: [
               Image.asset(
                 "assets/images/label.png",
-                height: 120,
+                height: 75,
               ),
               SizedBox(height: 12),
               Text(
@@ -487,7 +490,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
               SizedBox(height: 16),
               Text(
                 quiz.description,
-                maxLines: 5,
+                maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.white,
@@ -527,53 +530,68 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                 ],
               ),
               SizedBox(height: 30),
-              ListTile(
-                title: Text(
-                  "No of Questions",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  "${quiz.questions.length}",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "No of Questions",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${quiz.questions.length}",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text(
-                  "Time Limit",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  "${quiz.minutes} min ${quiz.seconds} Sec",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Time Limit",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${quiz.minutes} min ${quiz.seconds} Sec",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text(
-                  "Correct Grade",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  "${quiz.correctScore}",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Correct Grade",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${quiz.correctScore}",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text(
-                  "*Incorrect Grade",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  "${quiz.incorrectScore}",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "*Incorrect Grade",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${quiz.incorrectScore}",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               SizedBox(height: 28),
               MaterialButton(
@@ -605,14 +623,14 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   }
 
   Widget endCard() {
-    for(int i = 0 ;i<quiz.questions.length;i++){
-     setState(() {
-       if( int.parse(quiz.questions[i].answer) == responses[i] ){
-         correct ++;
-       }else{
-         wrong++;
-       }
-     });
+    for (int i = 0; i < quiz.questions.length; i++) {
+      setState(() {
+        if (int.parse(quiz.questions[i].answer) == responses[i]) {
+          correct++;
+        } else {
+          wrong++;
+        }
+      });
     }
     setState(() {
       score = double.parse(quiz.incorrectScore) * wrong +
@@ -632,7 +650,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 36),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 22),
           decoration: BoxDecoration(
@@ -653,7 +671,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
             children: [
               Image.asset(
                 "assets/images/label.png",
-                height: 120,
+                height: 110,
               ),
               SizedBox(height: 12),
               Text(
@@ -690,53 +708,68 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                 ],
               ),
               SizedBox(height: 30),
-              ListTile(
-                title: Text(
-                  "Attempted",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  (correct + wrong).toString(),
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Attempted",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    (correct + wrong).toString(),
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text(
-                  "Correct",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  (correct).toString(),
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Correct",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    (correct).toString(),
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text(
-                  "Wrong",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  (wrong).toString(),
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Wrong",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    (wrong).toString(),
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text(
-                  "Skipped",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                trailing: Text(
-                  "${quiz.questions.length - correct - wrong}",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Skipped",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${quiz.questions.length - correct - wrong}",
+                    style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               SizedBox(height: 28),
               MaterialButton(
@@ -758,7 +791,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 content: Text(
-                                    "You could have own cash prizes. Be a plus member now and earn rewards!"),
+                                    "You could have won cash prizes. Be a plus member and earn rewards!"),
                                 actions: [
                                   MaterialButton(
                                     onPressed: () {

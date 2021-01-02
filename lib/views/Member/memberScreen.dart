@@ -121,7 +121,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                 fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
-                              height: UIConstants.fitToHeight(24, context)),
+                              height: UIConstants.fitToHeight(16, context)),
                           offerItems != null
                               ? Container(
                                   decoration: BoxDecoration(
@@ -154,7 +154,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                 )
                               : Container(),
                           SizedBox(
-                            height: UIConstants.fitToHeight(32, context),
+                            height: UIConstants.fitToHeight(16, context),
                           ),
                           Stack(
                             alignment: Alignment.center,

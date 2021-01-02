@@ -76,14 +76,17 @@ Widget questionCard(Question question, context) {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    question.description,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                      fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      question.description,
+                      textAlign: TextAlign.center,maxLines: 8,overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline6.copyWith(
+                        fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
                 ],
               ),
@@ -114,7 +117,10 @@ Widget questionCard(Question question, context) {
                           topLeft: Radius.circular(16),
                           topRight: Radius.circular(16)),
                     ),
-                    child: Center(child: Text(question.options[0],style: TextStyle(fontSize: 16,color: question.answer == "1" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),)),
+                    child: Center(child: Padding(
+                      padding: const EdgeInsets.only(left:8.0),
+                      child: Text(question.options[0],maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 16,color: question.answer == "1" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),),
+                    )),
                   ),
                   Container(
                     height: 48,
@@ -123,7 +129,10 @@ Widget questionCard(Question question, context) {
                       color: question.answer == "2" ? Colors.green:Colors.white,
 
                     ),
-                    child: Center(child: Text(question.options[1],style: TextStyle(fontSize: 16,color: question.answer == "2" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),)),
+                    child: Center(child: Padding(
+                      padding: const EdgeInsets.only(left:8.0),
+                      child: Text(question.options[1],maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 16,color: question.answer == "2" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),),
+                    )),
                   ),
                   Container(
                     height: 48,
@@ -132,7 +141,10 @@ Widget questionCard(Question question, context) {
                       color: question.answer == "3" ? Colors.green:Colors.white,
 
                     ),
-                    child: Center(child: Text(question.options[2],style: TextStyle(fontSize: 16,color: question.answer == "3" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),)),
+                    child: Center(child: Padding(
+                      padding: const EdgeInsets.only(left:8.0),
+                      child: Text(question.options[2],maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 16,color: question.answer == "3" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),),
+                    )),
                   ),
                   Container(
                     height: 48,
@@ -143,7 +155,10 @@ Widget questionCard(Question question, context) {
                           bottomLeft: Radius.circular(16),
                           bottomRight: Radius.circular(16)),
                     ),
-                    child: Center(child: Text(question.options[3],style: TextStyle(fontSize: 16,color: question.answer == "4" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),)),
+                    child: Center(child: Padding(
+                      padding: const EdgeInsets.only(left:8.0),
+                      child: Text(question.options[3],maxLines: 1,overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 16,color: question.answer == "4" ? Colors.white: Colors.black,fontWeight: FontWeight.bold),),
+                    )),
                   ),
                 ],
               ),

@@ -186,6 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     user.phone == null ? addPhoneNumber() : print("Hi!");
   }
+
   double screenHeight;
 
   @override
@@ -199,96 +200,197 @@ class _HomeScreenState extends State<HomeScreen> {
             key: scaffkey,
             extendBody: true,
             backgroundColor: Colors.white,
-            body: Container(
-              height: UIConstants.fitToHeight(640, context),
-              width: UIConstants.fitToWidth(360, context),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: carouselSlider(context),
-                    ),
-                    carouselDots(context),
-                    Container(
-                        height: UIConstants.fitToHeight(screenHeight*0.55, context),
-                        width: UIConstants.fitToWidth(screenHeight*0.55, context),
-                        child: Stack(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: carouselSlider(context),
+                ),
+                carouselDots(context),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(bottom: 80),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Stack(
+                        children: [
+                          Column(
+                            children: [
+                              Expanded(
+                                flex: 10,
+                                child: Row(
                                   children: [
-                                    GestureDetector(
-                                      child: Card(
-                                        elevation: 3,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
+                                    Expanded(
+                                      flex: 10,
+                                      child: GestureDetector(
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                             color: Colors.lightBlue.shade300,
                                           ),
-                                          height: screenHeight*0.23,
-                                          width: screenHeight*0.23,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(32.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/unlocked.png",
-                                                  height: 32,
-                                                ),
-                                                SizedBox(
-                                                    height:
-                                                        UIConstants.fitToHeight(
-                                                            6, context)),
-                                                Text(
-                                                  tempQuiz1 == null
-                                                      ? "No"
-                                                      : tempQuiz1.name,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                // SizedBox(
-                                                //     height:
-                                                //         UIConstants.fitToHeight(
-                                                //             2, context)),
-                                                Text(
-                                                  tempQuiz1 == null
-                                                      ? "Quiz"
-                                                      : tempQuiz1.startTime +
-                                                          "\n" +
-                                                          tempQuiz1.endTime,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/images/unlocked.png",
+                                                height: 32,
+                                              ),
+                                              SizedBox(
+                                                  height:
+                                                      UIConstants.fitToHeight(
+                                                          6, context)),
+                                              Text(
+                                                tempQuiz1 == null
+                                                    ? "No"
+                                                    : tempQuiz1.name,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                tempQuiz1 == null
+                                                    ? "Quiz"
+                                                    : tempQuiz1.startTime +
+                                                        "\n" +
+                                                        tempQuiz1.endTime,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
                                           ),
                                         ),
+                                        onTap: quiz1 == null
+                                            ? () {
+                                                showDialog(
+                                                    context: (context),
+                                                    builder: (context) =>
+                                                        AlertDialog(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12)),
+                                                          title: Text("Alert"),
+                                                          content: Text(
+                                                              "Quiz not Started or Quiz Finished!"),
+                                                        ));
+                                              }
+                                            : () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(builder:
+                                                        (BuildContext context) {
+                                                  return QuizTestScreen(
+                                                      quiz: quiz1);
+                                                }));
+                                              },
                                       ),
-                                      onTap: quiz1 == null
-                                          ? () {
-                                              showDialog(
-                                                  context: (context),
-                                                  builder: (context) =>
-                                                      AlertDialog(
+                                    ),
+                                    Expanded(
+                                      child: Container(),
+                                      flex: 1,
+                                    ),
+                                    Expanded(
+                                      flex: 10,
+                                      child: GestureDetector(
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color:
+                                                    Colors.lightBlue.shade300,
+                                              ),
+                                              height: double.infinity,
+                                              width: double.infinity,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/locked.png",
+                                                    height: 32,
+                                                  ),
+                                                  SizedBox(
+                                                      height: UIConstants
+                                                          .fitToHeight(
+                                                              6, context)),
+                                                  Text(
+                                                    tempQuiz2 == null
+                                                        ? "No"
+                                                        : tempQuiz2.name,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    tempQuiz2 == null
+                                                        ? "Quiz"
+                                                        : tempQuiz2.startTime +
+                                                            "\n" +
+                                                            tempQuiz2.endTime,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            !subscribed
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white24,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                    ),
+                                                    height: double.infinity,
+                                                    width: double.infinity,
+                                                  )
+                                                : Container(),
+                                            !subscribed
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                    ),
+                                                    height: double.infinity,
+                                                    width: double.infinity,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.lock,
+                                                          size: 40,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Container(),
+                                          ],
+                                        ),
+                                        onTap: subscribed
+                                            ? (quiz2 == null
+                                                ? () {
+                                                    showDialog(
+                                                      context: (context),
+                                                      builder: (context) =>
+                                                          AlertDialog(
                                                         shape: RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
@@ -297,134 +399,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         title: Text("Alert"),
                                                         content: Text(
                                                             "Quiz not Started or Quiz Finished!"),
-                                                      ));
-                                            }
-                                          : () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(builder:
-                                                      (BuildContext context) {
-                                                return QuizTestScreen(
-                                                    quiz: quiz1);
-                                              }));
-                                            },
-                                    ),
-                                    SizedBox(
-                                        width: UIConstants.fitToHeight(
-                                            8, context)),
-                                    GestureDetector(
-                                        child: Card(
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      Colors.lightBlue.shade300,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                                height: screenHeight*0.23,
-                                                width: screenHeight*0.23,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      "assets/images/locked.png",
-                                                      height: 32,
-                                                    ),
-                                                    SizedBox(
-                                                        height: UIConstants
-                                                            .fitToHeight(
-                                                                6, context)),
-                                                    Text(
-                                                      tempQuiz2 == null
-                                                          ? "No"
-                                                          : tempQuiz2.name,
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    // SizedBox(
-                                                    //     height: UIConstants
-                                                    //         .fitToHeight(
-                                                    //             2, context)),
-                                                    Text(
-                                                      tempQuiz2 == null
-                                                          ? "Quiz"
-                                                          : tempQuiz2
-                                                                  .startTime +
-                                                              "\n" +
-                                                              tempQuiz2.endTime,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              !subscribed
-                                                  ? Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white24,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
                                                       ),
-                                                height: screenHeight*0.23,
-                                                width: screenHeight*0.23,
-                                                    )
-                                                  : Container(),
-                                              !subscribed
-                                                  ? Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                height: screenHeight*0.23,
-                                                width: screenHeight*0.23,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(
-                                                            Icons.lock,
-                                                            size: 40,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Container(),
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: subscribed
-                                            ? (quiz2 == null
-                                                ? () {
-                                                    showDialog(
-                                                        context: (context),
-                                                        builder:
-                                                            (context) =>
-                                                                AlertDialog(
-                                                                  shape: RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              12)),
-                                                                  title: Text(
-                                                                      "Alert"),
-                                                                  content: Text(
-                                                                      "Quiz not Started or Quiz Finished!"),
-                                                                ));
+                                                    );
                                                   }
                                                 : () {
                                                     Navigator.of(context).push(
@@ -454,16 +430,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           MainAxisSize.min,
                                                       children: [
                                                         Text(
-                                                            "You are not a Plus Member"),
+                                                            "You are not a Plus Member, Be a plus member and enjoy all quizes and rewards."),
                                                         MaterialButton(
                                                           onPressed: () {
                                                             Navigator.of(
                                                                     context)
                                                                 .pushReplacement(
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                MemberScreen()));
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        MemberScreen(),
+                                                              ),
+                                                            );
                                                           },
                                                           child: Padding(
                                                             padding:
@@ -487,51 +465,48 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                 );
-                                              }),
+                                              },
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                SizedBox(
-                                    height:
-                                        UIConstants.fitToHeight(8, context)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                              ),
+                              Expanded(child: Container(), flex: 1),
+                              Expanded(
+                                flex: 10,
+                                child: Row(
                                   children: [
-                                    GestureDetector(
-                                        child: Card(
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
+                                    Expanded(
+                                      flex: 10,
+                                      child: GestureDetector(
+                                        child: Container(
+                                          decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(12),
+                                            color: Colors.lightBlue.shade300,
                                           ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.lightBlue.shade300,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            height: screenHeight*0.23,
-                                            width: screenHeight*0.23,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  "assets/images/timeline.png",
-                                                  height: 32,
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/images/timeline.png",
+                                                height: 32,
+                                              ),
+                                              SizedBox(
+                                                height: UIConstants.fitToHeight(
+                                                    6, context),
+                                              ),
+                                              Text(
+                                                "Feed",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                SizedBox(
-                                                    height:
-                                                        UIConstants.fitToHeight(
-                                                            6, context)),
-                                                Text("Feed",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    )),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         onTap: () {
@@ -542,28 +517,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                             ),
                                           );
-                                        }),
-                                    SizedBox(
-                                        width: UIConstants.fitToHeight(
-                                            8, context)),
-                                    GestureDetector(
-                                        child: Card(
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(),
+                                      flex: 1,
+                                    ),
+                                    Expanded(
+                                      flex: 10,
+                                      child: GestureDetector(
                                           child: Stack(
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  color:
-                                                      Colors.lightBlue.shade300,
                                                   borderRadius:
                                                       BorderRadius.circular(12),
+                                                  color:
+                                                      Colors.lightBlue.shade300,
                                                 ),
-                                                height: screenHeight*0.23,
-                                                width: screenHeight*0.23,
+                                                height: double.infinity,
+                                                width: double.infinity,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -614,8 +588,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                height: screenHeight*0.23,
-                                                width: screenHeight*0.23,
+                                                      height: double.infinity,
+                                                      width: double.infinity,
                                                     )
                                                   : Container(),
                                               !subscribed
@@ -625,8 +599,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             BorderRadius
                                                                 .circular(12),
                                                       ),
-                                                height: screenHeight*0.23,
-                                                width: screenHeight*0.23,
+                                                      height: double.infinity,
+                                                      width: double.infinity,
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -642,109 +616,124 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   : Container(),
                                             ],
                                           ),
-                                        ),
-                                        onTap: subscribed
-                                            ? (quiz3 == null
-                                                ? () {
-                                                    showDialog(
-                                                        context: (context),
-                                                        builder:
-                                                            (context) =>
-                                                                AlertDialog(
-                                                                  shape: RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              12)),
-                                                                  title: Text(
-                                                                      "Alert"),
-                                                                  content: Text(
-                                                                      "Quiz not Started or Quiz Finished!"),
-                                                                ));
-                                                  }
-                                                : () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                      return QuizTestScreen(
-                                                          quiz: quiz3);
-                                                    }));
-                                                  })
-                                            : () {
-                                                showDialog(
-                                                    context: (context),
-                                                    builder:
-                                                        (context) =>
-                                                            AlertDialog(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              12)),
-                                                              title:
-                                                                  Text("Alert"),
-                                                              content: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                children: [
-                                                                  Text(
-                                                                      "You are not a Plus Member"),
-                                                                  MaterialButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .pushReplacement(
-                                                                              MaterialPageRoute(builder: (context) => MemberScreen()));
-                                                                    },
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                          horizontal:
-                                                                              8.0,
-                                                                          vertical:
-                                                                              2),
-                                                                      child: Text(
-                                                                          "Subscribe",
-                                                                          style:
-                                                                              TextStyle(color: Colors.white)),
+                                          onTap: subscribed
+                                              ? (quiz3 == null
+                                                  ? () {
+                                                      showDialog(
+                                                          context: (context),
+                                                          builder:
+                                                              (context) =>
+                                                                  AlertDialog(
+                                                                    shape: RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(12)),
+                                                                    title: Text(
+                                                                        "Alert"),
+                                                                    content: Text(
+                                                                        "Quiz not Started or Quiz Finished!"),
+                                                                  ));
+                                                    }
+                                                  : () {
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                        return QuizTestScreen(
+                                                            quiz: quiz3);
+                                                      }));
+                                                    })
+                                              : () {
+                                                  showDialog(
+                                                      context: (context),
+                                                      builder:
+                                                          (context) =>
+                                                              AlertDialog(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12)),
+                                                                title: Text(
+                                                                    "Alert"),
+                                                                content: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    Text(
+                                                                        "You are not a Plus Member"),
+                                                                    MaterialButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                MemberScreen()));
+                                                                      },
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsets.symmetric(
+                                                                            horizontal:
+                                                                                8.0,
+                                                                            vertical:
+                                                                                2),
+                                                                        child: Text(
+                                                                            "Subscribe",
+                                                                            style:
+                                                                                TextStyle(color: Colors.white)),
+                                                                      ),
+                                                                      color: Colors
+                                                                          .lightBlue
+                                                                          .shade300,
                                                                     ),
-                                                                    color: Colors
-                                                                        .lightBlue
-                                                                        .shade300,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ));
-                                              }),
+                                                                  ],
+                                                                ),
+                                                              ));
+                                                }),
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            superquiz(context),
-                          ],
-                        )),
-                  ],
+                              ),
+                            ],
+                          ),
+                          superQuiz(context),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           );
   }
 
-  Widget superquiz(context) {
+  Widget superQuiz(context) {
     return Center(
       child: InkWell(
+        onTap: (quiz4 == null
+            ? () {
+                showDialog(
+                    context: (context),
+                    builder: (context) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          title: Text("Alert"),
+                          content: Text("Quiz not Started or Quiz Finished!"),
+                        ));
+              }
+            : () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return QuizTestScreen(quiz: quiz4);
+                }));
+              }),
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 10, color: Colors.white12),
+            border: Border.all(width: 12, color: Colors.white12),
             borderRadius: BorderRadius.circular(90),
             color: Colors.white,
           ),
-          height: screenHeight*0.21,
-          width: screenHeight*0.21,
+          height: UIConstants.fitToHeight(130, context),
+          width: UIConstants.fitToHeight(130, context),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(90),
@@ -791,23 +780,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        onTap: (quiz4 == null
-            ? () {
-                showDialog(
-                    context: (context),
-                    builder: (context) => AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          title: Text("Alert"),
-                          content: Text("Quiz not Started or Quiz Finished!"),
-                        ));
-              }
-            : () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (BuildContext context) {
-                  return QuizTestScreen(quiz: quiz4);
-                }));
-              }),
       ),
     );
   }
@@ -815,7 +787,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget carouselSlider(context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: UIConstants.fitToHeight((screenHeight*0.18), context),
+        height: UIConstants.fitToHeight(100, context),
         autoPlay: true,
         autoPlayInterval: Duration(seconds: 4),
         autoPlayAnimationDuration: Duration(milliseconds: 600),
