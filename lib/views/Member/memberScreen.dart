@@ -64,8 +64,8 @@ class _MemberScreenState extends State<MemberScreen> {
   }
 
   Future searchOfferId(String amount) async {
-    for(int i=0; i<offers.length; i++) {
-      if(offers[i].amount == amount) {
+    for (int i = 0; i < offers.length; i++) {
+      if (offers[i].amount == amount) {
         return offers[i].id;
       } else {
         return "5fec7a7793e507d837641e93";
@@ -156,10 +156,11 @@ class _MemberScreenState extends State<MemberScreen> {
                                           value: _selectedItem,
                                           items: offerItems,
                                           onChanged: (value) async {
-                                            offerId = await searchOfferId(_selectedItem);
                                             setState(() {
                                               _selectedItem = (value);
                                             });
+                                            offerId = await searchOfferId(
+                                                _selectedItem);
                                           }),
                                     ),
                                   ),
