@@ -29,6 +29,7 @@ class User {
     this.fundAccount,
     this.username,
     this.upiId,
+    this.deviceToken,
     this.createdAt,
     this.updatedAt,
     this.v,
@@ -49,6 +50,7 @@ class User {
   String fundAccount;
   String username;
   String upiId;
+  String deviceToken;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
@@ -57,13 +59,16 @@ class User {
         interests: json["interests"] == null
             ? null
             : List<dynamic>.from(json["interests"].map((x) => x)),
-    exams: json["exams"] == null
-        ? null
-        : List<dynamic>.from(json["exams"].map((x) => x)),
+        exams: json["exams"] == null
+            ? null
+            : List<dynamic>.from(json["exams"].map((x) => x)),
         role: json["role"] == null ? null : json["role"],
         id: json["_id"] == null ? null : json["_id"],
+        deviceToken: json["deviceToken"] == null ? null : json["deviceToken"],
         name: json["name"] == null ? null : json["name"],
-        photoUrl: json["photoUrl"] == null ? "https://quizaddabox.ams3.digitaloceanspaces.com/dummy.png" : json["photoUrl"],
+        photoUrl: json["photoUrl"] == null
+            ? "https://quizaddabox.ams3.digitaloceanspaces.com/dummy.png"
+            : json["photoUrl"],
         phone: json["phone"] == null ? null : json["phone"],
         upiId: json["upiId"] == null ? "Not added yet" : json["upiId"],
         username: json["username"] == null ? null : json["username"],
@@ -96,6 +101,7 @@ class User {
         "username": username == null ? null : username,
         "reward": reward == null ? null : reward,
         "email": email == null ? null : email,
+        "deviceToken": deviceToken == null ? null : deviceToken,
         "subscription": subscription == null ? null : subscription.toJson(),
         "password": password == null ? null : password,
         "fundAccount": fundAccount == null ? null : fundAccount,

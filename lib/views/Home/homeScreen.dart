@@ -10,6 +10,7 @@ import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/Response.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/fileService.dart';
+import 'package:quiz_app/services/pushService.dart';
 import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
@@ -60,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Response> responses = [];
 
   loadDataForUser() async {
+    await PushService.genTokenID();
     setState(() {
       loading = true;
     });

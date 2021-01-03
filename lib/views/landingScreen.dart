@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/drawerComponent.dart';
 import 'package:quiz_app/models/User.dart';
+import 'package:quiz_app/services/pushService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/History/quizHistory.dart';
 import 'package:quiz_app/views/Home/homeScreen.dart';
@@ -21,9 +27,72 @@ class _LandingScreenState extends State<LandingScreen> {
   Color _selectedColor = Colors.orangeAccent;
   User user;
 
+  final _fcm = FirebaseMessaging();
+  StreamSubscription iosSubscription;
+
   @override
   void initState() {
+    if (Platform.isIOS) {
+      iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
+        // save the token  OR subscribe to a topic here
+      });
+
+      _fcm.requestNotificationPermissions(IosNotificationSettings());
+    }
     super.initState();
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        showDialog(
+          context: context,
+          builder: (context) =>  AlertDialog(
+            title: Text(message['notification']['title']),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(message['notification']['body']),
+              ],
+            ),
+
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        showDialog(
+          context: context,
+          builder: (context) =>  AlertDialog(
+            title: Text(message['notification']['title']),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(message['notification']['body']),
+              ],
+            ),
+
+          ),
+        );
+      },
+      onResume: (Map<String, dynamic> message) async {
+        showDialog(
+            context: context,
+            builder: (context) =>  AlertDialog(
+              title: Text(message['notification']['title']),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(message['notification']['body']),
+                ],
+              ),
+
+            ),
+        );
+      },
+    );
     _selectedIndex = widget.selectedIndex;
     // loadDataForScreen();
     loadDataForUser();
@@ -78,8 +147,9 @@ class _LandingScreenState extends State<LandingScreen> {
                   Icons.menu,
                   color: Colors.white,
                 ),
-                onPressed: () {
-                  _scaffoldKey.currentState.openDrawer();
+                onPressed: () async{
+                  // _scaffoldKey.currentState.openDrawer();
+                  await PushService.sendPushToSelf("title", "message");
                 },
               ),
               centerTitle: true,
