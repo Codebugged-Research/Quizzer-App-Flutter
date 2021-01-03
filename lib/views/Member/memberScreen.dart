@@ -29,6 +29,7 @@ class _MemberScreenState extends State<MemberScreen> {
   var offerId;
   var options;
   var _selectedItem;
+  String deductionAmount = "0";
 
   @override
   void initState() {
@@ -45,12 +46,12 @@ class _MemberScreenState extends State<MemberScreen> {
     offers = await OfferService.getAllOffers();
     offers.forEach((element) {
       offerItems.add(DropdownMenuItem(
-        value: int.parse(element.amount),
+        value: element,
         child: Text(element.name),
       ));
     });
     setState(() {
-      _selectedItem = (offerItems[0].value);
+      _selectedItem = (offers[0]);
       isLoading = false;
     });
     if (user.subscription != null) {
@@ -63,7 +64,7 @@ class _MemberScreenState extends State<MemberScreen> {
     }
   }
 
-  Future searchOfferId(String amount) async {
+  searchOfferId(String amount)  {
     for (int i = 0; i < offers.length; i++) {
       if (offers[i].amount == amount) {
         return offers[i].id;
@@ -158,9 +159,9 @@ class _MemberScreenState extends State<MemberScreen> {
                                           onChanged: (value) async {
                                             setState(() {
                                               _selectedItem = (value);
+                                              offerId = value.id;
+                                              deductionAmount = value.amount;
                                             });
-                                            offerId = await searchOfferId(
-                                                _selectedItem);
                                           }),
                                     ),
                                   ),
@@ -172,14 +173,14 @@ class _MemberScreenState extends State<MemberScreen> {
                           Stack(
                             alignment: Alignment.center,
                             children: [
-                              PlanCard(deducted: _selectedItem.toString()),
+                              PlanCard(deducted: deductionAmount.toString()),
                               buyWidgetOne(context),
                             ],
                           ),
                           Stack(
                             alignment: Alignment.center,
                             children: [
-                              PlanCardTwo(deducted: _selectedItem.toString()),
+                              PlanCardTwo(deducted: deductionAmount.toString()),
                               buyWidgetTwo(context),
                             ],
                           ),
@@ -222,7 +223,7 @@ class _MemberScreenState extends State<MemberScreen> {
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(jsonEncode({
                 "amount":
-                    (10000 - (int.parse("${_selectedItem.toString()}") * 100))
+                    (10000 - (int.parse("${deductionAmount.toString()}") * 100))
                         .toString()
               }));
               Navigator.pushReplacement(
@@ -231,10 +232,10 @@ class _MemberScreenState extends State<MemberScreen> {
                       builder: (context) => RazorPayScreen(
                             orderId: orderId,
                             amount: (10000 -
-                                    (int.parse("${_selectedItem.toString()}") *
+                                    (int.parse("${deductionAmount.toString()}") *
                                         100))
                                 .toString(),
-                            offerId: "$offerId",
+                            offerId: "$offerId", month: 1,
                           )));
             },
             color: Colors.white,
@@ -287,7 +288,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     (int.parse("${_selectedItem.toString()}") *
                                         100))
                                 .toString(),
-                            offerId: "$offerId",
+                            offerId: "$offerId", month: 3,
                           )));
             },
             color: Colors.white,

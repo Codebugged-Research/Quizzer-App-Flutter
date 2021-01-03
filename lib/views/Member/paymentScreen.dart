@@ -11,7 +11,8 @@ class RazorPayScreen extends StatefulWidget {
   final String orderId;
   final String amount;
   final String offerId;
-  RazorPayScreen({this.orderId, this.amount, this.offerId});
+  final int month;
+  RazorPayScreen({this.orderId, this.amount, this.offerId,this.month});
 
   @override
   _RazorPayScreenState createState() => _RazorPayScreenState();
@@ -20,7 +21,6 @@ class RazorPayScreen extends StatefulWidget {
 class _RazorPayScreenState extends State<RazorPayScreen> {
   Razorpay _razorpay = Razorpay();
   String amount;
-  String offerId;
   User user;
   var options;
   Future payData() async {
@@ -35,15 +35,17 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  createSubscriptionForUser() async {
+  createSubscriptionForUser(int month) async {
+    print("//////////////////////////");
     var payload = json.encode({
       "user": user.id,
       "validFrom":
           "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
       "validTill":
-          "${(DateTime.now().month + 1) > 12 ? (DateTime.now().year + 1) : DateTime.now().year}-${(DateTime.now().month + 1) > 12 ? (DateTime.now().month + 1 - 12) : (DateTime.now().month + 1)}-${DateTime.now().day}",
-      "offerId": "$offerId"
+          "${(DateTime.now().month + month) > 12 ? (DateTime.now().year + 1) : DateTime.now().year}-${(DateTime.now().month + month) > 12 ? (DateTime.now().month + month - 12) : (DateTime.now().month + month)}-${DateTime.now().day}",
+      "offerId": "${widget.offerId}"
     });
+    print(payload);
     String id = await SubscriptionService.createSubscription(payload);
     // Scaffold.of(context).showSnackBar(SnackBar(
     //   content: Text('Subscription Ordered'),
@@ -53,11 +55,11 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    print("Payment has succeeded");
+    print("///////////////////////////////////////////////////////////////Payment has succeeded");
     // scaffkey.currentState.showSnackBar(SnackBar(
     //   content: Text('Success'),
     // ));
-    createSubscriptionForUser();
+    createSubscriptionForUser(widget.month);
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => LandingScreen(
               selectedIndex: 0,

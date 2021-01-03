@@ -8,7 +8,7 @@ import 'package:quiz_app/services/userService.dart';
 class SubscriptionService extends AuthService {
   // ignore: missing_return
   static Future<String> createSubscription(var payload) async {
-     http.Response response = await AuthService.makeAuthenticatedRequest(
+     http.Response response = await AuthService. makeAuthenticatedRequest(
         AuthService.BASE_URI + 'subscription/create',
         method: 'POST',
         body: payload);
