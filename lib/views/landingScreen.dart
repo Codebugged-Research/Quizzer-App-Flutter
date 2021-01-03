@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/drawerComponent.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/pushService.dart';
@@ -28,6 +27,7 @@ class _LandingScreenState extends State<LandingScreen> {
   User user;
 
   final _fcm = FirebaseMessaging();
+  // ignore: cancel_subscriptions
   StreamSubscription iosSubscription;
 
   @override

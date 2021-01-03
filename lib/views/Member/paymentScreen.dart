@@ -10,7 +10,8 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 class RazorPayScreen extends StatefulWidget {
   final String orderId;
   final String amount;
-  RazorPayScreen({this.orderId, this.amount});
+  final String offerId;
+  RazorPayScreen({this.orderId, this.amount, this.offerId});
 
   @override
   _RazorPayScreenState createState() => _RazorPayScreenState();
@@ -19,13 +20,14 @@ class RazorPayScreen extends StatefulWidget {
 class _RazorPayScreenState extends State<RazorPayScreen> {
   Razorpay _razorpay = Razorpay();
   String amount;
+  String offerId;
   User user;
   var options;
   Future payData() async {
     try {
       _razorpay.open(options);
     } catch (e) {
-      print("errror occured here is ......................./:$e");
+      print("Error occurred here is ......................./:$e");
     }
 
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -40,6 +42,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
           "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
       "validTill":
           "${(DateTime.now().month + 1) > 12 ? (DateTime.now().year + 1) : DateTime.now().year}-${(DateTime.now().month + 1) > 12 ? (DateTime.now().month + 1 - 12) : (DateTime.now().month + 1)}-${DateTime.now().day}",
+      "offerId": "$offerId"
     });
     String id = await SubscriptionService.createSubscription(payload);
     // Scaffold.of(context).showSnackBar(SnackBar(
@@ -50,7 +53,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    print("payment has succedded");
+    print("Payment has succeeded");
     // scaffkey.currentState.showSnackBar(SnackBar(
     //   content: Text('Success'),
     // ));
@@ -102,7 +105,7 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
         'order_id': widget.orderId,
         'currency': "INR",
         'theme.color': "#528ff0",
-        // 'buttontext': "Pay",
+        'buttontext': "Pay",
         'description': 'Pay to be a Member',
         "prefill": {"contact": "${user.phone}", "email": "${user.email}"},
       };

@@ -3,7 +3,6 @@ import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/authService.dart';
 import 'package:quiz_app/services/userService.dart';
-import 'package:quiz_app/views/Profile/editScreen.dart';
 import 'package:quiz_app/views/addDataPage.dart';
 import 'package:quiz_app/views/loginScreen.dart';
 

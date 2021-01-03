@@ -69,9 +69,9 @@ class User {
         photoUrl: json["photoUrl"] == null
             ? "https://quizaddabox.ams3.digitaloceanspaces.com/dummy.png"
             : json["photoUrl"],
-        phone: json["phone"] == null ? null : json["phone"],
+        phone: json["phone"] == null ? "No Number is added" : json["phone"],
         upiId: json["upiId"] == null ? "Not added yet" : json["upiId"],
-        username: json["username"] == null ? null : json["username"],
+        username: json["username"] == null ? "No Username" : json["username"],
         reward: json["reward"] == null ? "0" : json["reward"],
         email: json["email"] == null ? null : json["email"],
         contactId: json["contactId"] == null ? null : json["contactId"],

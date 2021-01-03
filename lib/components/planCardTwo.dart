@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 
+// ignore: must_be_immutable
 class PlanCardTwo extends StatelessWidget {
   String deducted="0";
   PlanCardTwo({this.deducted});

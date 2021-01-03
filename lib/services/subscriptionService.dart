@@ -9,7 +9,7 @@ class SubscriptionService extends AuthService {
   // ignore: missing_return
   static Future<String> createSubscription(var payload) async {
      http.Response response = await AuthService.makeAuthenticatedRequest(
-        AuthService.BASE_URI + 'subscription/create/',
+        AuthService.BASE_URI + 'subscription/create',
         method: 'POST',
         body: payload);
     if (response.statusCode == 200) {

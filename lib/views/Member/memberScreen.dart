@@ -26,6 +26,7 @@ class _MemberScreenState extends State<MemberScreen> {
   List<DropdownMenuItem> offerItems = [];
   Offer offer;
   String orderId;
+  var offerId;
   var options;
   var _selectedItem;
 
@@ -59,6 +60,16 @@ class _MemberScreenState extends State<MemberScreen> {
         });
       }
       showDialogScreen();
+    }
+  }
+
+  Future searchOfferId(String amount) async {
+    for(int i=0; i<offers.length; i++) {
+      if(offers[i].amount == amount) {
+        return offers[i].id;
+      } else {
+        return "5fec7a7793e507d837641e93";
+      }
     }
   }
 
@@ -144,7 +155,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                           iconEnabledColor: Colors.black,
                                           value: _selectedItem,
                                           items: offerItems,
-                                          onChanged: (value) {
+                                          onChanged: (value) async {
+                                            offerId = await searchOfferId(_selectedItem);
                                             setState(() {
                                               _selectedItem = (value);
                                             });
@@ -221,6 +233,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     (int.parse("${_selectedItem.toString()}") *
                                         100))
                                 .toString(),
+                            offerId: "$offerId",
                           )));
             },
             color: Colors.white,
@@ -273,6 +286,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     (int.parse("${_selectedItem.toString()}") *
                                         100))
                                 .toString(),
+                            offerId: "$offerId",
                           )));
             },
             color: Colors.white,
