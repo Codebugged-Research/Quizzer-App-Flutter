@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Response> responses = [];
 
   loadDataForUser() async {
-    await PushService.genTokenID();
     setState(() {
       loading = true;
     });

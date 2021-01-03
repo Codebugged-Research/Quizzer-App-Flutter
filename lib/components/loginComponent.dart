@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/services/authService.dart';
+import 'package:quiz_app/services/pushService.dart';
 import 'package:quiz_app/views/Home/homeScreen.dart';
 import 'package:quiz_app/views/addDataPage.dart';
 import 'package:quiz_app/views/landingScreen.dart';
@@ -36,6 +37,8 @@ class LoginButtonComponentAndroid extends StatelessWidget {
                 googleUser.photoUrl.toString());
             if (authenticated) {
               print(authenticated);
+
+              await PushService.genTokenID();
               Navigator.of(context)
                   .pushReplacement(MaterialPageRoute(builder: (context) {
                 return LandingScreen(selectedIndex: 0,);

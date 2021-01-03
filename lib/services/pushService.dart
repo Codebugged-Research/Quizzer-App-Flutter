@@ -11,26 +11,9 @@ class PushService {
     await _fcm.subscribeToTopic("quiz");
     String id = await _fcm.getToken();
     pref.setString("deviceToken", id);
+    print(id);
     UserService.updateUser(jsonEncode({"deviceToken": id}));
     return id;
-  }
-
-   static Future<String> sendPushtoUser(String title, String message, String vendorId) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    var deviceToken = pref.getString("deviceToken");
-    final Map<String, String> headers = {"Content-Type": "application/json"};
-    var body = jsonEncode(
-      {"title": title, "message": message, "deviceToken": deviceToken, "vendorId": vendorId},
-    );
-    http.Response response = await http.post(
-        "https://www.myzeroapp.com/api/notification/data",
-        headers: headers,
-        body: body);
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return response.body;
-    }
   }
 
   static Future<String> sendPushToSelf(String title, String message) async {
@@ -41,7 +24,7 @@ class PushService {
       {"title": title, "message": message, "deviceToken": deviceToken},
     );
     http.Response response = await http.post(
-        "https://www.myzeroapp.com/api/notification/singleDevice",
+        "http://68.183.247.45/fcm/single",
         headers: headers,
         body: body);
     if (response.statusCode == 200) {
@@ -49,23 +32,6 @@ class PushService {
     } else {
       return response.body;
     }
-  }
 
-  static Future<String> sendPushToVendor(
-      String title, String message, String id) async {
-    final Map<String, String> headers = {"Content-Type": "application/json"};
-    var body = jsonEncode(
-      {"title": title, "message": message, "deviceToken": id},
-    );
-    http.Response response = await http.post(
-        "https://www.myzeroapp.com/api/notification/singleDevice",
-        headers: headers,
-        body: body);
-
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      return response.body;
-    }
   }
 }

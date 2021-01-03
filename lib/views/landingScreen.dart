@@ -32,6 +32,8 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   void initState() {
+
+    super.initState();
     if (Platform.isIOS) {
       iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
         // save the token  OR subscribe to a topic here
@@ -39,7 +41,6 @@ class _LandingScreenState extends State<LandingScreen> {
 
       _fcm.requestNotificationPermissions(IosNotificationSettings());
     }
-    super.initState();
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         showDialog(
