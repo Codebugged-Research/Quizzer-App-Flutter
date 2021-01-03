@@ -31,7 +31,7 @@ dependencies:
   http: ^0.12.2
   introduction_screen: ^1.0.9
   pinch_zoom_image_last: ^0.3.2
-  razorpay_flutter: null
+  razorpay_flutter:
   share_extend: ^1.1.9
   shared_preferences: ^0.5.12+4
   url_launcher: ^5.7.10
