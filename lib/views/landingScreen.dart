@@ -24,6 +24,7 @@ class _LandingScreenState extends State<LandingScreen> {
   int _selectedIndex = 0;
   bool isLoading = false;
   Color _selectedColor = Colors.orangeAccent;
+  String photoUrl;
   User user;
 
   final _fcm = FirebaseMessaging();
@@ -149,8 +150,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () async{
-                  // _scaffoldKey.currentState.openDrawer();
-                  await PushService.sendPushToSelf("title", "message");
+                  _scaffoldKey.currentState.openDrawer();
                 },
               ),
               centerTitle: true,

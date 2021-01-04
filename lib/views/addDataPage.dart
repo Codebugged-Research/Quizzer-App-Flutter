@@ -50,9 +50,13 @@ class _AddDataScreenState extends State<AddDataScreen> {
       isLoading = true;
     });
     user = await UserService.getUser();
-    String username = user.email.split("@")[0].toString();
-    _username.text = username;
+    // String username = user.email.split("@")[0].toString();
     setState(() {
+      _username.text =user.username;
+      _phone.text = user.phone;
+      _upi.text = user.upiId;
+      exams = user.exams;
+      interests = user.interests;
       isLoading = false;
     });
   }
@@ -234,9 +238,13 @@ class _AddDataScreenState extends State<AddDataScreen> {
                                 Icons.money,
                                 TextInputType.name),
                             _dropDown(examsList, exams, "Choose Your Exam"),
+                            SizedBox(height: 8),
+                            Text(exams.toString().substring(1).replaceAll("]", "")),
                             SizedBox(height: 16),
                             _dropDown(interestsList, interests,
                                 "Choose Your Interests"),
+                            SizedBox(height: 8),
+                            Text(interests.toString().substring(1).replaceAll("]", "")),
                           ],
                         ),
                       )),

@@ -29,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isLoading = true;
     });
     var auth = await AuthService.getSavedAuth();
-
     try {
       photoUrl = auth['photoUrl'];
       print(photoUrl);
@@ -75,81 +74,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: Container(
               height: UIConstants.fitToHeight(640, context),
               width: UIConstants.fitToWidth(360, context),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Stack(children: [
-                      Positioned(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.lightBlue.shade300,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0.0),
-                                bottomLeft: Radius.circular(27.0),
-                                bottomRight: Radius.circular(27.0),
-                                topRight: Radius.circular(0.0),
-                              )),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                  height: UIConstants.fitToHeight(56, context)),
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(photoUrl),
-                                backgroundColor: photoUrl == null
-                                    ? Colors.black
-                                    : Colors.white,
-                                radius: 80,
-                                child: photoUrl == null
-                                    ? Text(
-                                        'SN',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 32),
-                                      )
-                                    : null,
-                              ),
-                              SizedBox(
-                                  height: UIConstants.fitToHeight(20, context)),
-                              Text('${user.name}',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 0.46)),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 10,
-                                    bottom:
-                                        UIConstants.fitToHeight(20, context)),
-                                child: InkWell(
-                                   onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => AddDataScreen()));
-                                },
-                                  child: Text(
-                                    'Edit',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+              child: ListView(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.lightBlue.shade300,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(27.0),
+                          bottomRight: Radius.circular(27.0),
+                        )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                            height: UIConstants.fitToHeight(56, context)),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(photoUrl),
+                          backgroundColor: photoUrl == null
+                              ? Colors.black
+                              : Colors.white,
+                          radius: 80,
                         ),
-                      ),
-                    ]),
-                    profileInfo('Username', '${user.username}', Icons.person),
-                    profileInfo('Phone Number', '${user.phone}', Icons.call),
-                    profileInfo('Email', '${user.email}', Icons.mail),
-                    profileInfo('UPI ID', '${user.upiId}', Icons.money),
-                    profileInfo(
-                        'Rewards', '₹ ${user.reward}', Icons.emoji_events)
-                  ],
-                ),
+                        SizedBox(
+                            height: UIConstants.fitToHeight(20, context)),
+                        Text('${user.name}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.46)),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 10,
+                              bottom:
+                                  UIConstants.fitToHeight(20, context)),
+                          child: InkWell(
+                             onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => AddDataScreen()));
+                          },
+                            child: Text(
+                              'Edit',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  profileInfo('Username', '${user.username}', Icons.person),
+                  profileInfo('Phone Number', '${user.phone}', Icons.call),
+                  profileInfo('Email', '${user.email}', Icons.mail),
+                  profileInfo('UPI ID', '${user.upiId}', Icons.money),
+                  profileInfo(
+                      'Rewards', '₹ ${user.reward}', Icons.emoji_events),
+                  SizedBox(height: 100,),
+                ],
               ),
             ))
         : Center(child: CircularProgressIndicator());

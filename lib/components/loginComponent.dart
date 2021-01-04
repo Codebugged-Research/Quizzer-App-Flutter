@@ -13,7 +13,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return loginButton(
-        'Sign in with Google', 'assets/images/google.png', context);
+        'Sign in with Google', 'assets/images/Google.png', context);
   }
 
   Widget loginButton(String title, String assets, BuildContext context) {
@@ -28,6 +28,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
           final GoogleSignInAuthentication googleAuth =
               await googleUser.authentication;
           if (googleAuth.accessToken != null) {
+            print(googleUser.photoUrl.toString());
             bool authenticated = await AuthService.authenticate(
                 googleUser.displayName,
                 googleUser.email,

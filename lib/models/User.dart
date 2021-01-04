@@ -35,8 +35,8 @@ class User {
     this.v,
   });
 
-  List<dynamic> interests;
-  List<dynamic> exams;
+  List interests;
+  List exams;
   String role;
   String id;
   String name;
@@ -58,10 +58,10 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
         interests: json["interests"] == null
             ? null
-            : List<dynamic>.from(json["interests"].map((x) => x)),
+            : List<String>.from(json["interests"].map((x) => x)),
         exams: json["exams"] == null
             ? null
-            : List<dynamic>.from(json["exams"].map((x) => x)),
+            : List<String>.from(json["exams"].map((x) => x)),
         role: json["role"] == null ? null : json["role"],
         id: json["_id"] == null ? null : json["_id"],
         deviceToken: json["deviceToken"] == null ? null : json["deviceToken"],
