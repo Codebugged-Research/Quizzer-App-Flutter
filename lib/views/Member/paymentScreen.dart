@@ -59,12 +59,12 @@ class _RazorPayScreenState extends State<RazorPayScreen> {
     // scaffkey.currentState.showSnackBar(SnackBar(
     //   content: Text('Success'),
     // ));
+    _razorpay.clear();
     createSubscriptionForUser(widget.month);
     Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => LandingScreen(
               selectedIndex: 0,
             )));
-    _razorpay.clear();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

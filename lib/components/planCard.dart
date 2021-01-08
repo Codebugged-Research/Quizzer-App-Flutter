@@ -59,7 +59,7 @@ class PlanCard extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                     Text(
-                      '₹ ${(int.parse("100")-int.parse(deducted)).toString()}',
+                      '₹ ${(int.parse("30")-int.parse(deducted)).toString()}',
                       style: Theme.of(context)
                           .primaryTextTheme
                           .headline4

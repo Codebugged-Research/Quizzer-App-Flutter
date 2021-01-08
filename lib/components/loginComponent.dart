@@ -10,6 +10,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
   final googleSignIn = GoogleSignIn();
   final GlobalKey scaffkey;
   LoginButtonComponentAndroid({this.scaffkey});
+
   @override
   Widget build(BuildContext context) {
     return loginButton(

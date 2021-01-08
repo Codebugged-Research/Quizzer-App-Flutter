@@ -51,6 +51,7 @@ class _MemberScreenState extends State<MemberScreen> {
       ));
     });
     setState(() {
+      offerId = offers[0].id;
       _selectedItem = (offers[0]);
       isLoading = false;
     });
@@ -276,7 +277,7 @@ class _MemberScreenState extends State<MemberScreen> {
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(jsonEncode({
                 "amount":
-                    (20000 - (int.parse("${_selectedItem.toString()}") * 100))
+                    (20000 - (int.parse("${deductionAmount.toString()}") * 100))
                         .toString()
               }));
               Navigator.pushReplacement(
@@ -285,7 +286,7 @@ class _MemberScreenState extends State<MemberScreen> {
                       builder: (context) => RazorPayScreen(
                             orderId: orderId,
                             amount: (20000 -
-                                    (int.parse("${_selectedItem.toString()}") *
+                                    (int.parse("${deductionAmount.toString()}") *
                                         100))
                                 .toString(),
                             offerId: "$offerId", month: 3,
