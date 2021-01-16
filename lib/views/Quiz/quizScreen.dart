@@ -156,11 +156,15 @@ class _QuizScreenState extends State<QuizScreen> {
                         color: Colors.lightBlue.shade300,
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RewardScreen(
-                                        quiz: quizes[index],
-                                      )));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RewardScreen(
+                                quiz: quizes[index],
+                              ),
+                            ),
+                          ).then((val) {
+                            getdata();
+                          });
                         },
                       )
                     : FlatButton(
@@ -176,7 +180,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   builder: (context) => QuizTestScreen(
                                         quiz: quizes[index],
                                       ))).then((value) {
-                            setState(() {});
+                                        getdata();
                           });
                         },
                       ),

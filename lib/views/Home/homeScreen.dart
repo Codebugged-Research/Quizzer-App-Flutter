@@ -80,14 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime now = DateTime.now();
     try {
       if (user.subscription.validTill.difference(now).inDays > 0) {
-        setState(() {
-          subscribed = true;
-        });
+        subscribed = true;
       }
     } catch (e) {
-      setState(() {
-        subscribed = false;
-      });
+      subscribed = false;
     }
     quizes = await QuizService.getTodaysQuiz();
     setState(() {
@@ -184,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       loading = false;
     });
-    user.phone == null ? addPhoneNumber() : print("Hi!");
+    // user.phone == null ? addPhoneNumber() : print("Hi!");
   }
 
   double screenHeight;

@@ -61,13 +61,12 @@ class _ContactScreenState extends State<ContactScreen> {
                               height: UIConstants.fitToHeight(24, context)),
                           CircleAvatar(
                             backgroundColor: Colors.white,
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/logo.png',
-                                fit: BoxFit.cover,
-                              ),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              fit: BoxFit.fill,
+                              height: 140,
                             ),
-                            radius: 100,
+                            radius: 90,
                           ),
                           SizedBox(
                               height: UIConstants.fitToHeight(32, context)),

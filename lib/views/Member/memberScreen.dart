@@ -224,7 +224,7 @@ class _MemberScreenState extends State<MemberScreen> {
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(jsonEncode({
                 "amount":
-                    (10000 - (int.parse("${deductionAmount.toString()}") * 100))
+                    (3000 - (int.parse("${deductionAmount.toString()}") * 100))
                         .toString()
               }));
               Navigator.pushReplacement(
@@ -277,7 +277,7 @@ class _MemberScreenState extends State<MemberScreen> {
             onPressed: () async {
               orderId = await RazorPayService.createOrderId(jsonEncode({
                 "amount":
-                    (20000 - (int.parse("${deductionAmount.toString()}") * 100))
+                    (4500 - (int.parse("${deductionAmount.toString()}") * 100))
                         .toString()
               }));
               Navigator.pushReplacement(

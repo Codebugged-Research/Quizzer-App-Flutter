@@ -17,6 +17,7 @@ class Response {
         this.reward,
         this.userRole,
         this.score,
+        this.date,
         this.createdAt,
         this.updatedAt,
     });
@@ -29,6 +30,7 @@ class Response {
     String reward;
     String score;
     String userRole;
+    String date;
     DateTime createdAt;
     DateTime updatedAt;
 
@@ -40,6 +42,7 @@ class Response {
         quiz: json["quiz"] == null ? null :  Quiz.fromJson(json["quiz"]),
         reward: json["reward"] == null ? null : json["reward"],
         score: json["score"] == null ? null : json["score"],
+        date: json["date"]==null?null : json["date"],
         userRole: json["userRole"]==null?null: json["userRole"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
@@ -51,6 +54,7 @@ class Response {
         "wrong": wrong == null ? null : wrong,
         "reward": reward == null ? null : reward,
         "score": score == null ? null : score,
+        "date": date == null ? null : date,
         "userRole": userRole ==null ? null:userRole,
         "user": user == null ? null : user.toJson(),
         "quiz": quiz == null ? null : quiz.toJson(),

@@ -51,6 +51,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
     loadData();
   }
 
+  int currentPage = 0;
   List<int> responses = [];
 
   loadData() async {
@@ -64,7 +65,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: Colors.grey[600],
           ),
         ));
       });
@@ -78,11 +79,28 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
         children: dots);
   }
 
+  bool pageLoading = false;
   Widget questionCard() {
     return Stack(
       children: [
         PageView.builder(
+          physics: NeverScrollableScrollPhysics(),
           onPageChanged: (val) {
+            setState(() {
+              option1 = false;
+              option2 = false;
+              option3 = false;
+              option4 = false;
+              dots[val] = Container(
+                width: 16.0,
+                height: 16.0,
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+              );
+            });
             if (responses[val] != 0) {
               setState(() {
                 if (responses[val] == 1) {
@@ -95,41 +113,11 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                   option4 = true;
                 }
               });
-            } else {
-              setState(() {
-                option1 = false;
-                option2 = false;
-                option3 = false;
-                option4 = false;
-              });
             }
 
-            if (responses[val - 1] != 0) {
-              setState(() {
-                dots[val - 1] = Container(
-                  width: 16.0,
-                  height: 16.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.greenAccent,
-                  ),
-                );
-              });
-            } else {
-              setState(() {
-                dots[val - 1] = Container(
-                  width: 16.0,
-                  height: 16.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.orangeAccent,
-                  ),
-                );
-              });
-            }
-            print(val);
+            setState(() {
+              pageLoading = false;
+            });
           },
           controller: _pageController,
           itemCount: quiz.questions.length,
@@ -195,7 +183,10 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                       showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            22)),
                                                 content: Text(
                                                     "Do you want to submit your responses?"),
                                                 actions: [
@@ -204,7 +195,8 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                                       setState(() {
                                                         endTap = true;
                                                         stop = DateTime.now();
-                                                        tempTime = stop.difference(start);
+                                                        tempTime = stop
+                                                            .difference(start);
                                                       });
                                                       Navigator.pop(context);
                                                     },
@@ -254,9 +246,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 ),
                               ],
                             ),
-
-                            // SizedBox(
-                            //     height: MediaQuery.of(context).size.height * 0.05),
                             Align(
                                 alignment: Alignment.center,
                                 child: dottedContainer()),
@@ -289,7 +278,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 ),
                               ),
                             ),
-
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.005),
@@ -297,163 +285,276 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      // height: MediaQuery.of(context).size.height * 0.5,
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            tileColor:
-                                option1 ? Colors.greenAccent : Colors.white,
-                            title: Text(
-                              "${quiz.questions[index].options[0]}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                      color:
-                                          option1 ? Colors.white : Colors.black,
-                                      fontWeight: FontWeight.bold),
+                    pageLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Container(
+                            padding: EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ListTile(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  tileColor: option1
+                                      ? Colors.greenAccent
+                                      : Colors.white,
+                                  title: Text(
+                                    "${quiz.questions[index].options[0]}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        .copyWith(
+                                            color: option1
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      option1 = true;
+                                      option2 = false;
+                                      option3 = false;
+                                      option4 = false;
+                                      responses[index] = 1;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 16),
+                                ListTile(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  tileColor: option2
+                                      ? Colors.greenAccent
+                                      : Colors.white,
+                                  title: Text(
+                                    "${quiz.questions[index].options[1]}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        .copyWith(
+                                            color: option2
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      option1 = false;
+                                      option2 = true;
+                                      option3 = false;
+                                      option4 = false;
+                                      responses[index] = 2;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 16),
+                                ListTile(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  tileColor: option3
+                                      ? Colors.greenAccent
+                                      : Colors.white,
+                                  title: Text(
+                                    "${quiz.questions[index].options[2]}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        .copyWith(
+                                            color: option3
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      option1 = false;
+                                      option2 = false;
+                                      option3 = true;
+                                      option4 = false;
+                                      responses[index] = 3;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 16),
+                                ListTile(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  tileColor: option4
+                                      ? Colors.greenAccent
+                                      : Colors.white,
+                                  title: Text(
+                                    "${quiz.questions[index].options[3]}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        .copyWith(
+                                            color: option4
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      option1 = false;
+                                      option2 = false;
+                                      option3 = false;
+                                      option4 = true;
+                                      responses[index] = 4;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    MaterialButton(
+                                      onPressed: () {
+                                        if (responses[index] != 0) {
+                                          setState(() {
+                                            dots[index] = Container(
+                                              width: 16.0,
+                                              height: 16.0,
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 10.0,
+                                                  horizontal: 2.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.greenAccent,
+                                              ),
+                                            );
+                                          });
+                                        } else {
+                                          setState(() {
+                                            dots[index] = Container(
+                                              width: 16.0,
+                                              height: 16.0,
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 10.0,
+                                                  horizontal: 2.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.orangeAccent,
+                                              ),
+                                            );
+                                          });
+                                        }
+                                        setState(() {
+                                          pageLoading = true;
+                                        });
+                                        _pageController.animateToPage(index - 1,
+                                            duration:
+                                                Duration(milliseconds: 800),
+                                            curve: Curves.easeInOut);
+                                      },
+                                      color: Colors.lightBlue.shade300,
+                                      height: 48,
+                                      minWidth: 100,
+                                      child: Icon(Icons.arrow_back_ios,
+                                          color: Colors.white),
+                                    ),
+                                    MaterialButton(
+                                      onPressed: () {
+                                        if (responses[index] != 0) {
+                                          setState(() {
+                                            dots[index] = Container(
+                                              width: 16.0,
+                                              height: 16.0,
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 10.0,
+                                                  horizontal: 2.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.greenAccent,
+                                              ),
+                                            );
+                                          });
+                                        } else {
+                                          setState(() {
+                                            dots[index] = Container(
+                                              width: 16.0,
+                                              height: 16.0,
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 10.0,
+                                                  horizontal: 2.0),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.orangeAccent,
+                                              ),
+                                            );
+                                          });
+                                        }
+                                        if (quiz.questions.length ==
+                                            index + 1) {
+                                          showDialog(
+                                            context: (context),
+                                            builder: (context) => AlertDialog(
+                                              title: Text("Alert"),
+                                              content: Text(
+                                                  "Do you want to submit your response now?"),
+                                              actions: [
+                                                MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      endTap = true;
+                                                      stop = DateTime.now();
+                                                      tempTime = stop
+                                                          .difference(start);
+                                                    });
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 8.0,
+                                                        vertical: 2),
+                                                    child: Text("Yes",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                  color:
+                                                      Colors.lightBlue.shade300,
+                                                ),
+                                                MaterialButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text("No"),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          setState(() {
+                                            pageLoading = true;
+                                          });
+                                          _pageController.animateToPage(
+                                              index + 1,
+                                              duration:
+                                                  Duration(milliseconds: 800),
+                                              curve: Curves.easeInOut);
+                                        }
+                                      },
+                                      color: Colors.lightBlue.shade300,
+                                      height: 48,
+                                      minWidth: 100,
+                                      child: Icon(Icons.arrow_forward_ios,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                option1 = true;
-                                option2 = false;
-                                option3 = false;
-                                option4 = false;
-                                capture = true;
-                                responses[index] = 1;
-                              });
-                              if (quiz.questions.length == index + 1) {
-                                var duration = new Duration(milliseconds: 1500);
-                                return new Timer(duration, () {
-                                  setState(() {
-                                    endTap = true;
-                                    stop = DateTime.now();
-                                    tempTime = stop.difference(start);
-                                  });
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 16),
-                          ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            tileColor:
-                                option2 ? Colors.greenAccent : Colors.white,
-                            title: Text(
-                              "${quiz.questions[index].options[1]}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                      color:
-                                          option2 ? Colors.white : Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                option1 = false;
-                                option2 = true;
-                                option3 = false;
-                                option4 = false;
-                                capture = true;
-                                responses[index] = 2;
-                              });
-                              if (quiz.questions.length == index + 1) {
-                                var duration = new Duration(milliseconds: 1500);
-                                return new Timer(duration, () {
-                                  setState(() {
-                                    endTap = true;
-                                    stop = DateTime.now();
-                                    tempTime = stop.difference(start);
-                                  });
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 16),
-                          ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            tileColor:
-                                option3 ? Colors.greenAccent : Colors.white,
-                            title: Text(
-                              "${quiz.questions[index].options[2]}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                      color:
-                                          option3 ? Colors.white : Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                option1 = false;
-                                option2 = false;
-                                option3 = true;
-                                option4 = false;
-                                capture = true;
-                                responses[index] = 3;
-                              });
-                              if (quiz.questions.length == index + 1) {
-                                var duration = new Duration(milliseconds: 1500);
-                                return new Timer(duration, () {
-                                  setState(() {
-                                    endTap = true;
-                                    stop = DateTime.now();
-                                    tempTime = stop.difference(start);
-                                  });
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(height: 16),
-                          ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            tileColor:
-                                option4 ? Colors.greenAccent : Colors.white,
-                            title: Text(
-                              "${quiz.questions[index].options[3]}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(
-                                      color:
-                                          option4 ? Colors.white : Colors.black,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                option1 = false;
-                                option2 = false;
-                                option3 = false;
-                                option4 = true;
-                                capture = true;
-                                responses[index] = 4;
-                              });
-                              if (quiz.questions.length == index + 1) {
-                                var duration = new Duration(milliseconds: 800);
-                                return new Timer(duration, () {
-                                  setState(() {
-                                    endTap = true;
-                                    stop = DateTime.now();
-                                    tempTime = stop.difference(start);
-                                  });
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    )
+                          )
                   ],
                 ),
               ),
@@ -681,26 +782,26 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   Widget endCard() {
     for (int i = 0; i < quiz.questions.length; i++) {
-      setState(() {
-        if (int.parse(quiz.questions[i].answer) == responses[i]) {
-          correct++;
-        } else {
-          wrong++;
-        }
-      });
+      if (int.parse(quiz.questions[i].answer) == responses[i]) {
+        correct++;
+      } else {
+        wrong++;
+      }
     }
-    setState(() {
-      score = double.parse(quiz.incorrectScore) * wrong +
-          double.parse(quiz.correctScore) * correct;
-      response = Response(
-          correct: correct.toString(),
-          wrong: wrong.toString(),
-          user: user,
-          quiz: quiz,
-          userRole: user.role,
-          reward: reward.toString(),
-          score: score.toString());
-    });
+    print(correct);
+    print(wrong);
+    score = double.parse(quiz.incorrectScore) * wrong +
+        double.parse(quiz.correctScore) * correct;
+    response = Response(
+        correct: correct.toString(),
+        wrong: wrong.toString(),
+        user: user,
+        quiz: quiz,
+        date:
+            "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
+        userRole: user.role,
+        reward: reward.toString(),
+        score: score.toString());
     submit();
 
     return SizedBox(
@@ -845,48 +946,55 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                       showDialog(
                           context: (context),
                           builder: (context) => AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            content: Text(
-                                "You could have won cash prizes. Be a plus member  and earn rewards!"),
-                            actions: [
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              MemberScreen()));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0, vertical: 2),
-                                  child: Text("Subscribe",
-                                      style:
-                                      TextStyle(color: Colors.white)),
-                                ),
-                                color: Colors.lightBlue.shade300,
-                              ),
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              RewardScreen(
-                                                quiz: quiz,
-                                              )));
-                                },
-                                child: Text("Skip"),
-                              ),
-                            ],
-                          ));
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                content: Text(
+                                    "You could have won cash prizes. Be a plus member  and earn rewards!"),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MemberScreen()));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0, vertical: 2),
+                                      child: Text("Subscribe",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
+                                    color: Colors.lightBlue.shade300,
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LandingScreen(
+                                                    selectedIndex: 0,
+                                                  )));
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  RewardScreen(
+                                                    quiz: quiz,
+                                                  )));
+                                    },
+                                    child: Text("Skip"),
+                                  ),
+                                ],
+                              ));
                     } else {
-                      print(user.subscription.validTill
-                          .difference(DateTime.now())
-                          .inDays);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => LandingScreen(
-                            selectedIndex: 0,
-                          )));
+                                selectedIndex: 0,
+                              )));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => RewardScreen(
+                                quiz: quiz,
+                              )));
                     }
                   }),
               SizedBox(height: 28),
@@ -941,9 +1049,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                 ],
                               ));
                     } else {
-                      print(user.subscription.validTill
-                          .difference(DateTime.now())
-                          .inDays);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => LandingScreen(
                                 selectedIndex: 0,

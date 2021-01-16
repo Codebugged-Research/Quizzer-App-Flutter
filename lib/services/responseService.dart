@@ -12,7 +12,7 @@ class ResponseService extends AuthService {
         AuthService.BASE_URI + 'response/submit',
         method: 'POST',
         body: payload);
-        print(response.statusCode);
+        print("galti");
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -57,7 +57,7 @@ class ResponseService extends AuthService {
   // ignore: missing_return
   static Future<List<Response>> getResponseByUserDate(var id) async {
     http.Response response = await AuthService.makeAuthenticatedRequest(
-        AuthService.BASE_URI + 'response/UserDate/$id',
+        AuthService.BASE_URI + 'response/UserDate/$id/${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}',
         method: 'GET');
     if (response.statusCode == 200) {
       var responseMap = json.decode(response.body);
