@@ -59,6 +59,21 @@ class LoginButtonComponentAndroid extends StatelessWidget {
                     );
                   });
             }
+          }else{
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Authentication Failure!!!'),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'))
+                    ],
+                  );
+                });
           }
         },
         child: Row(
