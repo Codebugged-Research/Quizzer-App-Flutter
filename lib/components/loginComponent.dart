@@ -37,7 +37,6 @@ class LoginButtonComponentAndroid extends StatelessWidget {
                 googleUser.photoUrl.toString());
             if (authenticated) {
               print(authenticated);
-
               await PushService.genTokenID();
               Navigator.of(context)
                   .pushReplacement(MaterialPageRoute(builder: (context) {
