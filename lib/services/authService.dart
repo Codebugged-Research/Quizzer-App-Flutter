@@ -5,7 +5,7 @@ import 'package:quiz_app/services/baseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends BaseService {
-  static const BASE_URI = "http://68.183.247.45/";
+  static const BASE_URI = "http://139.59.9.205/";
   static Map<String, dynamic> _authDetails;
   static const String authNamespace = "auth";
   // ignore: missing_return

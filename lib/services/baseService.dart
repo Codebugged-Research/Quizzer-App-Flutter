@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class BaseService {
-  static const BASE_URI = "http://68.183.247.45/";
+  static const BASE_URI = "http://139.59.9.205/";
 
   static final Map<String, String> headers = {
     "Content-Type": "application/json"
