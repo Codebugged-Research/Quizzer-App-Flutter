@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:paytm/paytm.dart';
 import 'package:quiz_app/components/planCard.dart';
 import 'package:quiz_app/components/planCardTwo.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
@@ -11,7 +12,7 @@ import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/offerService.dart';
 import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
-import 'package:quiz_app/views/Member/paymentScreen.dart';
+import 'package:quiz_app/views/Member/paytm.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
 class MemberScreen extends StatefulWidget {
@@ -53,6 +54,7 @@ class _MemberScreenState extends State<MemberScreen> {
     setState(() {
       offerId = offers[0].id;
       _selectedItem = (offers[0]);
+      deductionAmount = offers[0].amount;
       isLoading = false;
     });
     if (user.subscription != null) {
@@ -65,15 +67,6 @@ class _MemberScreenState extends State<MemberScreen> {
     }
   }
 
-  searchOfferId(String amount)  {
-    for (int i = 0; i < offers.length; i++) {
-      if (offers[i].amount == amount) {
-        return offers[i].id;
-      } else {
-        return "5fec7a7793e507d837641e93";
-      }
-    }
-  }
 
   final scaffkey = new GlobalKey<ScaffoldState>();
   @override
@@ -222,19 +215,13 @@ class _MemberScreenState extends State<MemberScreen> {
               ]),
           child: MaterialButton(
             onPressed: () async {
-              orderId = await RazorPayService.createOrderId(jsonEncode({
-                "amount":
-                    (3000 - (int.parse("${deductionAmount.toString()}") * 100))
-                        .toString()
-              }));
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RazorPayScreen(
+                      builder: (context) => PayTmScreen(
                             orderId: orderId,
-                            amount: (10000 -
-                                    (int.parse("${deductionAmount.toString()}") *
-                                        100))
+                            amount: (30 -
+                                    (int.parse("${deductionAmount.toString()}") ))
                                 .toString(),
                             offerId: "$offerId", month: 1,
                           )));
@@ -275,19 +262,13 @@ class _MemberScreenState extends State<MemberScreen> {
               ]),
           child: MaterialButton(
             onPressed: () async {
-              orderId = await RazorPayService.createOrderId(jsonEncode({
-                "amount":
-                    (4500 - (int.parse("${deductionAmount.toString()}") * 100))
-                        .toString()
-              }));
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RazorPayScreen(
+                      builder: (context) => PayTmScreen(
                             orderId: orderId,
-                            amount: (20000 -
-                                    (int.parse("${deductionAmount.toString()}") *
-                                        100))
+                            amount: (45 -
+                                    (int.parse("${deductionAmount.toString()}")))
                                 .toString(),
                             offerId: "$offerId", month: 3,
                           )));

@@ -3,7 +3,7 @@ import 'package:quiz_app/constants/ui_constants.dart';
 
 // ignore: must_be_immutable
 class PlanCard extends StatelessWidget {
-  String deducted="0";
+  String deducted = "0";
   PlanCard({this.deducted});
   @override
   Widget build(BuildContext context) {
@@ -40,10 +40,7 @@ class PlanCard extends StatelessWidget {
                 ],
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
-                  colors: [
-                    const Color(0xff0CC1A1),
-                    const Color(0xff0D6EC7)
-                  ],
+                  colors: [const Color(0xff0CC1A1), const Color(0xff0D6EC7)],
                 ),
               ),
               child: Padding(
@@ -52,21 +49,38 @@ class PlanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                     'Be a Member',
+                      'Be a Member',
                       style: Theme.of(context)
                           .primaryTextTheme
                           .headline6
                           .copyWith(color: Colors.white),
                     ),
-                    Text(
-                      '₹ ${(int.parse("30")-int.parse(deducted)).toString()}',
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .headline4
-                          .copyWith(
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '₹ ${(int.parse("30"))}',
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6
+                              .copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  color: Colors.white,
+                                  letterSpacing: 0.46,
+                                  fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 8,),
+                        Text(
+                          '₹ ${(int.parse("30") - int.parse(deducted)).toString()}',
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline4
+                              .copyWith(
                               color: Colors.white,
                               letterSpacing: 0.46,
                               fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                     Text('Enjoy all Quiz',
                         style: Theme.of(context)

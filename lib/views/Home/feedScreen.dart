@@ -17,13 +17,11 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   bool isLoading = true;
-
   loadDataForScreen() async {
     setState(() {
       isLoading = true;
     });
     feeds = await FileService.getallfeed();
-    print(feeds[0].toJson());
     setState(() {
       isLoading = false;
     });
@@ -58,23 +56,33 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CircularProgressIndicator(),
             )
           : Container(
-            padding: EdgeInsets.only(top:16, left: 8, right: 8),
+              padding: EdgeInsets.only(top: 16, left: 8, right: 8),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: ListView.builder(
                 itemCount: feeds.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  print(feeds[index].createdAt.difference(DateTime.now()).inDays);
+                  print(
+                      feeds[index].createdAt.difference(DateTime.now()).inDays);
                   return Card(
                     elevation: 5,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        leading: feeds[index].createdAt.difference(DateTime.now()).inDays >= 0 ? Icon(Icons.file_present): Icon(Icons.new_releases),
+                        leading: feeds[index]
+                                    .createdAt
+                                    .difference(DateTime.now())
+                                    .inDays >=
+                                0
+                            ? Icon(Icons.file_present)
+                            : Icon(Icons.new_releases),
                         title: Text(feeds[index].name),
                         trailing: IconButton(
-                          icon: Icon(Icons.download_rounded, color: Colors.black,),
+                          icon: Icon(
+                            Icons.download_rounded,
+                            color: Colors.black,
+                          ),
                           onPressed: () async {
                             if (await canLaunch(feeds[index].fileUrl)) {
                               await launch(feeds[index].fileUrl);

@@ -58,15 +58,32 @@ class PlanCardTwo extends StatelessWidget {
                           .headline6
                           .copyWith(color: Colors.white),
                     ),
-                    Text(
-                      '₹ ${(int.parse("45")-int.parse(deducted)).toString()}',
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .headline4
-                          .copyWith(
+                   Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '₹ ${(int.parse("45"))}',
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6
+                              .copyWith(
+                              decoration: TextDecoration.lineThrough,
                               color: Colors.white,
                               letterSpacing: 0.46,
                               fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 8,),
+                        Text(
+                          '₹ ${(int.parse("45") - int.parse(deducted)).toString()}',
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .headline4
+                              .copyWith(
+                              color: Colors.white,
+                              letterSpacing: 0.46,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                     Text('Enjoy all Quiz',
                         style: Theme.of(context)
