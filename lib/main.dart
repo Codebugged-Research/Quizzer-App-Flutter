@@ -25,6 +25,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           primaryTextTheme:
               GoogleFonts.latoTextTheme(Theme.of(context).textTheme).copyWith(
+                  bodyText1: GoogleFonts.lato(color: Colors.white),
+                  bodyText2: GoogleFonts.lato(color: Colors.white),
                   headline3: GoogleFonts.lato(color: Colors.white),
                   headline4: GoogleFonts.lato(color: Colors.white),
                   headline5: GoogleFonts.lato(color: Colors.white),
