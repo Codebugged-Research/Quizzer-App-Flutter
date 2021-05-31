@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -23,21 +23,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  carousel_slider: ^2.3.1
+  carousel_slider: ^3.0.0
   countdown_flutter: ^0.1.2
   cupertino_icons: ^1.0.0
-  firebase_core: ^0.5.0
-  firebase_messaging: ^7.0.3
-  google_fonts: ^1.1.1
-  google_sign_in: ^4.5.6
-  paytm: ^2.0.0
-  http: ^0.12.2
-  introduction_screen: ^1.0.9
+  firebase_core: ^1.2.0
+  firebase_messaging: ^10.0.0
+  google_fonts: ^2.1.0
+  google_sign_in: ^5.0.4
+  paytm: ^3.0.0
+  http: ^0.13.3
+  introduction_screen: ^2.1.0
   pinch_zoom_image_last: ^0.3.2
   razorpay_flutter:
-  share_extend: ^1.1.9
-  shared_preferences: ^0.5.12+4
-  url_launcher: ^5.7.10
+  share_extend: ^2.0.0
+  shared_preferences: ^2.0.6
+  url_launcher: ^6.0.4
 
 dev_dependencies:
   flutter_test:

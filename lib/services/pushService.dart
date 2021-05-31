@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PushService {
   static Future<String> genTokenID() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    final FirebaseMessaging _fcm = FirebaseMessaging();
+    final FirebaseMessaging _fcm = FirebaseMessaging.instance;
     await _fcm.subscribeToTopic("quiz");
     String id = await _fcm.getToken();
     pref.setString("deviceToken", id);
@@ -24,7 +24,7 @@ class PushService {
       {"title": title, "message": message, "deviceToken": deviceToken},
     );
     http.Response response = await http.post(
-        "http://68.183.247.45/fcm/single",
+        Uri.parse("https://quizaddaplus.tk/fcm/single"),
         headers: headers,
         body: body);
     if (response.statusCode == 200) {
@@ -32,6 +32,5 @@ class PushService {
     } else {
       return response.body;
     }
-
   }
 }

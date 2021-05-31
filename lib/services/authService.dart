@@ -5,7 +5,7 @@ import 'package:quiz_app/services/baseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends BaseService {
-  static const BASE_URI = "http://139.59.9.205/";
+  static const BASE_URI = "https://quizaddaplus.tk/";
   static Map<String, dynamic> _authDetails;
   static const String authNamespace = "auth";
   // ignore: missing_return
@@ -28,21 +28,21 @@ class AuthService extends BaseService {
       switch (method) {
         case 'POST':
           body ??= {};
-          return http.post(url, headers: sentHeaders, body: body);
+          return http.post(Uri.parse(url), headers: sentHeaders, body: body);
           break;
 
         case 'GET':
-          return http.get(url, headers: sentHeaders);
+          return http.get(Uri.parse(url), headers: sentHeaders);
           break;
 
         case 'PUT':
-          return http.put(url, headers: sentHeaders, body: body);
+          return http.put(Uri.parse(url), headers: sentHeaders, body: body);
           break;
 
         case 'DELETE':
-          return http.delete(url, headers: sentHeaders);
+          return http.delete(Uri.parse(url), headers: sentHeaders);
         default:
-          return http.post(url, headers: sentHeaders, body: body);
+          return http.post(Uri.parse(url), headers: sentHeaders, body: body);
       }
     } catch (err) {
       print(err);

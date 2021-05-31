@@ -87,7 +87,7 @@ class _PayTmScreenState extends State<PayTmScreen> {
 
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: body,
         headers: {'Content-type': "application/json"},
       );

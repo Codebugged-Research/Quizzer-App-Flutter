@@ -28,76 +28,25 @@ class _LandingScreenState extends State<LandingScreen> {
   String photoUrl;
   User user;
 
-  final _fcm = FirebaseMessaging();
+  final _fcm = FirebaseMessaging.instance;
   // ignore: cancel_subscriptions
   StreamSubscription iosSubscription;
 
   @override
   void initState() {
-
     super.initState();
-    if (Platform.isIOS) {
-      iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
-        // save the token  OR subscribe to a topic here
-      });
-
-      _fcm.requestNotificationPermissions(IosNotificationSettings());
-    }
-    _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) {
         showDialog(
           context: context,
-          builder: (context) =>  AlertDialog(
-            title: Text(message['notification']['title']),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(message['notification']['body']),
-              ],
-            ),
-
+          builder: (context) => AlertDialog(
+            content: Text(message.notification.body),
+            title: Text(message.notification.title),
           ),
-        );
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        showDialog(
-          context: context,
-          builder: (context) =>  AlertDialog(
-            title: Text(message['notification']['title']),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(message['notification']['body']),
-              ],
-            ),
-
-          ),
-        );
-      },
-      onResume: (Map<String, dynamic> message) async {
-        showDialog(
-            context: context,
-            builder: (context) =>  AlertDialog(
-              title: Text(message['notification']['title']),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(message['notification']['body']),
-                ],
-              ),
-
-            ),
         );
       },
     );
     _selectedIndex = widget.selectedIndex;
-    // loadDataForScreen();
     loadDataForUser();
   }
 
@@ -150,7 +99,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   Icons.menu,
                   color: Colors.white,
                 ),
-                onPressed: () async{
+                onPressed: () async {
                   _scaffoldKey.currentState.openDrawer();
                 },
               ),
@@ -165,7 +114,10 @@ class _LandingScreenState extends State<LandingScreen> {
             ),
             drawer: Drawer(
               child: DrawerComponent(
-                  name: user.name, email: user.email, photUrl: user.photoUrl, username: user.username),
+                  name: user.name,
+                  email: user.email,
+                  photUrl: user.photoUrl,
+                  username: user.username),
             ),
             body: _widgetOptions.elementAt(_selectedIndex),
             floatingActionButton: Padding(

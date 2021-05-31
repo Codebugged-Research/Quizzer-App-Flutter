@@ -24,8 +24,11 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     return Scaffold(
         key: scaffKey,
         backgroundColor: Colors.white,
-        appBar:
-            AppBar(backgroundColor: Colors.lightBlue.shade300, elevation: 0.0, iconTheme: IconThemeData(color: Colors.white),),
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlue.shade300,
+          elevation: 0.0,
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
         body: Container(
           height: UIConstants.fitToHeight(640, context),
           width: UIConstants.fitToWidth(360, context),
@@ -95,8 +98,39 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                               letterSpacing: 0.23,
                               fontWeight: FontWeight.w500)),
                     )),
-                cardDetails(context, 'Privacy Policy', onTap: () {}),
-                SizedBox(height: UIConstants.fitToHeight(16, context),)
+                SizedBox(
+                  height: UIConstants.fitToHeight(8, context),
+                ),
+                cardDetails(context, 'Privacy Policy', onTap: () async {
+                  if (await canLaunch("https://quizaddaplus.tk/privacy")) {
+                    await launch("https://quizaddaplus.tk/privacy");
+                  } else {
+                    print('Could not launch https://quizaddaplus.tk/privacy');
+                  }
+                }),
+                SizedBox(
+                  height: UIConstants.fitToHeight(8, context),
+                ),
+                cardDetails(context, 'Refund Policy', onTap: () async {
+                  if (await canLaunch("https://quizaddaplus.tk/refund")) {
+                    await launch("https://quizaddaplus.tk/refund");
+                  } else {
+                    print('Could not launch https://quizaddaplus.tk/refund');
+                  }
+                }),
+                SizedBox(
+                  height: UIConstants.fitToHeight(8, context),
+                ),
+                cardDetails(context, 'Terms & Conditions', onTap: () async{
+                  if (await canLaunch("https://quizaddaplus.tk/terms")) {
+                    await launch("https://quizaddaplus.tk/terms");
+                  } else {
+                    print('Could not launch https://quizaddaplus.tk/terms');
+                  }
+                }),
+                SizedBox(
+                  height: UIConstants.fitToHeight(16, context),
+                )
               ],
             ),
           ),
