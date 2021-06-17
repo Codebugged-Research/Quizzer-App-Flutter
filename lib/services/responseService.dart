@@ -12,7 +12,6 @@ class ResponseService extends AuthService {
         AuthService.BASE_URI + 'response/submit',
         method: 'POST',
         body: payload);
-        print("galti");
     if (response.statusCode == 200) {
       return true;
     } else {

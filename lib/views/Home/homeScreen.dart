@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ));
                                               }
                                             : () {
-                                                Navigator.of(context).push(
+                                                Navigator.of(context).pushReplacement(
                                                     MaterialPageRoute(builder:
                                                         (BuildContext context) {
                                                   return QuizTestScreen(
@@ -399,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     );
                                                   }
                                                 : () {
-                                                    Navigator.of(context).push(
+                                                    Navigator.of(context).pushReplacement(
                                                       MaterialPageRoute(
                                                         builder: (BuildContext
                                                             context) {
@@ -630,7 +630,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   ));
                                                     }
                                                   : () {
-                                                      Navigator.of(context).push(
+                                                      Navigator.of(context).pushReplacement(
                                                           MaterialPageRoute(
                                                               builder:
                                                                   (BuildContext
@@ -718,7 +718,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             : () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                    .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
                   return QuizTestScreen(quiz: quiz4);
                 }));
               }),
