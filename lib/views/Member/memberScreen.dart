@@ -3,16 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:paytm/paytm.dart';
 import 'package:quiz_app/components/planCard.dart';
 import 'package:quiz_app/components/planCardTwo.dart';
 import 'package:quiz_app/constants/ui_constants.dart';
 import 'package:quiz_app/models/Offer.dart';
 import 'package:quiz_app/models/User.dart';
 import 'package:quiz_app/services/offerService.dart';
-import 'package:quiz_app/services/razorPayService.dart';
 import 'package:quiz_app/services/userService.dart';
-import 'package:quiz_app/views/Member/paytm.dart';
+import 'package:quiz_app/views/Member/Payment.dart';
+// import 'package:quiz_app/views/Member/paytm.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
 class MemberScreen extends StatefulWidget {
@@ -218,12 +217,13 @@ class _MemberScreenState extends State<MemberScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PayTmScreen(
+                      builder: (context) => Payment(
                             orderId: orderId,
                             amount: (30 -
                                     (int.parse("${deductionAmount.toString()}") ))
                                 .toString(),
                             offerId: "$offerId", month: 1,
+                        user: user,
                           )));
             },
             color: Colors.white,
@@ -265,12 +265,13 @@ class _MemberScreenState extends State<MemberScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PayTmScreen(
+                      builder: (context) => Payment(
                             orderId: orderId,
                             amount: (45 -
                                     (int.parse("${deductionAmount.toString()}")))
                                 .toString(),
                             offerId: "$offerId", month: 3,
+                        user: user,
                           )));
             },
             color: Colors.white,

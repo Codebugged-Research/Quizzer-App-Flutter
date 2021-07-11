@@ -14,7 +14,7 @@ class LoginButtonComponentAndroid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return loginButton(
-        'Sign in with Google', 'assets/images/Google.png', context);
+        'Sign in with Google', 'assets/images/google.png', context);
   }
 
   Widget loginButton(String title, String assets, BuildContext context) {
