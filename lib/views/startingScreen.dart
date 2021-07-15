@@ -56,13 +56,15 @@ class _StartingScreenState extends State<StartingScreen> {
 
   checkFields() {
     final form = formkey.currentState;
-    if (form.validate()) {
+    if (form.validate() && _phone.text.length >= 10) {
       form.save();
       return true;
     }
     setState(() {
       isLoading = false;
     });
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Enter correct phonenumber")));
     return false;
   }
 
@@ -73,21 +75,26 @@ class _StartingScreenState extends State<StartingScreen> {
     var payload = json.encode({
       "username": _username.text,
       "phone": _phone.text,
-      // "upiId": _upi.text,
-      // "exams": exams,
-      // "interests": interests,
-      // "contactId": contactId,
-      // "fundAccount": fundId
     });
-    print(payload);
     bool updated = await UserService.updateUser(payload);
     print(updated);
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-      return LandingScreen(selectedIndex: 0);
-    }));
-    setState(() {
-      isLoading = false;
-    });
+    if (updated) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("User Updated !")));
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return LandingScreen(selectedIndex: 0);
+      }));
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("User Not Updated !")));
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   // Widget _dropDown(List<DropdownMenuItem> source, List target, String hint) {
@@ -248,7 +255,9 @@ class _StartingScreenState extends State<StartingScreen> {
                                 color: Color(0xff25354E),
                                 elevation: 2.0,
                                 onPressed: () async {
-                                  await updateData();
+                                  if (checkFields()) {
+                                    await updateData();
+                                  }
                                 },
                                 child: Text(
                                   'Save',
