@@ -1064,8 +1064,13 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
+    return WillPopScope(
+      onWillPop: (){
+        return Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LandingScreen(selectedIndex: 0)));
+      },
+      child: Scaffold(
+        body: endTap ? endCard() : (readyTap ? questionCard() : infoCard()),
+      ),
     );
   }
 }

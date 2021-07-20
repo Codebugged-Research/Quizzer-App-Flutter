@@ -13,6 +13,7 @@ import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Member/Payment.dart';
 // import 'package:quiz_app/views/Member/paytm.dart';
 import 'package:quiz_app/views/landingScreen.dart';
+import 'package:quiz_app/views/loginScreen.dart';
 
 class MemberScreen extends StatefulWidget {
   @override
@@ -75,117 +76,122 @@ class _MemberScreenState extends State<MemberScreen> {
         // For Android.
         statusBarIconBrightness: Brightness.light,
       ),
-      child: Scaffold(
-        key: scaffkey,
-        body: !isLoading
-            ? SingleChildScrollView(
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Container(
-                      height: UIConstants.fitToHeight(260, context),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [],
+      child: WillPopScope(
+        onWillPop: (){
+          return Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LandingScreen(selectedIndex: 0)));
+        },
+        child: Scaffold(
+          key: scaffkey,
+          body: !isLoading
+              ? SingleChildScrollView(
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Container(
+                        height: UIConstants.fitToHeight(260, context),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height,
-                      color: Colors.transparent,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              height: UIConstants.fitToHeight(32, context)),
-                          Text(
-                            'Subscription',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .primaryTextTheme
-                                .headline4
-                                .copyWith(color: Colors.white),
-                          ),
-                          SizedBox(
-                              height: UIConstants.fitToHeight(16, context)),
-                          Text(
-                            'Select Offers!',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                              height: UIConstants.fitToHeight(16, context)),
-                          offerItems != null
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Colors.white,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton(
-                                          isDense: true,
-                                          hint: Text(
-                                            'Select Offers!',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          iconEnabledColor: Colors.black,
-                                          value: _selectedItem,
-                                          items: offerItems,
-                                          onChanged: (value) async {
-                                            setState(() {
-                                              _selectedItem = (value);
-                                              offerId = value.id;
-                                              deductionAmount = value.amount;
-                                            });
-                                          }),
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.transparent,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                height: UIConstants.fitToHeight(32, context)),
+                            Text(
+                              'Subscription',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline4
+                                  .copyWith(color: Colors.white),
+                            ),
+                            SizedBox(
+                                height: UIConstants.fitToHeight(16, context)),
+                            Text(
+                              'Select Offers!',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                                height: UIConstants.fitToHeight(16, context)),
+                            offerItems != null
+                                ? Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      color: Colors.white,
                                     ),
-                                  ),
-                                )
-                              : Container(),
-                          SizedBox(
-                            height: UIConstants.fitToHeight(16, context),
-                          ),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              PlanCard(deducted: deductionAmount.toString()),
-                              buyWidgetOne(context),
-                            ],
-                          ),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              PlanCardTwo(deducted: deductionAmount.toString()),
-                              buyWidgetTwo(context),
-                            ],
-                          ),
-                        ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton(
+                                            isDense: true,
+                                            hint: Text(
+                                              'Select Offers!',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            iconEnabledColor: Colors.black,
+                                            value: _selectedItem,
+                                            items: offerItems,
+                                            onChanged: (value) async {
+                                              setState(() {
+                                                _selectedItem = (value);
+                                                offerId = value.id;
+                                                deductionAmount = value.amount;
+                                              });
+                                            }),
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            SizedBox(
+                              height: UIConstants.fitToHeight(16, context),
+                            ),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                PlanCard(deducted: deductionAmount.toString()),
+                                buyWidgetOne(context),
+                              ],
+                            ),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                PlanCardTwo(deducted: deductionAmount.toString()),
+                                buyWidgetTwo(context),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
                 ),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
+        ),
       ),
     );
   }

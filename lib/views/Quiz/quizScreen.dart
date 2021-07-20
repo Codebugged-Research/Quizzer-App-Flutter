@@ -8,6 +8,7 @@ import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
 import 'package:quiz_app/views/Quiz/rewardScreen.dart';
+import 'package:quiz_app/views/landingScreen.dart';
 
 class QuizScreen extends StatefulWidget {
   @override
@@ -72,15 +73,20 @@ class _QuizScreenState extends State<QuizScreen> {
     return loading
         ? Center(child: CircularProgressIndicator())
         : quizes.length > 0
-            ? Scaffold(
-                backgroundColor: Colors.white,
-                body: ListView.builder(
-                  itemCount: quizes.length,
-                  itemBuilder: (context, index) {
-                    return quizTile(quizes[index], index);
-                  },
+            ? WillPopScope(
+              onWillPop: (){
+                return Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LandingScreen(selectedIndex: 0)));
+              },
+              child: Scaffold(
+                  backgroundColor: Colors.white,
+                  body: ListView.builder(
+                    itemCount: quizes.length,
+                    itemBuilder: (context, index) {
+                      return quizTile(quizes[index], index);
+                    },
+                  ),
                 ),
-              )
+            )
             : Center(
                 child: Text(
                 "No New Quizes",
@@ -148,7 +154,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   ],
                 ),
                 trailing: change[index]
-                    ? FlatButton(
+                    ? MaterialButton(
                         child: Text(
                           'LeaderBoard',
                           style: TextStyle(color: Colors.white),
