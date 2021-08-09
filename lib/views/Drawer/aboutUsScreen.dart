@@ -13,7 +13,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
 
   openPrivacyPolicy() async {
     String url =
-        'https://play.google.com/store/apps/details?id=nl.wikit.cvmaken&hl=en_IN&gl=US';
+        'https://play.google.com/store/apps/details?id=com.quizplus.quiz_adda';
     if (await canLaunch(url)) {
       await launch(url);
     }

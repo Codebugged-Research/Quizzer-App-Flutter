@@ -29,7 +29,7 @@ class DrawerComponent extends StatelessWidget {
 
   rateApp() async {
     String url =
-        'https://play.google.com/store/apps/details?id=nl.wikit.cvmaken&hl=en_IN&gl=US';
+        'https://play.google.com/store/apps/details?id=com.quizplus.quiz_adda';
     if (await canLaunch(url)) {
       await launch(url);
     }
@@ -37,7 +37,7 @@ class DrawerComponent extends StatelessWidget {
 
   shareApp() async {
     String url =
-        'https://play.google.com/store/apps/details?id=nl.wikit.cvmaken&hl=en_IN&gl=US';
+        'https://play.google.com/store/apps/details?id=com.quizplus.quiz_adda';
     if (Platform.isAndroid) {
       await ShareExtend.share('Check out this Amazing Quiz App $url', "text");
     }

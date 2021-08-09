@@ -82,7 +82,7 @@ class _QuizHistoryState extends State<QuizHistory> {
                                           .copyWith(color: Colors.green),
                                     ),
                                     Text(
-                                      quizResponses[index].score,
+                                      quizResponses[index].score.toString(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline6

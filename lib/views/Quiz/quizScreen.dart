@@ -74,10 +74,13 @@ class _QuizScreenState extends State<QuizScreen> {
         ? Center(child: CircularProgressIndicator())
         : quizes.length > 0
             ? WillPopScope(
-              onWillPop: (){
-                return Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LandingScreen(selectedIndex: 0)));
-              },
-              child: Scaffold(
+                onWillPop: () {
+                  return Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              LandingScreen(selectedIndex: 0)));
+                },
+                child: Scaffold(
                   backgroundColor: Colors.white,
                   body: ListView.builder(
                     itemCount: quizes.length,
@@ -86,7 +89,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     },
                   ),
                 ),
-            )
+              )
             : Center(
                 child: Text(
                 "No New Quizes",
@@ -125,7 +128,7 @@ class _QuizScreenState extends State<QuizScreen> {
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: (index == 0 ? true : unlocked)
+        child: (quiz.slot == "1" ? true : unlocked)
             ? ListTile(
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -173,7 +176,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           });
                         },
                       )
-                    : FlatButton(
+                    : MaterialButton(
                         child: Text(
                           'Start',
                           style: TextStyle(color: Colors.white),
@@ -181,12 +184,14 @@ class _QuizScreenState extends State<QuizScreen> {
                         color: Colors.orangeAccent,
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => QuizTestScreen(
-                                        quiz: quizes[index],
-                                      ))).then((value) {
-                                        getdata();
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QuizTestScreen(
+                                quiz: quizes[index],
+                              ),
+                            ),
+                          ).then((value) {
+                            getdata();
                           });
                         },
                       ),
@@ -199,7 +204,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   ],
                 ),
                 title: Text(quiz.name),
-                trailing: FlatButton(
+                trailing: MaterialButton(
                   child: Text(
                     'Locked',
                     style: TextStyle(color: Colors.white),

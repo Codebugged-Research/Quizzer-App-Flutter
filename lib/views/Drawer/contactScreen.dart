@@ -112,15 +112,15 @@ class _ContactScreenState extends State<ContactScreen> {
                   launch(('tel://07734015723'));
                 }),
                 SizedBox(height: UIConstants.fitToHeight(16, context),),                    
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:32.0),
-                  child: Text("Address", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                ),           
-                Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Text("Block No. 236 , LALMAU Block TARWAN, MEHNAJPUR Azamgarh, UP, PIN Code 276203", style: TextStyle(fontSize: 18,),textAlign: TextAlign.center,),
-                ),
-                SizedBox(height: 16),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal:32.0),
+                //   child: Text("Address", style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.all(32.0),
+                //   child: Text("Block No. 236 , LALMAU Block TARWAN, MEHNAJPUR Azamgarh, UP, PIN Code 276203", style: TextStyle(fontSize: 18,),textAlign: TextAlign.center,),
+                // ),
+                // SizedBox(height: 16),
               ],
             ),
           ),

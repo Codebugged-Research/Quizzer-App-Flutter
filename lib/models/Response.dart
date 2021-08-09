@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:quiz_app/models/Quiz.dart';
 import 'package:quiz_app/models/User.dart';
@@ -28,7 +29,7 @@ class Response {
     User user;
     Quiz quiz;
     String reward;
-    String score;
+    double score;
     String userRole;
     String date;
     DateTime createdAt;
@@ -41,7 +42,7 @@ class Response {
         user: json["user"] == null ? null : User.fromJson(json["user"]),
         quiz: json["quiz"] == null ? null :  Quiz.fromJson(json["quiz"]),
         reward: json["reward"] == null ? null : json["reward"],
-        score: json["score"] == null ? null : json["score"],
+        score: json["score"] == null ? null : double.parse(json["score"].toString()),
         date: json["date"]==null?null : json["date"],
         userRole: json["userRole"]==null?null: json["userRole"],
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),

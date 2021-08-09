@@ -801,7 +801,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
             "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
         userRole: user.role,
         reward: reward.toString(),
-        score: score.toString());
+        score: score);
     submit();
 
     return SizedBox(

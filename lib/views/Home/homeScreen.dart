@@ -61,6 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   loadDataForUser() async {
     setState(() {
+      quizes.clear();
+      cardList.clear();
+      files.clear();
       loading = true;
     });
     user = await UserService.getUser();
@@ -72,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
         cardList.add(Container(
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
-            child: Image.network(element.imageUrl, fit: BoxFit.fitWidth)));
+            child: Image.network(element.imageUrl, fit: BoxFit.cover)));
       });
     } catch (e) {
       print(e);
@@ -196,110 +199,33 @@ class _HomeScreenState extends State<HomeScreen> {
             key: scaffkey,
             extendBody: true,
             backgroundColor: Colors.white,
-            body: Column(
+            body: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 12.0),
-                  child: carouselSlider(context),
-                ),
-                carouselDots(context),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 80),
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Stack(
-                        children: [
-                          Column(
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child: carouselSlider(context),
+                    ),
+                    carouselDots(context),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 80),
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Stack(
                             children: [
-                              Expanded(
-                                flex: 10,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 10,
-                                      child: GestureDetector(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color: Colors.lightBlue.shade300,
-                                          ),
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/unlocked.png",
-                                                height: 32,
-                                              ),
-                                              SizedBox(
-                                                  height:
-                                                      UIConstants.fitToHeight(
-                                                          6, context)),
-                                              Text(
-                                                tempQuiz1 == null
-                                                    ? "No"
-                                                    : tempQuiz1.name,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Text(
-                                                tempQuiz1 == null
-                                                    ? "Quiz"
-                                                    : tempQuiz1.startTime +
-                                                        "\n" +
-                                                        tempQuiz1.endTime,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: quiz1 == null
-                                            ? () {
-                                                showDialog(
-                                                    context: (context),
-                                                    builder: (context) =>
-                                                        AlertDialog(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          12)),
-                                                          title: Text("Alert"),
-                                                          content: Text(
-                                                              "Quiz not Started or Quiz Finished!"),
-                                                        ));
-                                              }
-                                            : () {
-                                                Navigator.of(context).pushReplacement(
-                                                    MaterialPageRoute(builder:
-                                                        (BuildContext context) {
-                                                  return QuizTestScreen(
-                                                      quiz: quiz1);
-                                                }));
-                                              },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(),
-                                      flex: 1,
-                                    ),
-                                    Expanded(
-                                      flex: 10,
-                                      child: GestureDetector(
-                                        child: Stack(
-                                          children: [
-                                            Container(
+                              Column(
+                                children: [
+                                  Expanded(
+                                    flex: 10,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 10,
+                                          child: GestureDetector(
+                                            child: Container(
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
@@ -313,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Image.asset(
-                                                    "assets/images/locked.png",
+                                                    "assets/images/unlocked.png",
                                                     height: 32,
                                                   ),
                                                   SizedBox(
@@ -321,20 +247,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .fitToHeight(
                                                               6, context)),
                                                   Text(
-                                                    tempQuiz2 == null
+                                                    tempQuiz1 == null
                                                         ? "No"
-                                                        : tempQuiz2.name,
+                                                        : tempQuiz1.name,
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
                                                   Text(
-                                                    tempQuiz2 == null
+                                                    tempQuiz1 == null
                                                         ? "Quiz"
-                                                        : tempQuiz2.startTime +
+                                                        : tempQuiz1.startTime +
                                                             "\n" +
-                                                            tempQuiz2.endTime,
+                                                            tempQuiz1.endTime,
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,
@@ -344,45 +270,168 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ],
                                               ),
                                             ),
-                                            !subscribed
-                                                ? Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white24,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                    height: double.infinity,
-                                                    width: double.infinity,
-                                                  )
-                                                : Container(),
-                                            !subscribed
-                                                ? Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                    height: double.infinity,
-                                                    width: double.infinity,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.lock,
-                                                          size: 40,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  )
-                                                : Container(),
-                                          ],
-                                        ),
-                                        onTap: subscribed
-                                            ? (quiz2 == null
+                                            onTap: quiz1 == null
                                                 ? () {
+                                                    showDialog(
+                                                        context: (context),
+                                                        builder:
+                                                            (context) =>
+                                                                AlertDialog(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              12)),
+                                                                  title: Text(
+                                                                      "Alert"),
+                                                                  content: Text(
+                                                                      "Quiz not Started or Attached!"),
+                                                                ));
+                                                  }
+                                                : () {
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                      return QuizTestScreen(
+                                                          quiz: quiz1);
+                                                    }));
+                                                  },
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(),
+                                          flex: 1,
+                                        ),
+                                        Expanded(
+                                          flex: 10,
+                                          child: GestureDetector(
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    color: Colors
+                                                        .lightBlue.shade300,
+                                                  ),
+                                                  height: double.infinity,
+                                                  width: double.infinity,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/locked.png",
+                                                        height: 32,
+                                                      ),
+                                                      SizedBox(
+                                                          height: UIConstants
+                                                              .fitToHeight(
+                                                                  6, context)),
+                                                      Text(
+                                                        tempQuiz2 == null
+                                                            ? "No"
+                                                            : tempQuiz2.name,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        tempQuiz2 == null
+                                                            ? "Quiz"
+                                                            : tempQuiz2
+                                                                    .startTime +
+                                                                "\n" +
+                                                                tempQuiz2
+                                                                    .endTime,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                !subscribed
+                                                    ? Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white24,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                        ),
+                                                        height: double.infinity,
+                                                        width: double.infinity,
+                                                      )
+                                                    : Container(),
+                                                !subscribed
+                                                    ? Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                        ),
+                                                        height: double.infinity,
+                                                        width: double.infinity,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Icon(
+                                                              Icons.lock,
+                                                              size: 40,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : Container(),
+                                              ],
+                                            ),
+                                            onTap: subscribed
+                                                ? (quiz2 == null
+                                                    ? () {
+                                                        showDialog(
+                                                          context: (context),
+                                                          builder: (context) =>
+                                                              AlertDialog(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12)),
+                                                            title:
+                                                                Text("Alert"),
+                                                            content: Text(
+                                                                "Quiz not Started or Attached!"),
+                                                          ),
+                                                        );
+                                                      }
+                                                    : () {
+                                                        Navigator.of(context)
+                                                            .pushReplacement(
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return QuizTestScreen(
+                                                                  quiz: quiz2);
+                                                            },
+                                                          ),
+                                                        );
+                                                      })
+                                                : () {
                                                     showDialog(
                                                       context: (context),
                                                       builder: (context) =>
@@ -393,228 +442,245 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     .circular(
                                                                         12)),
                                                         title: Text("Alert"),
-                                                        content: Text(
-                                                            "Quiz not Started or Quiz Finished!"),
-                                                      ),
-                                                    );
-                                                  }
-                                                : () {
-                                                    Navigator.of(context).pushReplacement(
-                                                      MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return QuizTestScreen(
-                                                              quiz: quiz2);
-                                                        },
-                                                      ),
-                                                    );
-                                                  })
-                                            : () {
-                                                showDialog(
-                                                  context: (context),
-                                                  builder: (context) =>
-                                                      AlertDialog(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12)),
-                                                    title: Text("Alert"),
-                                                    content: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Text(
-                                                            "You are not a Plus Member, Be a plus member and enjoy all quizes and rewards."),
-                                                        MaterialButton(
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pushReplacement(
-                                                              MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        MemberScreen(),
-                                                              ),
-                                                            );
-                                                          },
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
+                                                        content: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                                "You are not a Plus Member, Be a plus member and enjoy all quizes and rewards."),
+                                                            MaterialButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pushReplacement(
+                                                                  MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            MemberScreen(),
+                                                                  ),
+                                                                );
+                                                              },
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
                                                                         .symmetric(
                                                                     horizontal:
                                                                         8.0,
                                                                     vertical:
                                                                         2),
-                                                            child: Text(
-                                                                "Subscribe",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white)),
-                                                          ),
-                                                          color: Colors
-                                                              .lightBlue
-                                                              .shade300,
+                                                                child: Text(
+                                                                    "Subscribe",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white)),
+                                                              ),
+                                                              color: Colors
+                                                                  .lightBlue
+                                                                  .shade300,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(child: Container(), flex: 1),
+                                  Expanded(
+                                    flex: 10,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 10,
+                                          child: GestureDetector(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color:
+                                                    Colors.lightBlue.shade300,
+                                              ),
+                                              height: double.infinity,
+                                              width: double.infinity,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/timeline.png",
+                                                    height: 32,
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        UIConstants.fitToHeight(
+                                                            6, context),
+                                                  ),
+                                                  Text(
+                                                    "Feed",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return FeedScreen();
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(),
+                                          flex: 1,
+                                        ),
+                                        Expanded(
+                                          flex: 10,
+                                          child: GestureDetector(
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      color: Colors
+                                                          .lightBlue.shade300,
+                                                    ),
+                                                    height: double.infinity,
+                                                    width: double.infinity,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Image.asset(
+                                                          "assets/images/locked.png",
+                                                          height: 32,
+                                                        ),
+                                                        SizedBox(
+                                                            height: UIConstants
+                                                                .fitToHeight(6,
+                                                                    context)),
+                                                        Text(
+                                                          tempQuiz3 == null
+                                                              ? "No"
+                                                              : tempQuiz3.name,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        // SizedBox(
+                                                        //     height: UIConstants
+                                                        //         .fitToHeight(
+                                                        //             2, context)),
+                                                        Text(
+                                                          tempQuiz3 == null
+                                                              ? "Quiz"
+                                                              : tempQuiz3
+                                                                      .startTime +
+                                                                  "\n" +
+                                                                  tempQuiz3
+                                                                      .endTime,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
-                                                );
-                                              },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(child: Container(), flex: 1),
-                              Expanded(
-                                flex: 10,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 10,
-                                      child: GestureDetector(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color: Colors.lightBlue.shade300,
-                                          ),
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/timeline.png",
-                                                height: 32,
+                                                  !subscribed
+                                                      ? Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color:
+                                                                Colors.white24,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
+                                                          ),
+                                                          height:
+                                                              double.infinity,
+                                                          width:
+                                                              double.infinity,
+                                                        )
+                                                      : Container(),
+                                                  !subscribed
+                                                      ? Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
+                                                          ),
+                                                          height:
+                                                              double.infinity,
+                                                          width:
+                                                              double.infinity,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(
+                                                                Icons.lock,
+                                                                size: 40,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container(),
+                                                ],
                                               ),
-                                              SizedBox(
-                                                height: UIConstants.fitToHeight(
-                                                    6, context),
-                                              ),
-                                              Text(
-                                                "Feed",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                                return FeedScreen();
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(),
-                                      flex: 1,
-                                    ),
-                                    Expanded(
-                                      flex: 10,
-                                      child: GestureDetector(
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  color:
-                                                      Colors.lightBlue.shade300,
-                                                ),
-                                                height: double.infinity,
-                                                width: double.infinity,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      "assets/images/locked.png",
-                                                      height: 32,
-                                                    ),
-                                                    SizedBox(
-                                                        height: UIConstants
-                                                            .fitToHeight(
-                                                                6, context)),
-                                                    Text(
-                                                      tempQuiz3 == null
-                                                          ? "No"
-                                                          : tempQuiz3.name,
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    // SizedBox(
-                                                    //     height: UIConstants
-                                                    //         .fitToHeight(
-                                                    //             2, context)),
-                                                    Text(
-                                                      tempQuiz3 == null
-                                                          ? "Quiz"
-                                                          : tempQuiz3
-                                                                  .startTime +
-                                                              "\n" +
-                                                              tempQuiz3.endTime,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              !subscribed
-                                                  ? Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white24,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                      height: double.infinity,
-                                                      width: double.infinity,
-                                                    )
-                                                  : Container(),
-                                              !subscribed
-                                                  ? Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                      height: double.infinity,
-                                                      width: double.infinity,
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Icon(
-                                                            Icons.lock,
-                                                            size: 40,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Container(),
-                                            ],
-                                          ),
-                                          onTap: subscribed
-                                              ? (quiz3 == null
-                                                  ? () {
+                                              onTap: subscribed
+                                                  ? (quiz3 == null
+                                                      ? () {
+                                                          showDialog(
+                                                              context:
+                                                                  (context),
+                                                              builder:
+                                                                  (context) =>
+                                                                      AlertDialog(
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(12)),
+                                                                        title: Text(
+                                                                            "Alert"),
+                                                                        content:
+                                                                            Text("Quiz not Started or Attached!"),
+                                                                      ));
+                                                        }
+                                                      : () {
+                                                          Navigator.of(context)
+                                                              .pushReplacement(
+                                                                  MaterialPageRoute(builder:
+                                                                      (BuildContext
+                                                                          context) {
+                                                            return QuizTestScreen(
+                                                                quiz: quiz3);
+                                                          }));
+                                                        })
+                                                  : () {
                                                       showDialog(
                                                           context: (context),
                                                           builder:
@@ -625,76 +691,57 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             BorderRadius.circular(12)),
                                                                     title: Text(
                                                                         "Alert"),
-                                                                    content: Text(
-                                                                        "Quiz not Started or Quiz Finished!"),
-                                                                  ));
-                                                    }
-                                                  : () {
-                                                      Navigator.of(context).pushReplacement(
-                                                          MaterialPageRoute(
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                        return QuizTestScreen(
-                                                            quiz: quiz3);
-                                                      }));
-                                                    })
-                                              : () {
-                                                  showDialog(
-                                                      context: (context),
-                                                      builder:
-                                                          (context) =>
-                                                              AlertDialog(
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            12)),
-                                                                title: Text(
-                                                                    "Alert"),
-                                                                content: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  children: [
-                                                                    Text(
-                                                                        "You are not a Plus Member"),
-                                                                    MaterialButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                MemberScreen()));
-                                                                      },
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                8.0,
-                                                                            vertical:
-                                                                                2),
-                                                                        child: Text(
-                                                                            "Subscribe",
-                                                                            style:
-                                                                                TextStyle(color: Colors.white)),
-                                                                      ),
-                                                                      color: Colors
-                                                                          .lightBlue
-                                                                          .shade300,
+                                                                    content:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      children: [
+                                                                        Text(
+                                                                            "You are not a Plus Member"),
+                                                                        MaterialButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MemberScreen()));
+                                                                          },
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+                                                                            child:
+                                                                                Text("Subscribe", style: TextStyle(color: Colors.white)),
+                                                                          ),
+                                                                          color: Colors
+                                                                              .lightBlue
+                                                                              .shade300,
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                              ));
-                                                }),
+                                                                  ));
+                                                    }),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
+                              superQuiz(context),
                             ],
                           ),
-                          superQuiz(context),
-                        ],
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                Positioned(
+                  bottom: 65.0,
+                  right: 8.0, // or whatever
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.lightBlue.shade300,
+                    child: Icon(Icons.refresh),
+                    onPressed: () async {
+                      await loadDataForUser();
+                    },
                   ),
                 ),
               ],
@@ -713,12 +760,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           title: Text("Alert"),
-                          content: Text("Quiz not Started or Quiz Finished!"),
+                          content: Text("Quiz not Started or Attached!"),
                         ));
               }
             : () {
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (BuildContext context) {
                   return QuizTestScreen(quiz: quiz4);
                 }));
               }),
@@ -783,7 +830,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget carouselSlider(context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: UIConstants.fitToHeight(100, context),
+        height: UIConstants.fitToHeight(120, context),
         autoPlay: true,
         autoPlayInterval: Duration(seconds: 4),
         autoPlayAnimationDuration: Duration(milliseconds: 600),

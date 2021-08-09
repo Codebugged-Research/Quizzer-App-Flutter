@@ -103,7 +103,7 @@ class _RewardScreenState extends State<RewardScreen> {
                                             .copyWith(color: Colors.white,fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        quizResponses.first.score,
+                                        quizResponses.first.score.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline5
@@ -174,7 +174,7 @@ class _RewardScreenState extends State<RewardScreen> {
                                                 .copyWith(color: Colors.green),
                                       ),
                                       Text(
-                                            quizResponses[index].score,
+                                            quizResponses[index].score.toString(),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline6
