@@ -51,11 +51,67 @@
       },
       "oauth_client": [
         {
+          "client_id": "393532867631-5gcprgrons0256echbv2gbdckeae2kvd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "5b648d39003b8e3bf9d022a8e1a84fa68a7e6678"
+          }
+        },
+        {
+          "client_id": "393532867631-ahiqemrlco1d7nps0r7hkbk4m04gi4qb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "30bddb145a94eb3c391c1d966b4b7a92b025d3be"
+          }
+        },
+        {
+          "client_id": "393532867631-crv6cft7pvfn62ej7vh1h9989bino367.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "e8c488cfa5c14f3a8064b08fcaee166a9881e9f6"
+          }
+        },
+        {
+          "client_id": "393532867631-fff3lemktsbddk91aittfcqcc78m1hg3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "ad94020cead05363f2927660db166973bc8bce0b"
+          }
+        },
+        {
           "client_id": "393532867631-mfqtr712avuvleh6poolv8ncpmn6vj5n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.quizplus.quiz_adda",
             "certificate_hash": "7ee58b8850d8de9fde7f13b0fcbfbbcb3237ebdb"
+          }
+        },
+        {
+          "client_id": "393532867631-nkj7oftclnel33lcqr44ncm9r6ts3649.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "ba2d512860a4278158d13e0333cb010689a80385"
+          }
+        },
+        {
+          "client_id": "393532867631-p6bs99b5tnhulhjt9j3fa5okptee760v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "7a112d89fabbdbcc2483c505cd4a9a365a249a0b"
+          }
+        },
+        {
+          "client_id": "393532867631-r0i9i19iurlm6a46pofaufr10pfci5vo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quizplus.quiz_adda",
+            "certificate_hash": "19d3859c9ecef5b7308e395e9d6c796ad0007a9e"
           }
         },
         {

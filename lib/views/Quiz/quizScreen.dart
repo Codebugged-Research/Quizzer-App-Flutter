@@ -7,6 +7,7 @@ import 'package:quiz_app/services/quizService.dart';
 import 'package:quiz_app/services/responseService.dart';
 import 'package:quiz_app/services/userService.dart';
 import 'package:quiz_app/views/Quiz/QuizTestScreen.dart';
+import 'package:quiz_app/views/Quiz/quizModule/TimeErrorScreen.dart';
 import 'package:quiz_app/views/Quiz/rewardScreen.dart';
 import 'package:quiz_app/views/landingScreen.dart';
 
@@ -27,7 +28,6 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   User user;
-
   bool loading = false;
   DateTime now = DateTime.now();
   List<bool> change = [];
@@ -186,7 +186,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => QuizTestScreen(
+                              builder: (context) => TimeErrorScreen(
                                 quiz: quizes[index],
                               ),
                             ),

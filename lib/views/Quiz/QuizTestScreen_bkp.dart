@@ -46,10 +46,10 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
   var tempTime;
 
   @override
-  void dispose() {
-    _pageController?.dispose();
-    super.dispose();
-  }
+void dispose() {
+  _pageController?.dispose();
+  super.dispose();
+}
 
   checkTime() async {
     var res = await AuthService.makeAuthenticatedRequest(
@@ -59,7 +59,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
     DateTime netTime = DateTime.fromMillisecondsSinceEpoch(times);
     int diff = DateTime.now().difference(netTime).inSeconds;
     print(diff);
-    if (diff > 30 || -diff > 30) {
+    if (diff > 30 || -diff >30) {
       setState(() {
         blockScreen = true;
       });
@@ -73,7 +73,6 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
       );
     }
   }
-
   bool blockScreen = false;
 
   @override
@@ -810,6 +809,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
     );
   }
 
+
   Widget endCard() {
     for (int i = 0; i < quiz.questions.length; i++) {
       if (int.parse(quiz.questions[i].answer) == responses[i]) {
@@ -1068,12 +1068,11 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
                                   MaterialButton(
                                     onPressed: () {
                                       Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (context) => LandingScreen(
-                                            selectedIndex: 0,
-                                          ),
-                                        ),
-                                      );
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LandingScreen(
+                                                    selectedIndex: 0,
+                                                  )));
                                     },
                                     child: Text("Skip"),
                                   ),
@@ -1101,11 +1100,7 @@ class _QuizTestScreenState extends State<QuizTestScreen> {
             builder: (context) => LandingScreen(selectedIndex: 0)));
       },
       child: Scaffold(
-        body: blockScreen
-            ? Center(
-                child: Text("Update your phone time!"),
-              )
-            : (endTap ? endCard() : (readyTap ? questionCard() : infoCard())),
+        body: blockScreen ? Center(child: Text("Update your phone time!"),) :(endTap ? endCard() : (readyTap ? questionCard() : infoCard())),
       ),
     );
   }

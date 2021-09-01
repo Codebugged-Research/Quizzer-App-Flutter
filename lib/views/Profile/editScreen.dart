@@ -12,8 +12,8 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  TextEditingController username = TextEditingController();
-  TextEditingController upi = TextEditingController();
+  TextEditingController username = new TextEditingController();
+  TextEditingController upi = new TextEditingController();
   bool loading = false;
   User user;
   @override
